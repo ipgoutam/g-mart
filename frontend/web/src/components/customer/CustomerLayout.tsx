@@ -1,4 +1,4 @@
-import gmartLogo from "../../assets/gmart-logo-header.png";
+import gmartLogo from "../assets/gmart-logo-header.png";
 import {
   Bell,
   Check,
@@ -1018,7 +1018,7 @@ function CustomerLayout() {
 
               <Link to="/" className="flex min-w-0 items-center">
                 <img
-                  src="/src/assets/gmart-logo-header.png"
+                  src={gmartLogo}
                   alt="G-Mart"
                   className="h-8 w-auto max-w-[76px] shrink object-contain sm:h-12 sm:max-w-none"
                 />
