@@ -1,3 +1,4 @@
+import gmartLogo from "../../assets/gmart-logo-header.png";
 import {
   Bell,
   Check,
@@ -19,6 +20,7 @@ import {
   ClipboardList,
   Home,
 } from "lucide-react";
+
 import {
   useEffect,
   useMemo,
@@ -697,7 +699,7 @@ function CustomerLayout() {
         </p> */}
         <div className="flex flex-col items-start gap-2">
   <img
-    src="/src/assets/gmart-logo-header.png"
+    src={gmartLogo}
     alt="G-Mart"
     className="h-10 w-auto max-w-[140px] object-contain"
   />

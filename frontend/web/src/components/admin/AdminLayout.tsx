@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-
+import gmartLogo from "../../assets/gmart-logo-header.png";
 import {
   Bell,
   ClipboardList,
@@ -492,7 +492,7 @@ function AdminLayout() {
       <div className="border-b border-white/10 px-5 py-6">
         <div className="flex flex-col items-start gap-2">
           <img
-            src="/src/assets/gmart-logo-header.png"
+            src={gmartLogo}
             alt="G-Mart"
             className="h-10 w-auto max-w-[140px] object-contain"
           />
