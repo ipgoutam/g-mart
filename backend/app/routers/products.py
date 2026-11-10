@@ -2,7 +2,7 @@
 import os
 import uuid
 from decimal import Decimal
-
+from pathlib import Path
 from PIL import Image, UnidentifiedImageError
 
 from fastapi import (
@@ -47,7 +47,8 @@ router = APIRouter(
 # IMAGE UPLOAD SETTINGS
 # --------------------------------------------------
 
-UPLOAD_DIR = "uploads"
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+UPLOAD_DIR = str(BACKEND_DIR / "uploads")
 
 MAX_FILE_SIZE = 5 * 1024 * 1024
 MAX_IMAGE_PIXELS = 20_000_000
