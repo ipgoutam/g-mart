@@ -285,16 +285,29 @@ export default function Products() {
               ? data.products
               : [];
 
-      const ids = rawItems
-        .map((item: any) => {
+
+      const ids: number[] = rawItems
+        .map((item: unknown): number => {
           if (typeof item === "number" || typeof item === "string") {
             return Number(item);
           }
-          return Number(item?.product_id ?? item?.id);
-        })
-        .filter((id: number) => Number.isInteger(id) && id > 0 && id !== productId);
 
-      setFrequentlyBoughtIds(Array.from(new Set(ids)).slice(0, 20));
+          if (typeof item === "object" && item !== null) {
+            const product = item as Record<string, unknown>;
+            return Number(product.product_id ?? product.id);
+          }
+
+          return NaN;
+        })
+        .filter(
+          (id: number) =>
+            Number.isInteger(id) && id > 0 && id !== productId
+        );
+
+      setFrequentlyBoughtIds(
+        Array.from(new Set<number>(ids)).slice(0, 20)
+      );
+
     } catch (err: any) {
       setFrequentlyBoughtIds([]);
       setError(

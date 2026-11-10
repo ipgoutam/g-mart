@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { Product } from "../types/product";
-import type { Theme } from "../hooks/useTheme";
+import type { Product } from "../../types/product";
+import type { Theme } from "../../hooks/useTheme";
 
 // --------------------------------------------------
 // CONFIG  (adjust these to match your app)
