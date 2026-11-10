@@ -1,9 +1,10 @@
 
 import os
-import uuid
 from decimal import Decimal
-from pathlib import Path
 from PIL import Image, UnidentifiedImageError
+
+import cloudinary
+import cloudinary.uploader
 
 from fastapi import (
     APIRouter,
@@ -47,8 +48,6 @@ router = APIRouter(
 # IMAGE UPLOAD SETTINGS
 # --------------------------------------------------
 
-BACKEND_DIR = Path(__file__).resolve().parents[2]
-UPLOAD_DIR = str(BACKEND_DIR / "uploads")
 
 MAX_FILE_SIZE = 5 * 1024 * 1024
 MAX_IMAGE_PIXELS = 20_000_000
@@ -73,6 +72,13 @@ EXTENSION_FORMATS = {
     ".webp": "WEBP"
 }
 
+# Cloudinary configuration
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 # --------------------------------------------------
 # HELPER: FIND PRODUCT
@@ -175,9 +181,9 @@ def handle_stock_increase(
 # 1. UPLOAD PRODUCT IMAGE (ADMIN ONLY)
 # --------------------------------------------------
 
+
 @router.post("/upload-image/")
 def upload_product_image(
-    request: Request,
     file: UploadFile = File(...),
     admin: User = Depends(require_section_access("products"))
 ):
@@ -215,7 +221,6 @@ def upload_product_image(
             )
 
         with Image.open(file.file) as image:
-
             actual_format = image.format
 
             if actual_format not in ALLOWED_FORMATS:
@@ -254,43 +259,50 @@ def upload_product_image(
     finally:
         file.file.seek(0)
 
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-    filename = f"{uuid.uuid4().hex}{extension}"
-
-    file_path = os.path.join(
-        UPLOAD_DIR,
-        filename
-    )
-
-    try:
-        with open(file_path, "wb") as buffer:
-            while chunk := file.file.read(1024 * 1024):
-                buffer.write(chunk)
-
-    except OSError:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-
+    if not all([
+        os.getenv("CLOUDINARY_CLOUD_NAME"),
+        os.getenv("CLOUDINARY_API_KEY"),
+        os.getenv("CLOUDINARY_API_SECRET")
+    ]):
         raise HTTPException(
             status_code=500,
-            detail="Could not save image"
+            detail="Cloudinary environment variables are not configured"
+        )
+
+    try:
+        result = cloudinary.uploader.upload(
+            file.file,
+            folder="gmart/products",
+            resource_type="image"
+        )
+
+        image_url = result.get("secure_url")
+
+        if not image_url:
+            raise HTTPException(
+                status_code=502,
+                detail="Cloudinary did not return an image URL"
+            )
+
+        return {
+            "message": "Image uploaded successfully",
+            "image_url": image_url
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as exc:
+        print(
+            f"Cloudinary upload error: {type(exc).__name__}: {exc}"
+        )
+        raise HTTPException(
+            status_code=502,
+            detail="Could not upload image to Cloudinary"
         )
 
     finally:
         file.file.close()
-
-    image_url = str(
-        request.url_for(
-            "uploads",
-            path=filename
-        )
-    )
-
-    return {
-        "message": "Image uploaded successfully",
-        "image_url": image_url
-    }
 
 
 # --------------------------------------------------
