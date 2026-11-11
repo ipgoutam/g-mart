@@ -805,7 +805,7 @@ def has_completed_purchase(
 # 15. GET PUBLIC PRODUCT REVIEWS
 # --------------------------------------------------
 
-@router.get("/{product_id}/reviews")
+@router.get("/{product_id:int}/reviews")
 def get_product_reviews(
     product_id: int,
     db: Session = Depends(get_db)

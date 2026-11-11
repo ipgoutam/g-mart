@@ -30,7 +30,7 @@ import CustomerLayout from "./components/customer/CustomerLayout";
 import Categories from "./pages/admin/Categories";
 import Homepage from "./pages/admin/Homepage";
 import AdminRegister from "./pages/admin/AdminRegister";
-// import BrandManagement from "./pages/admin/BrandManagement";
+import BrandManagement from "./pages/admin/BrandManagement";
 
 function App() {
   return (
@@ -76,7 +76,7 @@ function App() {
           <Route path="management" element={<AdminManagement />} />
           <Route path="admins" element={<AdminManagement />} />
           <Route path="payments" element={<Payments />} />
-          {/* <Route path="brands" element={<BrandManagement />} /> */}
+          <Route path="brands" element={<BrandManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>

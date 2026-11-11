@@ -54,6 +54,21 @@ function formatDate(value?: string) {
         minute: "2-digit",
       });
 }
+function getErrorMessage(error: any): string {
+  const detail = error?.response?.data?.detail;
+
+  if (typeof detail === "string") {
+    return detail;
+  }
+
+  if (Array.isArray(detail)) {
+    return detail
+      .map((item) => item.msg || "Validation error")
+      .join(", ");
+  }
+
+  return "Something went wrong. Please try again.";
+}
 
 function Reviews() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -67,14 +82,11 @@ function Reviews() {
     setLoading(true);
     setError("");
     try {
-      const response = await api.get("/product-details/admin/reviews");
+      const response = await api.get("/product-details/admin/reviews?status=all");
       setReviews(getReviews(response.data));
     } catch (err: any) {
       console.error("Failed to load product reviews:", err);
-      setError(
-        err?.response?.data?.detail ||
-          "Unable to load reviews. Please refresh and try again."
-      );
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -92,7 +104,7 @@ function Reviews() {
     setError("");
     try {
       await api.patch(
-        `/product-details/admin/reviews/${reviewId}/moderation`,
+        `/product-details/admin/reviews/${reviewId}`,
         { status }
       );
       setReviews((current) =>
@@ -102,10 +114,7 @@ function Reviews() {
       );
     } catch (err: any) {
       console.error("Failed to moderate review:", err);
-      setError(
-        err?.response?.data?.detail ||
-          "Could not update this review. Please try again."
-      );
+      setError(getErrorMessage(err));
     } finally {
       setUpdatingId(null);
     }
