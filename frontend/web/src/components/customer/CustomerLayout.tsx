@@ -1,4 +1,4 @@
-import gmartLogo from "../assets/gmart-logo-header.png";
+import gmartLogo from "../../assets/gmart-logo-header.png";
 import {
   Bell,
   Check,
@@ -773,7 +773,7 @@ function CustomerLayout() {
               }
             >
               <span className="flex items-center gap-3">
-                <span className="text-lg">🛒</span>
+                <span className="text-lg"><ShoppingCart size={18} /></span>
                 Cart
               </span>
 

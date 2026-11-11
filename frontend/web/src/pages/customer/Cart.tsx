@@ -1,4 +1,4 @@
-
+import { ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
@@ -61,7 +61,7 @@ function Cart() {
 
         {items.length === 0 ? (
           <div className="rounded-xl bg-white p-12 text-center shadow-sm">
-            <div className="text-6xl">🛒</div>
+            <div className="text-6xl"><ShoppingCart size={18} /></div>
 
             <h2 className="mt-5 text-2xl font-bold">
               Your cart is empty

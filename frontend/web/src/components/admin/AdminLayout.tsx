@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import gmartLogo from "../assets/gmart-logo-header.png";
+import gmartLogo from "../../assets/gmart-logo-header.png";
 import {
   Bell,
   ClipboardList,

@@ -1,4 +1,4 @@
-
+import { ShoppingCart } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -504,7 +504,7 @@ function Dashboard() {
             title="Total Orders"
             value={summary.total_orders}
             subtitle={`${summary.pending_orders} pending orders`}
-            icon="🛒"
+            icon="<ShoppingCart size={18} />"
           />
 
           <SummaryCard
