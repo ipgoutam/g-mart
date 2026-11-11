@@ -380,13 +380,13 @@ function Coupons() {
   ) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-9 w-9 animate-spin rounded-full border-4 border-gray-200 border-t-[#B3944D]" />
+        <div className="h-9 w-9 animate-spin rounded-full border-4 border-gray-200 dark:border-slate-700 border-t-[#B3944D]" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 text-[#101B2D]">
+    <div className="space-y-6 text-[#101B2D] dark:text-slate-100">
 
       {/* PAGE HEADER */}
 
@@ -398,7 +398,7 @@ function Coupons() {
           <h1 className="mt-1 text-2xl font-bold sm:text-3xl">
             Coupons Management
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
             Create and manage your store discount coupons.
           </p>
         </div>
@@ -443,11 +443,11 @@ function Coupons() {
           return (
             <div
               key={item.label}
-              className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+              className="rounded-2xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-slate-400">
                     {item.label}
                   </p>
                   <h2 className="mt-2 text-2xl font-bold">
@@ -466,15 +466,15 @@ function Coupons() {
 
       {/* COUPON TABLE */}
 
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
 
-        <div className="flex flex-col gap-3 border-b border-gray-100 p-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 border-b border-gray-100 dark:border-slate-700 p-5 lg:flex-row lg:items-center lg:justify-between">
 
           <div>
             <h2 className="text-lg font-bold">
               All Coupons
             </h2>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
               {filteredCoupons.length} coupon(s) found
             </p>
           </div>
@@ -484,20 +484,20 @@ function Coupons() {
             <div className="relative">
               <Search
                 size={17}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500"
               />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search coupon..."
-                className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-3 text-sm outline-none focus:border-[#B3944D] sm:w-56"
+                className="w-full rounded-xl border border-gray-200 dark:border-slate-700 py-2.5 pl-10 pr-3 text-sm outline-none focus:border-[#B3944D] sm:w-56"
               />
             </div>
 
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-[#B3944D]"
+              className="rounded-xl border border-gray-200 dark:border-slate-700 px-3 py-2.5 text-sm outline-none focus:border-[#B3944D]"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -509,7 +509,7 @@ function Coupons() {
             <button
               onClick={loadCoupons}
               title="Refresh coupons"
-              className="flex items-center justify-center rounded-xl border border-gray-200 px-3 py-2.5 text-gray-600 transition hover:bg-gray-50"
+              className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-slate-700 px-3 py-2.5 text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700"
             >
               <RefreshCw size={17} />
             </button>
@@ -517,22 +517,22 @@ function Coupons() {
         </div>
 
         {error && !showModal && (
-          <div className="m-5 rounded-xl bg-red-50 p-3 text-sm text-red-600">
+          <div className="m-5 rounded-xl bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-600 dark:text-red-300 dark:text-red-300">
             {error}
           </div>
         )}
 
         {loading ? (
           <div className="flex min-h-56 items-center justify-center">
-            <div className="h-9 w-9 animate-spin rounded-full border-4 border-gray-200 border-t-[#B3944D]" />
+            <div className="h-9 w-9 animate-spin rounded-full border-4 border-gray-200 dark:border-slate-700 border-t-[#B3944D]" />
           </div>
         ) : filteredCoupons.length === 0 ? (
           <div className="flex min-h-64 flex-col items-center justify-center px-5 text-center">
-            <TicketPercent size={42} className="text-gray-300" />
+            <TicketPercent size={42} className="text-gray-300 dark:text-slate-500" />
             <h3 className="mt-3 font-semibold">
               No coupons found
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Create a coupon or change your search filters.
             </p>
           </div>
@@ -540,7 +540,7 @@ function Coupons() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[950px] text-left text-sm">
 
-              <thead className="bg-[#F8F7F3] text-xs uppercase tracking-wide text-gray-500">
+              <thead className="bg-[#F8F7F3] text-xs uppercase tracking-wide text-gray-500 dark:text-slate-400">
                 <tr>
                   <th className="px-5 py-4">Coupon</th>
                   <th className="px-5 py-4">Discount</th>
@@ -552,20 +552,20 @@ function Coupons() {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                 {filteredCoupons.map((coupon) => {
                   const status = getCouponStatus(coupon);
 
                   return (
                     <tr
                       key={coupon.id}
-                      className="transition hover:bg-gray-50"
+                      className="transition hover:bg-gray-50 dark:hover:bg-slate-700"
                     >
                       <td className="px-5 py-4">
                         <p className="font-bold tracking-wide">
                           {coupon.code}
                         </p>
-                        <p className="mt-1 max-w-48 truncate text-xs text-gray-500">
+                        <p className="mt-1 max-w-48 truncate text-xs text-gray-500 dark:text-slate-400">
                           {coupon.description || "No description"}
                         </p>
                       </td>
@@ -584,13 +584,13 @@ function Coupons() {
                         <span className="font-semibold">
                           {coupon.usage_count}
                         </span>
-                        <span className="text-gray-400">
+                        <span className="text-gray-400 dark:text-slate-500">
                           {" "}/{" "}
                           {coupon.max_uses ?? "Unlimited"}
                         </span>
                       </td>
 
-                      <td className="px-5 py-4 text-gray-600">
+                      <td className="px-5 py-4 text-gray-600 dark:text-slate-300">
                         {formatDate(coupon.expiry_date)}
                       </td>
 
@@ -598,13 +598,13 @@ function Coupons() {
                         <span
                           className={`rounded-full px-3 py-1 text-xs font-semibold ${
                             status === "Active"
-                              ? "bg-green-100 text-green-700"
+                              ? "bg-green-100 text-green-700 dark:text-green-300"
                               : status === "Expired" ||
                                 status === "Limit reached"
-                              ? "bg-red-100 text-red-700"
+                              ? "bg-red-100 text-red-700 dark:text-red-300"
                               : status === "Scheduled"
-                              ? "bg-blue-100 text-blue-700"
-                              : "bg-gray-100 text-gray-600"
+                              ? "bg-blue-100 text-blue-700 dark:text-blue-300"
+                              : "bg-gray-100 dark:bg-slate-700 text-gray-600"
                           }`}
                         >
                           {status}
@@ -617,7 +617,7 @@ function Coupons() {
                           <button
                             onClick={() => openEditModal(coupon)}
                             title="Edit coupon"
-                            className="rounded-lg border border-gray-200 p-2 text-gray-600 transition hover:border-[#B3944D] hover:text-[#B3944D]"
+                            className="rounded-lg border border-gray-200 dark:border-slate-700 p-2 text-gray-600 dark:text-slate-300 transition hover:border-[#B3944D] hover:text-[#B3944D]"
                           >
                             <Pencil size={16} />
                           </button>
@@ -628,7 +628,7 @@ function Coupons() {
                             className={`rounded-lg border px-3 py-2 text-xs font-semibold ${
                               coupon.is_active
                                 ? "border-orange-200 text-orange-600 hover:bg-orange-50"
-                                : "border-green-200 text-green-600 hover:bg-green-50"
+                                : "border-green-200 text-green-600 dark:text-green-300 hover:bg-green-50"
                             }`}
                           >
                             {coupon.is_active ? "Deactivate" : "Activate"}
@@ -637,7 +637,7 @@ function Coupons() {
                           <button
                             onClick={() => deleteCoupon(coupon)}
                             title="Delete coupon"
-                            className="rounded-lg border border-red-100 p-2 text-red-500 transition hover:bg-red-50"
+                            className="rounded-lg border border-red-100 dark:border-red-900/50 p-2 text-red-500 transition hover:bg-red-50"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -661,16 +661,16 @@ function Coupons() {
           onClick={closeModal}
         >
           <div
-            className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+            className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
 
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-5 py-4 sm:px-7">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 px-5 py-4 sm:px-7">
               <div>
                 <h2 className="text-xl font-bold">
                   {editingCoupon ? "Edit Coupon" : "Create Coupon"}
                 </h2>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                   Configure your discount coupon.
                 </p>
               </div>
@@ -678,7 +678,7 @@ function Coupons() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+                className="rounded-lg p-2 text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-700"
               >
                 <X size={20} />
               </button>
@@ -687,7 +687,7 @@ function Coupons() {
             <form onSubmit={handleSubmit} className="space-y-5 p-5 sm:p-7">
 
               {error && (
-                <div className="rounded-xl bg-red-50 p-3 text-sm text-red-600">
+                <div className="rounded-xl bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-600 dark:text-red-300 dark:text-red-300">
                   {error}
                 </div>
               )}
@@ -715,10 +715,10 @@ function Coupons() {
                         handleChange("code", e.target.value.toUpperCase())
                       }
                       placeholder="e.g. GMART20"
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm font-bold uppercase outline-none focus:border-[#B3944D] disabled:bg-gray-100"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm font-bold uppercase outline-none focus:border-[#B3944D] disabled:bg-gray-100"
                     />
                     {editingCoupon && (
-                      <p className="mt-1 text-xs text-gray-400">
+                      <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                         Coupon codes cannot be changed while editing.
                       </p>
                     )}
@@ -735,7 +735,7 @@ function Coupons() {
                         handleChange("description", e.target.value)
                       }
                       placeholder="Describe this coupon..."
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
                   </div>
                 </div>
@@ -762,7 +762,7 @@ function Coupons() {
                           e.target.value as "percentage" | "fixed"
                         )
                       }
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                     >
                       <option value="percentage">Percentage (%)</option>
                       <option value="fixed">Fixed Amount (₹)</option>
@@ -786,7 +786,7 @@ function Coupons() {
                       placeholder={
                         form.discount_type === "percentage" ? "20" : "50"
                       }
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
                   </div>
 
@@ -802,7 +802,7 @@ function Coupons() {
                       onChange={(e) =>
                         handleChange("min_order_amount", e.target.value)
                       }
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
                   </div>
 
@@ -820,7 +820,7 @@ function Coupons() {
                           handleChange("max_discount_amount", e.target.value)
                         }
                         placeholder="Optional"
-                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                        className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                       />
                     </div>
                   )}
@@ -847,7 +847,7 @@ function Coupons() {
                       onChange={(e) =>
                         handleChange("start_date", e.target.value)
                       }
-                      className="w-full rounded-xl border border-gray-200 px-3 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-3 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
                   </div>
 
@@ -862,7 +862,7 @@ function Coupons() {
                       onChange={(e) =>
                         handleChange("expiry_date", e.target.value)
                       }
-                      className="w-full rounded-xl border border-gray-200 px-3 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-3 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
                   </div>
 
@@ -878,14 +878,14 @@ function Coupons() {
                         handleChange("max_uses", e.target.value)
                       }
                       placeholder="Unlimited"
-                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+                      className="w-full rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
                     />
-                    <p className="mt-1 text-xs text-gray-400">
+                    <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                       Leave empty for unlimited usage.
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3">
+                  <div className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-slate-700 px-4 py-3">
                     <input
                       id="coupon-active"
                       type="checkbox"
@@ -907,12 +907,12 @@ function Coupons() {
 
               {/* ACTIONS */}
 
-              <div className="flex flex-col-reverse gap-3 border-t border-gray-100 pt-5 sm:flex-row sm:justify-end">
+              <div className="flex flex-col-reverse gap-3 border-t border-gray-100 dark:border-slate-700 pt-5 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={closeModal}
                   disabled={saving}
-                  className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+                  className="rounded-xl border border-gray-200 dark:border-slate-700 px-5 py-3 text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700"
                 >
                   Cancel
                 </button>

@@ -106,16 +106,16 @@ function Inventory() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-4 md:p-8">
 
       {/* HEADER */}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-navy md:text-3xl">
+          <h1 className="text-2xl font-bold text-navy dark:text-slate-100 md:text-3xl">
             Inventory Management
           </h1>
 
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
             Track stock changes and inventory movement history.
           </p>
         </div>
@@ -131,44 +131,44 @@ function Inventory() {
       {/* SUMMARY CARDS */}
       <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 
-        <div className="rounded-xl border bg-white p-5 shadow-sm">
-          <p className="text-sm text-gray-500">
+        <div className="rounded-xl border bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <p className="text-sm text-gray-500 dark:text-slate-400">
             Total Movements
           </p>
 
-          <h2 className="mt-2 text-3xl font-bold text-navy">
+          <h2 className="mt-2 text-3xl font-bold text-navy dark:text-slate-100">
             {summary.total_movements}
           </h2>
 
-          <p className="mt-2 text-xs text-gray-400">
+          <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
             Recorded stock changes
           </p>
         </div>
 
-        <div className="rounded-xl border bg-white p-5 shadow-sm">
-          <p className="text-sm text-gray-500">
+        <div className="rounded-xl border bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <p className="text-sm text-gray-500 dark:text-slate-400">
             Total Stock Added
           </p>
 
-          <h2 className="mt-2 text-3xl font-bold text-green-600">
+          <h2 className="mt-2 text-3xl font-bold text-green-600 dark:text-green-300 dark:text-green-300">
             +{summary.stock_added}
           </h2>
 
-          <p className="mt-2 text-xs text-gray-400">
+          <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
             Units added to inventory
           </p>
         </div>
 
-        <div className="rounded-xl border bg-white p-5 shadow-sm">
-          <p className="text-sm text-gray-500">
+        <div className="rounded-xl border bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <p className="text-sm text-gray-500 dark:text-slate-400">
             Total Stock Removed
           </p>
 
-          <h2 className="mt-2 text-3xl font-bold text-red-600">
+          <h2 className="mt-2 text-3xl font-bold text-red-600 dark:text-red-300 dark:text-red-300">
             -{summary.stock_removed}
           </h2>
 
-          <p className="mt-2 text-xs text-gray-400">
+          <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
             Units removed from inventory
           </p>
         </div>
@@ -176,16 +176,16 @@ function Inventory() {
       </div>
 
       {/* FILTERS */}
-      <div className="mb-6 rounded-xl border bg-white p-5 shadow-sm">
+      <div className="mb-6 rounded-xl border bg-white dark:bg-slate-800 p-5 shadow-sm">
 
-        <h2 className="mb-4 text-lg font-semibold text-navy">
+        <h2 className="mb-4 text-lg font-semibold text-navy dark:text-slate-100">
           Filter Inventory History
         </h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-600">
+            <label className="mb-2 block text-sm font-medium text-gray-600 dark:text-slate-300">
               Search Product
             </label>
 
@@ -199,7 +199,7 @@ function Inventory() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-600">
+            <label className="mb-2 block text-sm font-medium text-gray-600 dark:text-slate-300">
               Product ID
             </label>
 
@@ -217,7 +217,7 @@ function Inventory() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-600">
+            <label className="mb-2 block text-sm font-medium text-gray-600 dark:text-slate-300">
               Movement Type
             </label>
 
@@ -247,30 +247,30 @@ function Inventory() {
 
       {/* ERROR */}
       {error && (
-        <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+        <div className="mb-5 rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 p-4 text-sm text-red-600 dark:text-red-300 dark:text-red-300">
           {error}
         </div>
       )}
 
       {/* MOVEMENT HISTORY */}
-      <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border bg-white dark:bg-slate-800 shadow-sm">
 
         <div className="border-b p-5">
-          <h2 className="text-lg font-semibold text-navy">
+          <h2 className="text-lg font-semibold text-navy dark:text-slate-100">
             Stock Movement History
           </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
             Showing {filteredMovements.length} records on this page.
           </p>
         </div>
 
         {loading ? (
-          <div className="p-10 text-center text-gray-500">
+          <div className="p-10 text-center text-gray-500 dark:text-slate-400">
             Loading inventory history...
           </div>
         ) : filteredMovements.length === 0 ? (
-          <div className="p-10 text-center text-gray-500">
+          <div className="p-10 text-center text-gray-500 dark:text-slate-400">
             No inventory movements found.
           </div>
         ) : (
@@ -278,7 +278,7 @@ function Inventory() {
 
             <table className="w-full min-w-[1050px] text-left text-sm">
 
-              <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+              <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase text-gray-500 dark:text-slate-400">
                 <tr>
                   <th className="px-5 py-4">Product</th>
                   <th className="px-5 py-4">Movement</th>
@@ -296,26 +296,26 @@ function Inventory() {
                 {filteredMovements.map((movement) => (
                   <tr
                     key={movement.id}
-                    className="hover:bg-gray-50"
+                    className="hover:bg-gray-50 dark:hover:bg-slate-700"
                   >
 
                     <td className="px-5 py-4">
-                      <p className="font-semibold text-gray-800">
+                      <p className="font-semibold text-gray-800 dark:text-slate-100">
                         {movement.product_name}
                       </p>
 
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">
                         Product ID: #{movement.product_id ?? "Deleted"}
                       </p>
                     </td>
 
                     <td className="px-5 py-4">
-                      <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                      <span className="rounded-full bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-3 py-1 text-xs font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {formatMovementType(movement.movement_type)}
                       </span>
                     </td>
 
-                    <td className="px-5 py-4 text-gray-600">
+                    <td className="px-5 py-4 text-gray-600 dark:text-slate-300">
                       {movement.previous_stock}
                     </td>
 
@@ -323,9 +323,9 @@ function Inventory() {
                       <span
                         className={
                           movement.quantity_change > 0
-                            ? "font-semibold text-green-600"
+                            ? "font-semibold text-green-600 dark:text-green-300"
                             : movement.quantity_change < 0
-                            ? "font-semibold text-red-600"
+                            ? "font-semibold text-red-600 dark:text-red-300"
                             : "text-gray-500"
                         }
                       >
@@ -334,29 +334,29 @@ function Inventory() {
                       </span>
                     </td>
 
-                    <td className="px-5 py-4 font-semibold text-navy">
+                    <td className="px-5 py-4 font-semibold text-navy dark:text-slate-100">
                       {movement.new_stock}
                     </td>
 
-                    <td className="px-5 py-4 text-gray-600">
+                    <td className="px-5 py-4 text-gray-600 dark:text-slate-300">
                       {movement.changed_by_name || "Unknown"}
                       {movement.changed_by_user_id && (
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-400 dark:text-slate-500">
                           ID: #{movement.changed_by_user_id}
                         </p>
                       )}
                     </td>
 
-                    <td className="max-w-[180px] px-5 py-4 text-gray-600">
+                    <td className="max-w-[180px] px-5 py-4 text-gray-600 dark:text-slate-300">
                       {movement.reason || "—"}
                       {movement.order_id && (
-                        <p className="mt-1 text-xs text-gray-400">
+                        <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                           Order: #{movement.order_id}
                         </p>
                       )}
                     </td>
 
-                    <td className="whitespace-nowrap px-5 py-4 text-gray-500">
+                    <td className="whitespace-nowrap px-5 py-4 text-gray-500 dark:text-slate-400">
                       {formatDate(movement.created_at)}
                     </td>
 
@@ -375,19 +375,19 @@ function Inventory() {
           <button
             disabled={skip === 0 || loading}
             onClick={() => setSkip(Math.max(0, skip - limit))}
-            className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Previous
           </button>
 
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-gray-500 dark:text-slate-400">
             Page {Math.floor(skip / limit) + 1}
           </span>
 
           <button
             disabled={loading || movements.length < limit}
             onClick={() => setSkip(skip + limit)}
-            className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Next
           </button>

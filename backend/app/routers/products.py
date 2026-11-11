@@ -185,6 +185,7 @@ def handle_stock_increase(
 @router.post("/upload-image/")
 def upload_product_image(
     file: UploadFile = File(...),
+    folder: str = "products",
     admin: User = Depends(require_section_access("products"))
 ):
     extension = os.path.splitext(
@@ -270,9 +271,15 @@ def upload_product_image(
         )
 
     try:
+        if folder not in {"products", "brands"}:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid upload folder"
+            )
+
         result = cloudinary.uploader.upload(
             file.file,
-            folder="gmart/products",
+            folder=f"gmart/{folder}",
             resource_type="image"
         )
 
@@ -321,8 +328,29 @@ def create_product(
 ):
     product_values = product_data.model_dump()
 
-    new_product = Product(**product_values)
+    brand_id = product_values.get("brand_id")
 
+    if brand_id is not None:
+        selected_brand = db.query(Brand).filter(
+            Brand.id == brand_id
+        ).first()
+
+        if not selected_brand:
+            raise HTTPException(
+                status_code=404,
+                detail="Selected brand not found"
+            )
+
+        # Keep the legacy brand text synchronized
+        product_values["brand"] = selected_brand.name
+
+    else:
+        product_values["brand_id"] = None
+        product_values["brand"] = (
+            product_values.get("brand") or None
+        )
+
+    new_product = Product(**product_values)
     db.add(new_product)
 
     try:
@@ -331,7 +359,6 @@ def create_product(
 
     except IntegrityError:
         db.rollback()
-
         raise HTTPException(
             status_code=409,
             detail="A product with this SKU or barcode already exists"
@@ -339,14 +366,12 @@ def create_product(
 
     except Exception:
         db.rollback()
-
         raise HTTPException(
             status_code=500,
             detail="Could not create product"
         )
 
     return new_product
-
 
 # --------------------------------------------------
 # 3. GET ALL PRODUCTS (PUBLIC)

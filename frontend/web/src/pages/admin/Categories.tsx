@@ -687,7 +687,7 @@ export default function Categories() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center text-gray-600">
+      <div className="flex min-h-[60vh] items-center justify-center text-gray-600 dark:text-slate-300">
         Loading categories...
       </div>
     );
@@ -699,11 +699,11 @@ export default function Categories() {
 
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-[#101B2D]">
+          <h2 className="text-2xl font-bold text-[#101B2D] dark:text-slate-100">
             Category Management
           </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
             Create categories and control how they appear on your homepage.
           </p>
         </div>
@@ -719,13 +719,13 @@ export default function Categories() {
       {/* ALERTS */}
 
       {error && (
-        <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-700">
+        <div className="mb-4 rounded-lg bg-green-50 dark:bg-green-950/30 p-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
           {success}
         </div>
       )}
@@ -759,19 +759,19 @@ export default function Categories() {
       <div className="mb-8 space-y-6">
         {/* CATEGORY ORDER */}
 
-        <div className="rounded-xl bg-white p-5 shadow-sm">
+        <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-lg font-bold text-[#101B2D]">
+            <h3 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
               Popular Categories Order
             </h3>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Change the order in which categories appear on the customer homepage.
             </p>
           </div>
 
           {popularOrderCategories.length === 0 ? (
-            <p className="rounded-lg bg-[#F7F5EF] p-4 text-sm text-gray-500">
+            <p className="rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] p-4 text-sm text-gray-500 dark:text-slate-400">
               No active categories are currently enabled in Popular Categories.
               Enable a category using the Popular visibility setting below.
             </p>
@@ -780,10 +780,10 @@ export default function Categories() {
               {popularOrderCategories.map((category, index) => (
                 <div
                   key={category.id}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 p-3"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 dark:border-slate-700 p-3"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F7F5EF] text-sm font-bold text-[#101B2D]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F7F5EF] dark:bg-[#0E1A2B] text-sm font-bold text-[#101B2D] dark:text-slate-100">
                       {index + 1}
                     </span>
 
@@ -794,12 +794,12 @@ export default function Categories() {
                         className="h-10 w-10 shrink-0 rounded-lg object-cover"
                       />
                     ) : (
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#F7F5EF]">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B]">
                         🏷️
                       </div>
                     )}
 
-                    <span className="truncate font-semibold text-[#101B2D]">
+                    <span className="truncate font-semibold text-[#101B2D] dark:text-slate-100">
                       {category.name}
                     </span>
                   </div>
@@ -813,7 +813,7 @@ export default function Categories() {
                       disabled={
                         index === 0 || savingCategoryOrder
                       }
-                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-bold hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                      className="rounded-lg border border-gray-300 dark:border-slate-600 px-3 py-2 text-sm font-bold hover:bg-gray-100 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-30"
                       aria-label={`Move ${category.name} up`}
                     >
                       ↑
@@ -828,7 +828,7 @@ export default function Categories() {
                         index === popularOrderCategories.length - 1 ||
                         savingCategoryOrder
                       }
-                      className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-bold hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                      className="rounded-lg border border-gray-300 dark:border-slate-600 px-3 py-2 text-sm font-bold hover:bg-gray-100 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-30"
                       aria-label={`Move ${category.name} down`}
                     >
                       ↓
@@ -840,7 +840,7 @@ export default function Categories() {
           )}
 
           {savingCategoryOrder && (
-            <p className="mt-3 text-xs text-blue-600">
+            <p className="mt-3 text-xs text-blue-600 dark:text-blue-300">
               Saving category order...
             </p>
           )}
@@ -848,19 +848,19 @@ export default function Categories() {
 
         {/* PRODUCT ORDER */}
 
-        <div className="rounded-xl bg-white p-5 shadow-sm">
+        <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
           <div className="mb-5">
-            <h3 className="text-lg font-bold text-[#101B2D]">
+            <h3 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
               Popular Category Product Order
             </h3>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Select a popular category and arrange the products inside its homepage carousel.
             </p>
           </div>
 
           <div className="mb-5 max-w-md">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
               Select Popular Category
             </label>
 
@@ -870,7 +870,7 @@ export default function Categories() {
                 setSelectedPopularCategoryId(event.target.value)
               }
               disabled={popularOrderCategories.length === 0}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#D6B875] disabled:bg-gray-100"
+              className="w-full rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 outline-none focus:border-[#D6B875] disabled:bg-gray-100"
             >
               {popularOrderCategories.length === 0 ? (
                 <option value="">
@@ -890,11 +890,11 @@ export default function Categories() {
           </div>
 
           {popularProductsLoading ? (
-            <p className="py-8 text-center text-sm text-gray-500">
+            <p className="py-8 text-center text-sm text-gray-500 dark:text-slate-400">
               Loading category products...
             </p>
           ) : popularProducts.length === 0 ? (
-            <p className="rounded-lg bg-[#F7F5EF] p-4 text-sm text-gray-500">
+            <p className="rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] p-4 text-sm text-gray-500 dark:text-slate-400">
               No products found in this category.
             </p>
           ) : (
@@ -903,10 +903,10 @@ export default function Categories() {
                 {popularProducts.map((product, index) => (
                   <div
                     key={product.id}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 p-3"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 dark:border-slate-700 p-3"
                   >
                     <div className="flex min-w-0 items-center gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F7F5EF] text-sm font-bold text-[#101B2D]">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F7F5EF] dark:bg-[#0E1A2B] text-sm font-bold text-[#101B2D] dark:text-slate-100">
                         {index + 1}
                       </span>
 
@@ -914,20 +914,20 @@ export default function Categories() {
                         <img
                           src={product.image_url}
                           alt={product.name}
-                          className="h-12 w-12 shrink-0 rounded-lg border border-gray-100 object-contain"
+                          className="h-12 w-12 shrink-0 rounded-lg border border-gray-100 dark:border-slate-700 object-contain"
                         />
                       ) : (
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#F7F5EF]">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B]">
                           🛍️
                         </div>
                       )}
 
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-[#101B2D]">
+                        <p className="truncate text-sm font-semibold text-[#101B2D] dark:text-slate-100">
                           {product.name}
                         </p>
 
-                        <p className="mt-1 text-xs text-gray-500">
+                        <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                           Stock: {product.stock}
                           {" · "}
                           {product.is_available
@@ -948,7 +948,7 @@ export default function Categories() {
                           savingProductOrder ||
                           popularProductsLoading
                         }
-                        className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-bold hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                        className="rounded-lg border border-gray-300 dark:border-slate-600 px-3 py-2 text-sm font-bold hover:bg-gray-100 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-30"
                         aria-label={`Move ${product.name} up`}
                       >
                         ↑
@@ -964,7 +964,7 @@ export default function Categories() {
                           savingProductOrder ||
                           popularProductsLoading
                         }
-                        className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-bold hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                        className="rounded-lg border border-gray-300 dark:border-slate-600 px-3 py-2 text-sm font-bold hover:bg-gray-100 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-30"
                         aria-label={`Move ${product.name} down`}
                       >
                         ↓
@@ -974,8 +974,8 @@ export default function Categories() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-4">
-                <p className="text-xs text-gray-500">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 dark:border-slate-700 pt-4">
+                <p className="text-xs text-gray-500 dark:text-slate-400">
                   Changes are not applied to the homepage until you save.
                 </p>
 
@@ -1004,13 +1004,13 @@ export default function Categories() {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search categories..."
-          className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#D6B875]"
+          className="min-w-0 flex-1 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 outline-none focus:border-[#D6B875]"
         />
 
         <select
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-3"
+          className="rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3"
         >
           <option value="all">All categories</option>
           <option value="active">Active</option>
@@ -1022,7 +1022,7 @@ export default function Categories() {
 
       {/* CATEGORY TABLE */}
 
-      <div className="overflow-x-auto rounded-xl bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-xl bg-white dark:bg-slate-800 shadow-sm">
         <table className="w-full min-w-[1050px] text-left text-sm">
           <thead className="bg-[#101B2D] text-white">
             <tr>
@@ -1039,7 +1039,7 @@ export default function Categories() {
             {filteredCategories.map((category) => (
               <tr
                 key={category.id}
-                className="border-b border-gray-100 last:border-0"
+                className="border-b border-gray-100 dark:border-slate-700 last:border-0"
               >
                 <td className="p-4">
                   <div className="flex items-center gap-3">
@@ -1050,20 +1050,20 @@ export default function Categories() {
                         onError={(event) => {
                           event.currentTarget.style.display = "none";
                         }}
-                        className="h-12 w-12 rounded-lg border border-gray-100 object-cover"
+                        className="h-12 w-12 rounded-lg border border-gray-100 dark:border-slate-700 object-cover"
                       />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#F7F5EF] text-xl">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] text-xl">
                         🏷️
                       </div>
                     )}
 
                     <div>
-                      <p className="font-semibold text-[#101B2D]">
+                      <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                         {category.name}
                       </p>
 
-                      <p className="max-w-xs truncate text-xs text-gray-500">
+                      <p className="max-w-xs truncate text-xs text-gray-500 dark:text-slate-400">
                         {category.description || "No description"}
                       </p>
                     </div>
@@ -1075,8 +1075,8 @@ export default function Categories() {
                     onClick={() => toggleStatus(category)}
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       category.is_active
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
+                        ? "bg-green-100 text-green-700 dark:text-green-300"
+                        : "bg-red-100 text-red-700 dark:text-red-300"
                     }`}
                   >
                     {category.is_active ? "Active" : "Inactive"}
@@ -1090,8 +1090,8 @@ export default function Categories() {
                     }
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       category.show_on_home
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-100 text-gray-600"
+                        ? "bg-green-100 text-green-700 dark:text-green-300"
+                        : "bg-gray-100 dark:bg-slate-700 text-gray-600"
                     }`}
                   >
                     {category.show_on_home ? "Visible" : "Hidden"}
@@ -1105,8 +1105,8 @@ export default function Categories() {
                     }
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       category.show_in_popular
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-100 text-gray-600"
+                        ? "bg-green-100 text-green-700 dark:text-green-300"
+                        : "bg-gray-100 dark:bg-slate-700 text-gray-600"
                     }`}
                   >
                     {category.show_in_popular ? "Visible" : "Hidden"}
@@ -1114,10 +1114,10 @@ export default function Categories() {
                 </td>
 
                 <td className="p-4">
-                  <p className="text-xs text-gray-600">
+                  <p className="text-xs text-gray-600 dark:text-slate-300">
                     Homepage: {category.display_order}
                   </p>
-                  <p className="mt-1 text-xs text-gray-600">
+                  <p className="mt-1 text-xs text-gray-600 dark:text-slate-300">
                     Popular: {category.popular_display_order}
                   </p>
                 </td>
@@ -1126,14 +1126,14 @@ export default function Categories() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => openEditForm(category)}
-                      className="rounded-lg bg-blue-50 px-3 py-2 text-blue-700 transition hover:bg-blue-100"
+                      className="rounded-lg bg-blue-50 dark:bg-blue-950/30 px-3 py-2 text-blue-700 dark:text-blue-300 dark:text-blue-300 transition hover:bg-blue-100"
                     >
                       Edit
                     </button>
 
                     <button
                       onClick={() => handleDelete(category)}
-                      className="rounded-lg bg-red-50 px-3 py-2 text-red-700 transition hover:bg-red-100"
+                      className="rounded-lg bg-red-50 dark:bg-red-950/30 px-3 py-2 text-red-700 dark:text-red-300 dark:text-red-300 transition hover:bg-red-100"
                     >
                       Delete
                     </button>
@@ -1146,7 +1146,7 @@ export default function Categories() {
               <tr>
                 <td
                   colSpan={6}
-                  className="p-10 text-center text-gray-500"
+                  className="p-10 text-center text-gray-500 dark:text-slate-400"
                 >
                   No categories found.
                 </td>
@@ -1160,14 +1160,14 @@ export default function Categories() {
 
       {showForm && (
         <div className="fixed inset-0 z-[100] overflow-y-auto bg-black/50 p-4">
-          <div className="mx-auto my-6 max-w-2xl rounded-2xl bg-white p-6 shadow-xl">
+          <div className="mx-auto my-6 max-w-2xl rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-xl">
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-[#101B2D]">
+                <h2 className="text-xl font-bold text-[#101B2D] dark:text-slate-100">
                   {editingCategory ? "Edit Category" : "Add New Category"}
                 </h2>
 
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                   Configure category details and homepage visibility.
                 </p>
               </div>
@@ -1175,7 +1175,7 @@ export default function Categories() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="text-2xl text-gray-500 hover:text-gray-800"
+                className="text-2xl text-gray-500 dark:text-slate-400 hover:text-gray-800"
               >
                 ×
               </button>
@@ -1213,7 +1213,7 @@ export default function Categories() {
                           className={`rounded-lg px-3 py-2 text-xs font-semibold ${
                             categoryNameMode === "existing"
                               ? "bg-[#101B2D] text-white"
-                              : "border border-gray-300 text-gray-700"
+                              : "border border-gray-300 text-gray-700 dark:text-slate-200"
                           }`}
                         >
                           Existing Product Category
@@ -1228,7 +1228,7 @@ export default function Categories() {
                           className={`rounded-lg px-3 py-2 text-xs font-semibold ${
                             categoryNameMode === "new"
                               ? "bg-[#101B2D] text-white"
-                              : "border border-gray-300 text-gray-700"
+                              : "border border-gray-300 text-gray-700 dark:text-slate-200"
                           }`}
                         >
                           + Create New Category
@@ -1277,7 +1277,7 @@ export default function Categories() {
                             )}
                           </select>
 
-                          <p className="mt-2 text-xs text-gray-500">
+                          <p className="mt-2 text-xs text-gray-500 dark:text-slate-400">
                             Choose a category name already used by your products.
                           </p>
 
@@ -1289,7 +1289,7 @@ export default function Categories() {
                                   setCategoryNameMode("new");
                                   updateField("name", "");
                                 }}
-                                className="mt-2 text-xs font-semibold text-blue-700 hover:underline"
+                                className="mt-2 text-xs font-semibold text-blue-700 dark:text-blue-300 dark:text-blue-300 hover:underline"
                               >
                                 Create a brand-new category instead
                               </button>
@@ -1309,7 +1309,7 @@ export default function Categories() {
                             className="form-input"
                           />
 
-                          <p className="mt-2 text-xs text-gray-500">
+                          <p className="mt-2 text-xs text-gray-500 dark:text-slate-400">
                             Enter a category name that is not currently used.
                           </p>
                         </>
@@ -1327,7 +1327,7 @@ export default function Categories() {
                   />
 
                   {uploading && (
-                    <p className="mt-2 text-xs text-blue-600">
+                    <p className="mt-2 text-xs text-blue-600 dark:text-blue-300">
                       Uploading image...
                     </p>
                   )}
@@ -1343,7 +1343,7 @@ export default function Categories() {
                       <button
                         type="button"
                         onClick={() => updateField("image_url", "")}
-                        className="text-xs font-medium text-red-600 hover:underline"
+                        className="text-xs font-medium text-red-600 dark:text-red-300 dark:text-red-300 hover:underline"
                       >
                         Remove image
                       </button>
@@ -1366,7 +1366,7 @@ export default function Categories() {
 
               {/* CATEGORY STATUS */}
 
-              <div className="rounded-xl border border-gray-200 p-4">
+              <div className="rounded-xl border border-gray-200 dark:border-slate-700 p-4">
                 <label className="flex cursor-pointer items-center gap-3">
                   <input
                     type="checkbox"
@@ -1378,11 +1378,11 @@ export default function Categories() {
                   />
 
                   <div>
-                    <p className="font-semibold text-[#101B2D]">
+                    <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                       Category is active
                     </p>
 
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-slate-400">
                       Inactive categories should not be displayed to customers.
                     </p>
                   </div>
@@ -1391,7 +1391,7 @@ export default function Categories() {
 
               {/* SHOP BY CATEGORY SETTINGS */}
 
-              <div className="rounded-xl border border-[#D6B875] bg-[#F7F5EF] p-4">
+              <div className="rounded-xl border border-[#D6B875] bg-[#F7F5EF] dark:bg-[#0E1A2B] p-4">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
@@ -1403,17 +1403,17 @@ export default function Categories() {
                   />
 
                   <div className="flex-1">
-                    <p className="font-semibold text-[#101B2D]">
+                    <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                       Show in Shop by Category
                     </p>
 
-                    <p className="mt-1 text-xs text-gray-600">
+                    <p className="mt-1 text-xs text-gray-600 dark:text-slate-300">
                       Display this category in the homepage category section.
                     </p>
 
                     {form.show_on_home && (
                       <div className="mt-3 max-w-xs">
-                        <label className="mb-1 block text-xs font-medium text-gray-700">
+                        <label className="mb-1 block text-xs font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                           Homepage display order
                         </label>
 
@@ -1435,7 +1435,7 @@ export default function Categories() {
 
               {/* POPULAR CATEGORY SETTINGS */}
 
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
+              <div className="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
@@ -1447,17 +1447,17 @@ export default function Categories() {
                   />
 
                   <div className="flex-1">
-                    <p className="font-semibold text-[#101B2D]">
+                    <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                       Show in Popular Categories
                     </p>
 
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                       Display this category in the homepage popular section.
                     </p>
 
                     {form.show_in_popular && (
                       <div className="mt-3 max-w-xs">
-                        <label className="mb-1 block text-xs font-medium text-gray-700">
+                        <label className="mb-1 block text-xs font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                           Popular section display order
                         </label>
 
@@ -1486,7 +1486,7 @@ export default function Categories() {
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="rounded-lg border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-lg border border-gray-300 dark:border-slate-600 px-5 py-3 text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-700"
                 >
                   Cancel
                 </button>
@@ -1523,9 +1523,9 @@ function SummaryCard({
   value: number;
 }) {
   return (
-    <div className="rounded-xl bg-white p-5 shadow-sm">
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-2 text-3xl font-bold text-[#101B2D]">{value}</p>
+    <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
+      <p className="text-sm text-gray-500 dark:text-slate-400">{label}</p>
+      <p className="mt-2 text-3xl font-bold text-[#101B2D] dark:text-slate-100">{value}</p>
     </div>
   );
 }
@@ -1539,7 +1539,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-gray-700">
+      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
         {label}
       </label>
       {children}

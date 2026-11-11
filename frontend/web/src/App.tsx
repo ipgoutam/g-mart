@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/customer/Home";
@@ -25,11 +24,13 @@ import Coupons from "./pages/admin/Coupons";
 import Notifications from "./pages/admin/Notifications";
 import AdminManagement from "./pages/admin/AdminManagement";
 import Payments from "./pages/admin/Payments";
+import Reviews from "./pages/admin/Reviews";
 import AdminLayout from "./components/admin/AdminLayout";
 import CustomerLayout from "./components/customer/CustomerLayout";
 import Categories from "./pages/admin/Categories";
 import Homepage from "./pages/admin/Homepage";
 import AdminRegister from "./pages/admin/AdminRegister";
+// import BrandManagement from "./pages/admin/BrandManagement";
 
 function App() {
   return (
@@ -37,7 +38,6 @@ function App() {
       <ScrollRestoration />
 
       <Routes>
-
         {/* Customer routes */}
         <Route element={<CustomerLayout />}>
           <Route path="/" element={<Home />} />
@@ -65,6 +65,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="products" element={<Products />} />
           <Route path="inventory" element={<Inventory />} />
+          <Route path="reviews" element={<Reviews />} />
           <Route path="orders" element={<Orders />} />
           <Route path="settings" element={<Settings />} />
           <Route path="categories" element={<Categories />} />
@@ -75,6 +76,7 @@ function App() {
           <Route path="management" element={<AdminManagement />} />
           <Route path="admins" element={<AdminManagement />} />
           <Route path="payments" element={<Payments />} />
+          {/* <Route path="brands" element={<BrandManagement />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

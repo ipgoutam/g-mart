@@ -492,33 +492,33 @@ function Homepage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
           Homepage Management
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Manage your homepage hero carousel and Popular Categories section.
         </p>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+        <div className="rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 px-4 py-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
           {success}
         </div>
       )}
 
       {/* HERO CAROUSEL MANAGEMENT */}
-      <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-800">
+      <section className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
           Add Product to Hero Carousel
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Select a product already available in your product catalogue.
         </p>
 
@@ -526,7 +526,7 @@ function Homepage() {
           <select
             value={selectedProduct}
             onChange={(event) => setSelectedProduct(event.target.value)}
-            className="min-h-11 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none focus:border-amber-500"
+            className="min-h-11 flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-amber-500"
           >
             <option value="">Select a product</option>
 
@@ -549,20 +549,20 @@ function Homepage() {
         </div>
 
         {availableProductsToAdd.length === 0 && (
-          <p className="mt-3 text-xs text-slate-500">
+          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
             All products are already added to the carousel.
           </p>
         )}
       </section>
 
       {/* HERO CAROUSEL PRODUCTS */}
-      <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-slate-800">
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
               Hero Carousel Products
             </h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Change visibility or use the arrows to arrange the display order.
             </p>
           </div>
@@ -571,7 +571,7 @@ function Homepage() {
             type="button"
             onClick={loadData}
             disabled={loading || saving}
-            className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50"
           >
             <RefreshCw size={15} />
             Refresh
@@ -579,16 +579,16 @@ function Homepage() {
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-sm text-slate-500">
+          <div className="py-12 text-center text-sm text-slate-500 dark:text-slate-400">
             Loading homepage products...
           </div>
         ) : entries.length === 0 ? (
           <div className="py-12 text-center">
-            <ImageOff className="mx-auto text-slate-400" size={35} />
-            <p className="mt-3 font-medium text-slate-700">
+            <ImageOff className="mx-auto text-slate-400 dark:text-slate-500" size={35} />
+            <p className="mt-3 font-medium text-slate-700 dark:text-slate-200">
               No hero products added yet.
             </p>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Add a product above to display it in the homepage carousel.
             </p>
           </div>
@@ -597,10 +597,10 @@ function Homepage() {
             {entries.map((entry, index) => (
               <div
                 key={entry.id}
-                className="flex flex-col gap-4 rounded-xl border border-slate-200 p-3 sm:flex-row sm:items-center"
+                className="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-700 p-3 sm:flex-row sm:items-center"
               >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-600">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 dark:bg-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300 dark:text-slate-300">
                     {index + 1}
                   </span>
 
@@ -608,21 +608,21 @@ function Homepage() {
                     <img
                       src={entry.product.image_url}
                       alt={entry.product.name}
-                      className="h-16 w-16 shrink-0 rounded-lg border border-slate-200 object-cover"
+                      className="h-16 w-16 shrink-0 rounded-lg border border-slate-200 dark:border-slate-700 object-cover"
                     />
                   ) : (
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-400">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700 dark:bg-slate-700 text-slate-400 dark:text-slate-500">
                       <ImageOff size={22} />
                     </div>
                   )}
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate font-semibold text-slate-800">
+                  <h3 className="truncate font-semibold text-slate-800 dark:text-slate-100">
                     {entry.product.name}
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     {entry.product.category} · ₹{entry.product.price}
                   </p>
 
@@ -630,21 +630,21 @@ function Homepage() {
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                         entry.is_visible
-                          ? "bg-green-100 text-green-700"
-                          : "bg-slate-100 text-slate-600"
+                          ? "bg-green-100 text-green-700 dark:text-green-300"
+                          : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300"
                       }`}
                     >
                       {entry.is_visible ? "Visible" : "Hidden"}
                     </span>
 
                     {!entry.product.is_available && (
-                      <span className="rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-700">
+                      <span className="rounded-full bg-red-100 dark:bg-red-900/30 px-2.5 py-1 text-xs font-medium text-red-700 dark:text-red-300 dark:text-red-300">
                         Product unavailable
                       </span>
                     )}
 
                     {entry.product.stock <= 0 && (
-                      <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">
+                      <span className="rounded-full bg-amber-100 dark:bg-amber-900/30 dark:bg-amber-900/30 px-2.5 py-1 text-xs font-medium text-amber-700 dark:text-amber-300 dark:text-amber-300">
                         Out of stock
                       </span>
                     )}
@@ -657,7 +657,7 @@ function Homepage() {
                     onClick={() => moveProduct(index, -1)}
                     disabled={saving || index === 0}
                     title="Move up"
-                    className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-slate-50 disabled:opacity-30"
+                    className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30"
                   >
                     <ArrowUp size={17} />
                   </button>
@@ -667,7 +667,7 @@ function Homepage() {
                     onClick={() => moveProduct(index, 1)}
                     disabled={saving || index === entries.length - 1}
                     title="Move down"
-                    className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-slate-50 disabled:opacity-30"
+                    className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30"
                   >
                     <ArrowDown size={17} />
                   </button>
@@ -677,7 +677,7 @@ function Homepage() {
                     onClick={() => toggleVisibility(entry)}
                     disabled={saving}
                     title={entry.is_visible ? "Hide product" : "Show product"}
-                    className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+                    className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50"
                   >
                     {entry.is_visible ? (
                       <EyeOff size={17} />
@@ -691,7 +691,7 @@ function Homepage() {
                     onClick={() => removeProduct(entry)}
                     disabled={saving}
                     title="Remove from carousel"
-                    className="rounded-lg border border-red-200 p-2 text-red-600 hover:bg-red-50 disabled:opacity-50"
+                    className="rounded-lg border border-red-200 dark:border-red-800/60 p-2 text-red-600 dark:text-red-300 dark:text-red-300 hover:bg-red-50 disabled:opacity-50"
                   >
                     <Trash2 size={17} />
                   </button>
@@ -703,20 +703,20 @@ function Homepage() {
       </section>
 
       {/* POPULAR CATEGORIES MANAGEMENT */}
-      <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
         <div>
-          <h2 className="text-lg font-semibold text-slate-800">
+          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
             Popular Categories Management
           </h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Add categories, control their visibility, and arrange their order
             on the customer homepage.
           </p>
         </div>
 
         {/* Add category */}
-        <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <h3 className="font-semibold text-slate-800">
+        <div className="mt-5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-4">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-100">
             Add Category
           </h3>
 
@@ -727,7 +727,7 @@ function Homepage() {
               className={`rounded-lg px-3 py-2 text-sm font-medium ${
                 categoryNameMode === "existing"
                   ? "bg-slate-900 text-white"
-                  : "border border-slate-300 bg-white text-slate-600"
+                  : "border border-slate-300 bg-white text-slate-600 dark:text-slate-300"
               }`}
             >
               Existing Product Category
@@ -739,7 +739,7 @@ function Homepage() {
               className={`rounded-lg px-3 py-2 text-sm font-medium ${
                 categoryNameMode === "new"
                   ? "bg-slate-900 text-white"
-                  : "border border-slate-300 bg-white text-slate-600"
+                  : "border border-slate-300 bg-white text-slate-600 dark:text-slate-300"
               }`}
             >
               + Create New Category
@@ -753,7 +753,7 @@ function Homepage() {
                 onChange={(event) =>
                   setSelectedProductCategory(event.target.value)
                 }
-                className="min-h-11 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none focus:border-amber-500"
+                className="min-h-11 flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-amber-500"
               >
                 <option value="">Select an existing product category</option>
                 {availableProductCategories.map((name) => (
@@ -768,7 +768,7 @@ function Homepage() {
                 value={newCategoryName}
                 onChange={(event) => setNewCategoryName(event.target.value)}
                 placeholder="Enter new category name"
-                className="min-h-11 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none focus:border-amber-500"
+                className="min-h-11 flex-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-amber-500"
               />
             )}
 
@@ -790,7 +790,7 @@ function Homepage() {
 
           {categoryNameMode === "existing" &&
             availableProductCategories.length === 0 && (
-              <p className="mt-2 text-xs text-slate-500">
+              <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
                 There are no unused product categories available. You can
                 create a new category instead.
               </p>
@@ -799,20 +799,20 @@ function Homepage() {
 
         {/* Category order and visibility */}
         <div className="mt-5">
-          <h3 className="font-semibold text-slate-800">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-100">
             Categories
           </h3>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Use the arrows to change category order. Hidden categories remain
             available here for future use.
           </p>
 
           {loading ? (
-            <div className="py-8 text-center text-sm text-slate-500">
+            <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
               Loading categories...
             </div>
           ) : categories.length === 0 ? (
-            <div className="py-8 text-center text-sm text-slate-500">
+            <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
               No categories found. Add a category above.
             </div>
           ) : (
@@ -826,15 +826,15 @@ function Homepage() {
                       : "border-slate-200"
                   }`}
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-600">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 dark:bg-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300 dark:text-slate-300">
                     {index + 1}
                   </span>
 
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-slate-800">
+                    <p className="font-semibold text-slate-800 dark:text-slate-100">
                       {category.name}
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                       {category.is_active ? "Active" : "Inactive"} ·{" "}
                       {category.show_in_popular
                         ? "Shown in Popular Categories"
@@ -848,7 +848,7 @@ function Homepage() {
                       onClick={() => movePopularCategory(index, -1)}
                       disabled={saving || index === 0}
                       title="Move category up"
-                      className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-white disabled:opacity-30"
+                      className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-white disabled:opacity-30"
                     >
                       <ArrowUp size={17} />
                     </button>
@@ -858,7 +858,7 @@ function Homepage() {
                       onClick={() => movePopularCategory(index, 1)}
                       disabled={saving || index === categories.length - 1}
                       title="Move category down"
-                      className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-white disabled:opacity-30"
+                      className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-white disabled:opacity-30"
                     >
                       <ArrowDown size={17} />
                     </button>
@@ -872,7 +872,7 @@ function Homepage() {
                           ? "Hide category"
                           : "Show category"
                       }
-                      className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-600 hover:bg-white disabled:opacity-50"
+                      className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-white disabled:opacity-50"
                     >
                       {category.show_in_popular ? (
                         <>
@@ -894,11 +894,11 @@ function Homepage() {
         </div>
 
         {/* Products inside selected category */}
-        <div className="mt-8 border-t border-slate-200 pt-6">
-          <h3 className="font-semibold text-slate-800">
+        <div className="mt-8 border-t border-slate-200 dark:border-slate-700 pt-6">
+          <h3 className="font-semibold text-slate-800 dark:text-slate-100">
             Reorder Products Within a Category
           </h3>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Select a category and use the arrows to arrange its products in
             the customer homepage carousel.
           </p>
@@ -908,7 +908,7 @@ function Homepage() {
               value={selectedCategory}
               onChange={(event) => setSelectedCategory(event.target.value)}
               disabled={categories.length === 0}
-              className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none focus:border-amber-500 sm:max-w-md"
+              className="min-h-11 w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-amber-500 sm:max-w-md"
             >
               {categories.length === 0 ? (
                 <option value="">No categories available</option>
@@ -924,15 +924,15 @@ function Homepage() {
           </div>
 
           {loadingPopularProducts ? (
-            <div className="py-8 text-center text-sm text-slate-500">
+            <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
               Loading category products...
             </div>
           ) : !selectedCategory ? (
-            <div className="py-8 text-center text-sm text-slate-500">
+            <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
               Select a category to manage its products.
             </div>
           ) : popularProducts.length === 0 ? (
-            <div className="py-8 text-center text-sm text-slate-500">
+            <div className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
               No products found in "{selectedCategory}".
             </div>
           ) : (
@@ -940,9 +940,9 @@ function Homepage() {
               {popularProducts.map((product, index) => (
                 <div
                   key={product.id}
-                  className="flex flex-col gap-3 rounded-xl border border-slate-200 p-3 sm:flex-row sm:items-center"
+                  className="flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-slate-700 p-3 sm:flex-row sm:items-center"
                 >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-600">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 dark:bg-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300 dark:text-slate-300">
                     {index + 1}
                   </span>
 
@@ -950,19 +950,19 @@ function Homepage() {
                     <img
                       src={product.image_url}
                       alt={product.name}
-                      className="h-14 w-14 shrink-0 rounded-lg border border-slate-200 object-cover"
+                      className="h-14 w-14 shrink-0 rounded-lg border border-slate-200 dark:border-slate-700 object-cover"
                     />
                   ) : (
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-400">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700 dark:bg-slate-700 text-slate-400 dark:text-slate-500">
                       <ImageOff size={20} />
                     </div>
                   )}
 
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-slate-800">
+                    <p className="font-semibold text-slate-800 dark:text-slate-100">
                       {product.name}
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                       Stock: {product.stock}
                       {product.sku ? ` · SKU: ${product.sku}` : ""}
                     </p>
@@ -971,15 +971,15 @@ function Homepage() {
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                           product.is_available
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
+                            ? "bg-green-100 text-green-700 dark:text-green-300"
+                            : "bg-red-100 text-red-700 dark:text-red-300"
                         }`}
                       >
                         {product.is_available ? "Available" : "Unavailable"}
                       </span>
 
                       {product.stock <= 0 && (
-                        <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">
+                        <span className="rounded-full bg-amber-100 dark:bg-amber-900/30 dark:bg-amber-900/30 px-2.5 py-1 text-xs font-medium text-amber-700 dark:text-amber-300 dark:text-amber-300">
                           Out of stock
                         </span>
                       )}
@@ -992,7 +992,7 @@ function Homepage() {
                       onClick={() => movePopularProduct(index, -1)}
                       disabled={saving || index === 0}
                       title="Move product up"
-                      className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-slate-50 disabled:opacity-30"
+                      className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30"
                     >
                       <ArrowUp size={17} />
                     </button>
@@ -1004,7 +1004,7 @@ function Homepage() {
                         saving || index === popularProducts.length - 1
                       }
                       title="Move product down"
-                      className="rounded-lg border border-slate-300 p-2 text-slate-600 hover:bg-slate-50 disabled:opacity-30"
+                      className="rounded-lg border border-slate-300 dark:border-slate-600 p-2 text-slate-600 dark:text-slate-300 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30"
                     >
                       <ArrowDown size={17} />
                     </button>

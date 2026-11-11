@@ -277,14 +277,14 @@ const saveAdminPermissions = async () => {
 
   if (!isSuperAdmin) {
     return (
-      <div className="rounded-xl border border-red-100 bg-white p-10 text-center shadow-sm">
+      <div className="rounded-xl border border-red-100 dark:border-red-900/50 bg-white dark:bg-slate-800 p-10 text-center shadow-sm">
         <ShieldCheck className="mx-auto h-12 w-12 text-red-500" />
 
-        <h2 className="mt-4 text-xl font-bold text-[#101B2D]">
+        <h2 className="mt-4 text-xl font-bold text-[#101B2D] dark:text-slate-100">
           Access denied
         </h2>
 
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-gray-500 dark:text-slate-400">
           Only the Super Admin can manage administrator accounts.
         </p>
       </div>
@@ -292,7 +292,7 @@ const saveAdminPermissions = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
 
         {/* Page heading */}
@@ -302,11 +302,11 @@ const saveAdminPermissions = async () => {
               G-MART ADMIN
             </p>
 
-            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] sm:text-3xl">
+            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] dark:text-slate-100 sm:text-3xl">
               Admin Management
             </h1>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Manage administrator accounts and invite new admins.
             </p>
           </div>
@@ -316,7 +316,7 @@ const saveAdminPermissions = async () => {
               type="button"
               onClick={loadAdmins}
               disabled={loading}
-              className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700 disabled:opacity-50"
             >
               <RefreshCw size={16} />
               Refresh
@@ -339,7 +339,7 @@ const saveAdminPermissions = async () => {
 
         {/* Alerts */}
         {error && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
             <span>{error}</span>
             <button
               type="button"
@@ -352,7 +352,7 @@ const saveAdminPermissions = async () => {
         )}
 
         {success && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 px-4 py-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
             <span>{success}</span>
             <button
               type="button"
@@ -371,19 +371,19 @@ const saveAdminPermissions = async () => {
               label: "Total Admins",
               value: totalAdmins,
               icon: Users,
-              color: "bg-blue-50 text-blue-700",
+              color: "bg-blue-50 text-blue-700 dark:text-blue-300",
             },
             {
               label: "Active Admins",
               value: activeAdmins,
               icon: ShieldCheck,
-              color: "bg-green-50 text-green-700",
+              color: "bg-green-50 text-green-700 dark:text-green-300",
             },
             {
               label: "Inactive Admins",
               value: inactiveAdmins,
               icon: X,
-              color: "bg-red-50 text-red-700",
+              color: "bg-red-50 text-red-700 dark:text-red-300",
             },
           ].map((item) => {
             const Icon = item.icon;
@@ -391,10 +391,10 @@ const saveAdminPermissions = async () => {
             return (
               <div
                 key={item.label}
-                className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm"
+                className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-gray-500">{item.label}</p>
+                  <p className="text-sm text-gray-500 dark:text-slate-400">{item.label}</p>
 
                   <span
                     className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.color}`}
@@ -403,7 +403,7 @@ const saveAdminPermissions = async () => {
                   </span>
                 </div>
 
-                <p className="mt-3 text-2xl font-bold text-[#101B2D]">
+                <p className="mt-3 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                   {item.value}
                 </p>
               </div>
@@ -412,21 +412,21 @@ const saveAdminPermissions = async () => {
         </div>
 
         {/* Search and filter */}
-        <div className="mb-6 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-          <h2 className="mb-4 text-lg font-bold text-[#101B2D]">
+        <div className="mb-6 rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <h2 className="mb-4 text-lg font-bold text-[#101B2D] dark:text-slate-100">
             Find Administrators
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Search
               </label>
 
               <div className="relative">
                 <Search
                   size={18}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500"
                 />
 
                 <input
@@ -440,7 +440,7 @@ const saveAdminPermissions = async () => {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Account Status
               </label>
 
@@ -458,43 +458,43 @@ const saveAdminPermissions = async () => {
         </div>
 
         {/* Admin table */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 p-5 sm:flex-row sm:items-center">
+        <div className="overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 dark:border-slate-700 p-5 sm:flex-row sm:items-center">
             <div>
-              <h2 className="text-lg font-bold text-[#101B2D]">
+              <h2 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
                 Administrator Accounts
               </h2>
 
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 View and manage G-MART administrators.
               </p>
             </div>
 
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-slate-400">
               {filteredAdmins.length} administrators found
             </span>
           </div>
 
           {loading ? (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-gray-500 dark:text-slate-400">
               Loading administrators...
             </div>
           ) : filteredAdmins.length === 0 ? (
             <div className="p-12 text-center">
-              <Users className="mx-auto h-10 w-10 text-gray-300" />
+              <Users className="mx-auto h-10 w-10 text-gray-300 dark:text-slate-500" />
 
-              <h3 className="mt-3 font-semibold text-gray-700">
+              <h3 className="mt-3 font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 No administrators found
               </h3>
 
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 Try changing your search or filters.
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[850px] text-left text-sm">
-                <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
+                <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400">
                   <tr>
                     <th className="px-5 py-4">Administrator</th>
                     <th className="px-5 py-4">Contact</th>
@@ -504,27 +504,27 @@ const saveAdminPermissions = async () => {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                   {filteredAdmins.map((admin) => (
                     <tr
                       key={admin.id}
-                      className="transition hover:bg-gray-50"
+                      className="transition hover:bg-gray-50 dark:hover:bg-slate-700"
                     >
                       <td className="px-5 py-4">
-                        <p className="font-semibold text-[#101B2D]">
+                        <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                           {admin.full_name}
                         </p>
 
-                        <p className="mt-1 text-xs text-gray-400">
+                        <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                           Admin ID: #{admin.id}
                           {admin.id === user?.id && " • You"}
                         </p>
                       </td>
 
                       <td className="px-5 py-4">
-                        <p className="text-gray-700">{admin.email}</p>
+                        <p className="text-gray-700 dark:text-slate-200 dark:text-slate-200">{admin.email}</p>
 
-                        <p className="mt-1 text-xs text-gray-500">
+                        <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                           {admin.phone || "No phone number"}
                         </p>
                       </td>
@@ -534,7 +534,7 @@ const saveAdminPermissions = async () => {
                           className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                             admin.role === "super_admin"
                               ? "bg-purple-100 text-purple-700"
-                              : "bg-blue-100 text-blue-700"
+                              : "bg-blue-100 text-blue-700 dark:text-blue-300"
                           }`}
                         >
                           {admin.role.replace(/_/g, " ")}
@@ -545,8 +545,8 @@ const saveAdminPermissions = async () => {
                         <span
                           className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                             admin.is_active
-                              ? "bg-green-100 text-green-700"
-                              : "bg-red-100 text-red-700"
+                              ? "bg-green-100 text-green-700 dark:text-green-300"
+                              : "bg-red-100 text-red-700 dark:text-red-300"
                           }`}
                         >
                           {admin.is_active ? "Active" : "Inactive"}
@@ -559,14 +559,14 @@ const saveAdminPermissions = async () => {
                             <button
                               type="button"
                               onClick={() => openPermissionModal(admin)}
-                              className="rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-100"
+                              className="rounded-lg bg-blue-50 dark:bg-blue-950/30 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-300 dark:text-blue-300 hover:bg-blue-100"
                             >
                               Manage Permissions
                             </button>
                           )}
 
                           {admin.id === user?.id ? (
-                            <span className="text-xs text-gray-400">
+                            <span className="text-xs text-gray-400 dark:text-slate-500">
                               Current account
                             </span>
                           ) : (
@@ -576,8 +576,8 @@ const saveAdminPermissions = async () => {
                               onClick={() => toggleAdminStatus(admin)}
                               className={`rounded-lg px-3 py-2 text-xs font-semibold transition disabled:opacity-50 ${
                                 admin.is_active
-                                  ? "bg-red-50 text-red-700 hover:bg-red-100"
-                                  : "bg-green-50 text-green-700 hover:bg-green-100"
+                                  ? "bg-red-50 text-red-700 dark:text-red-300 hover:bg-red-100"
+                                  : "bg-green-50 text-green-700 dark:text-green-300 hover:bg-green-100"
                               }`}
                             >
                               {updatingId === admin.id
@@ -600,18 +600,18 @@ const saveAdminPermissions = async () => {
       {/* Admin Permissions Modal */}
       {selectedAdmin && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/50 p-3 sm:p-6">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-5 shadow-2xl sm:p-7">
+          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-800 p-5 shadow-2xl sm:p-7">
             <div className="mb-5 flex items-start justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#B3944D]">
                   ADMIN ACCESS CONTROL
                 </p>
 
-                <h2 className="mt-1 text-xl font-bold text-[#101B2D]">
+                <h2 className="mt-1 text-xl font-bold text-[#101B2D] dark:text-slate-100">
                   Manage Permissions
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                   {selectedAdmin.full_name} ({selectedAdmin.email})
                 </p>
               </div>
@@ -619,7 +619,7 @@ const saveAdminPermissions = async () => {
               <button
                 type="button"
                 onClick={() => setSelectedAdmin(null)}
-                className="rounded-lg bg-gray-100 p-2 text-gray-600 hover:bg-gray-200"
+                className="rounded-lg bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 p-2 text-gray-600 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700"
               >
                 <X size={18} />
               </button>
@@ -629,9 +629,9 @@ const saveAdminPermissions = async () => {
               {ADMIN_SECTIONS.map((section) => (
                 <div
                   key={section.key}
-                  className="flex items-center justify-between rounded-lg border border-gray-100 p-4"
+                  className="flex items-center justify-between rounded-lg border border-gray-100 dark:border-slate-700 p-4"
                 >
-                  <span className="text-sm font-semibold text-gray-700">
+                  <span className="text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                     {section.label}
                   </span>
 
@@ -668,7 +668,7 @@ const saveAdminPermissions = async () => {
                 type="button"
                 onClick={() => setSelectedAdmin(null)}
                 disabled={permissionSaving}
-                className="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+                className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700"
               >
                 Cancel
               </button>
@@ -692,7 +692,7 @@ const saveAdminPermissions = async () => {
           onClick={closeInviteModal}
         >
           <div
-            className="w-full max-w-lg rounded-2xl bg-white p-5 shadow-2xl sm:p-7"
+            className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-800 p-5 shadow-2xl sm:p-7"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between">
@@ -701,11 +701,11 @@ const saveAdminPermissions = async () => {
                   ADMINISTRATION
                 </p>
 
-                <h2 className="mt-1 text-xl font-bold text-[#101B2D]">
+                <h2 className="mt-1 text-xl font-bold text-[#101B2D] dark:text-slate-100">
                   Invite New Admin
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                   Create a secure invitation for a new administrator.
                 </p>
               </div>
@@ -713,7 +713,7 @@ const saveAdminPermissions = async () => {
               <button
                 type="button"
                 onClick={closeInviteModal}
-                className="rounded-lg bg-gray-100 p-2 text-gray-600 hover:bg-gray-200"
+                className="rounded-lg bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 p-2 text-gray-600 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700"
               >
                 <X size={18} />
               </button>
@@ -722,13 +722,13 @@ const saveAdminPermissions = async () => {
             {!inviteResult ? (
             <>
                 {error && (
-                <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div className="mb-4 rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
                     {error}
                 </div>
                 )}
 
                 <form onSubmit={createInvitation}>
-                <label className="mb-1.5 block text-sm font-medium text-gray-600">
+                <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                     Admin Email Address
                 </label>
 
@@ -741,7 +741,7 @@ const saveAdminPermissions = async () => {
                     className="form-input"
                 />
 
-                <p className="mt-2 text-xs text-gray-400">
+                <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
                     The invitation will expire after 48 hours.
                 </p>
 
@@ -749,7 +749,7 @@ const saveAdminPermissions = async () => {
                     <button
                     type="button"
                     onClick={closeInviteModal}
-                    className="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50"
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700"
                     >
                     Cancel
                     </button>
@@ -766,22 +766,22 @@ const saveAdminPermissions = async () => {
             </>
             ) : (
             <div>
-                <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-green-700">
+                <div className="rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 p-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-green-700 dark:text-green-300 dark:text-green-300">
                     <Check size={18} />
                     Invitation created successfully
                 </div>
 
-                <p className="mt-2 text-sm text-green-700">
+                <p className="mt-2 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
                     Invitation for {inviteResult.email}
                 </p>
 
-                <p className="mt-1 text-xs text-green-700">
+                <p className="mt-1 text-xs text-green-700 dark:text-green-300 dark:text-green-300">
                     Expires in {inviteResult.expires_in_hours} hours.
                 </p>
                 </div>
 
-                <label className="mb-2 mt-5 block text-sm font-semibold text-gray-700">
+                <label className="mb-2 mt-5 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 Invitation Token
                 </label>
 
@@ -789,18 +789,18 @@ const saveAdminPermissions = async () => {
                 readOnly
                 value={inviteResult.invitation_token}
                 rows={3}
-                className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs text-gray-700"
+                className="w-full resize-none rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-950 p-3 text-xs text-gray-700 dark:text-slate-200 dark:text-slate-200"
                 />
 
                 <button
                 type="button"
                 onClick={copyInvitationToken}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-[#101B2D] hover:bg-gray-50"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-[#101B2D] dark:text-slate-100 hover:bg-gray-50 dark:hover:bg-slate-700"
                 >
                 {copiedToken ? <Check size={17} /> : <Copy size={17} />}
                 {copiedToken ? "Copied" : "Copy Invitation Token"}
                 </button>
-                <label className="mb-2 mt-5 block text-sm font-semibold text-gray-700">
+                <label className="mb-2 mt-5 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                     Admin Registration Link
                     </label>
 
@@ -808,7 +808,7 @@ const saveAdminPermissions = async () => {
                     readOnly
                     value={invitationLink}
                     rows={3}
-                    className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs text-gray-700"
+                    className="w-full resize-none rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-950 p-3 text-xs text-gray-700 dark:text-slate-200 dark:text-slate-200"
                     />
 
                     <button
@@ -820,7 +820,7 @@ const saveAdminPermissions = async () => {
                     {copiedLink ? "Invitation Link Copied" : "Copy Invitation Link"}
                     </button>
 
-                <p className="mt-3 text-xs text-gray-500">
+                <p className="mt-3 text-xs text-gray-500 dark:text-slate-400">
                 Share this token securely with the invited person.
                 They will need it to complete their admin registration.
                 </p>

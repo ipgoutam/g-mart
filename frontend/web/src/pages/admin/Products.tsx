@@ -4,11 +4,22 @@ import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+interface Brand {
+  id: number;
+  name: string;
+  description: string | null;
+  logo_url: string | null;
+  is_active: boolean;
+  show_on_home: boolean;
+  display_order: number;
+}
+
 interface Product {
   id: number;
   name: string;
   description: string | null;
   brand: string | null;
+  brand_id: number | null;
   category: string;
   sku: string | null;
   barcode: string | null;
@@ -37,6 +48,7 @@ interface ProductForm {
   name: string;
   description: string;
   brand: string;
+  brand_id: string;
   category: string;
   sku: string;
   barcode: string;
@@ -53,10 +65,17 @@ interface ProductForm {
   is_available: boolean;
 }
 
+interface BrandForm {
+  name: string;
+  description: string;
+  logo_url: string;
+}
+
 const emptyForm: ProductForm = {
   name: "",
   description: "",
   brand: "",
+  brand_id: "",
   category: "",
   sku: "",
   barcode: "",
@@ -73,6 +92,12 @@ const emptyForm: ProductForm = {
   is_available: true,
 };
 
+const emptyBrandForm: BrandForm = {
+  name: "",
+  description: "",
+  logo_url: "",
+};
+
 const units = ["piece", "packet", "bottle", "kg", "g", "litre", "ml"];
 
 export default function Products() {
@@ -80,12 +105,20 @@ export default function Products() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
+  
   const [loading, setLoading] = useState(true);
+  const [loadingBrands, setLoadingBrands] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+
+  const [uploadingBrandLogo, setUploadingBrandLogo] = useState(false);
+  const [brandLogoPreview, setBrandLogoPreview] = useState("");
+ 
   const [productImages, setProductImages] = useState<ProductImage[]>([]);
   const [loadingImages, setLoadingImages] = useState(false);
   const [imageActionLoading, setImageActionLoading] = useState(false);
+
   const [frequentlyBoughtIds, setFrequentlyBoughtIds] = useState<number[]>([]);
   const [frequentlyBoughtSearch, setFrequentlyBoughtSearch] = useState("");
   const [loadingFrequentlyBought, setLoadingFrequentlyBought] = useState(false);
@@ -100,6 +133,11 @@ export default function Products() {
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [form, setForm] = useState<ProductForm>(emptyForm);
+
+  const [showBrandForm, setShowBrandForm] = useState(false);
+  const [savingBrand, setSavingBrand] = useState(false);
+  const [newBrand, setNewBrand] = useState<BrandForm>(emptyBrandForm);
+
   const [categorySearch, setCategorySearch] = useState("");
   const [addingNewCategory, setAddingNewCategory] = useState(false);
 
@@ -112,6 +150,7 @@ export default function Products() {
     }
 
     loadProducts();
+    loadBrands();
   }, [user, authLoading]);
 
   const loadProducts = async () => {
@@ -122,11 +161,22 @@ export default function Products() {
       const response = await api.get<Product[]>("/products/");
       setProducts(response.data);
     } catch (err: any) {
-      setError(
-        err.response?.data?.detail || "Unable to load products."
-      );
+      setError(err.response?.data?.detail || "Unable to load products.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadBrands = async () => {
+    setLoadingBrands(true);
+
+    try {
+      const response = await api.get<Brand[]>("/brands/");
+      setBrands(response.data);
+    } catch (err: any) {
+      setError(err.response?.data?.detail || "Unable to load brands.");
+    } finally {
+      setLoadingBrands(false);
     }
   };
 
@@ -166,16 +216,20 @@ export default function Products() {
 
   const loadProductImages = async (productId: number) => {
     setLoadingImages(true);
+
     try {
       const response = await api.get<ProductImage[]>(
         `/product-details/${productId}/images`
       );
+
       const images = Array.isArray(response.data)
         ? [...response.data].sort(
             (a, b) => a.display_order - b.display_order
           )
         : [];
+
       setProductImages(images);
+
       setForm((previous) => ({
         ...previous,
         image_url: images[0]?.image_url || "",
@@ -214,6 +268,7 @@ export default function Products() {
           })),
         }
       );
+
       await loadProductImages(editingProduct.id);
       await loadProducts();
       setSuccess("Product image order updated.");
@@ -228,13 +283,16 @@ export default function Products() {
 
   const moveProductImage = async (index: number, direction: -1 | 1) => {
     const targetIndex = index + direction;
+
     if (targetIndex < 0 || targetIndex >= productImages.length) return;
 
     const nextImages = [...productImages];
+
     [nextImages[index], nextImages[targetIndex]] = [
       nextImages[targetIndex],
       nextImages[index],
     ];
+
     await saveImageOrder(nextImages);
   };
 
@@ -270,11 +328,14 @@ export default function Products() {
 
   const loadFrequentlyBought = async (productId: number) => {
     setLoadingFrequentlyBought(true);
+
     try {
       const response = await api.get(
         `/product-details/${productId}/frequently-bought-together`
       );
+
       const data = response.data;
+
       const rawItems = Array.isArray(data)
         ? data
         : Array.isArray(data?.product_ids)
@@ -284,7 +345,6 @@ export default function Products() {
             : Array.isArray(data?.products)
               ? data.products
               : [];
-
 
       const ids: number[] = rawItems
         .map((item: unknown): number => {
@@ -307,7 +367,6 @@ export default function Products() {
       setFrequentlyBoughtIds(
         Array.from(new Set<number>(ids)).slice(0, 20)
       );
-
     } catch (err: any) {
       setFrequentlyBoughtIds([]);
       setError(
@@ -324,10 +383,12 @@ export default function Products() {
       if (previous.includes(productId)) {
         return previous.filter((id) => id !== productId);
       }
+
       if (previous.length >= 20) {
         setError("You can select a maximum of 20 complementary products.");
         return previous;
       }
+
       return [...previous, productId];
     });
   };
@@ -338,11 +399,13 @@ export default function Products() {
     setSavingFrequentlyBought(true);
     setError("");
     setSuccess("");
+
     try {
       await api.put(
         `/product-details/${editingProduct.id}/frequently-bought-together`,
         { product_ids: frequentlyBoughtIds }
       );
+
       setSuccess("Frequently Bought Together products saved.");
     } catch (err: any) {
       setError(
@@ -361,6 +424,26 @@ export default function Products() {
     }));
   };
 
+  const handleBrandSelection = (brandId: string) => {
+    if (brandId === "legacy") {
+      setForm((previous) => ({
+        ...previous,
+        brand_id: "legacy",
+      }));
+      return;
+    }
+
+    const selectedBrand = brands.find(
+      (brand) => String(brand.id) === brandId
+    );
+
+    setForm((previous) => ({
+      ...previous,
+      brand_id: brandId,
+      brand: selectedBrand?.name || "",
+    }));
+  };
+
   const openAddForm = () => {
     setEditingProduct(null);
     setForm(emptyForm);
@@ -368,6 +451,8 @@ export default function Products() {
     setFrequentlyBoughtIds([]);
     setFrequentlyBoughtSearch("");
     setShowForm(true);
+    setShowBrandForm(false);
+    setNewBrand(emptyBrandForm);
     setError("");
     setSuccess("");
     setCategorySearch("");
@@ -379,6 +464,7 @@ export default function Products() {
     setProductImages([]);
     setFrequentlyBoughtIds([]);
     setFrequentlyBoughtSearch("");
+
     void loadProductImages(product.id);
     void loadFrequentlyBought(product.id);
 
@@ -386,6 +472,11 @@ export default function Products() {
       name: product.name,
       description: product.description || "",
       brand: product.brand || "",
+      brand_id: product.brand_id
+        ? String(product.brand_id)
+        : product.brand
+          ? "legacy"
+          : "",
       category: product.category,
       sku: product.sku || "",
       barcode: product.barcode || "",
@@ -405,11 +496,136 @@ export default function Products() {
       expiry_date: product.expiry_date || "",
       is_available: product.is_available,
     });
+
     setCategorySearch("");
     setAddingNewCategory(false);
     setShowForm(true);
+    setShowBrandForm(false);
     setError("");
     setSuccess("");
+  };
+  const handleBrandLogoUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      setError("Only JPG, JPEG, PNG and WEBP images are allowed.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Brand logo must be less than 5 MB.");
+      event.target.value = "";
+      return;
+    }
+
+    const data = new FormData();
+    data.append("file", file);
+
+    setUploadingBrandLogo(true);
+    setError("");
+
+    try {
+      const response = await api.post(
+        "/products/upload-image/?folder=brands",
+        data,
+        {
+          headers: {
+            "Content-Type": undefined,
+          },
+        }
+      );
+
+      const uploadedUrl = response.data.image_url;
+
+      setNewBrand((previous) => ({
+        ...previous,
+        logo_url: uploadedUrl,
+      }));
+
+      setBrandLogoPreview(uploadedUrl);
+      setSuccess("Brand logo uploaded successfully.");
+    } catch (err: any) {
+      setError(
+        err.response?.data?.detail || "Unable to upload brand logo."
+      );
+    } finally {
+      setUploadingBrandLogo(false);
+      event.target.value = "";
+    }
+  };
+  const handleCreateBrand = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const brandName = newBrand.name.trim();
+
+    if (brandName.length < 2) {
+      setError("Brand name must contain at least 2 characters.");
+      return;
+    }
+
+    setSavingBrand(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await api.post<Brand>("/brands/", {
+        name: brandName,
+        description: newBrand.description.trim() || null,
+        logo_url: newBrand.logo_url.trim() || null,
+        is_active: true,
+        show_on_home: true,
+        display_order: 0,
+      });
+
+      const createdBrand = response.data;
+
+      setBrands((previous) => {
+        const alreadyExists = previous.some(
+          (brand) => brand.id === createdBrand.id
+        );
+
+        if (alreadyExists) return previous;
+
+        return [...previous, createdBrand].sort(
+          (a, b) => a.name.localeCompare(b.name)
+        );
+      });
+
+      setForm((previous) => ({
+        ...previous,
+        brand_id: String(createdBrand.id),
+        brand: createdBrand.name,
+      }));
+
+      setNewBrand(emptyBrandForm);
+      setShowBrandForm(false);
+      setSuccess(
+        `Brand "${createdBrand.name}" created and selected successfully.`
+      );
+    } catch (err: any) {
+      const detail = err.response?.data?.detail;
+
+      if (Array.isArray(detail)) {
+        setError(
+          detail.map((item: any) => item.msg).join(", ")
+        );
+      } else {
+        setError(detail || "Unable to create brand.");
+      }
+    } finally {
+      setSavingBrand(false);
+    }
   };
 
   const handleImageUpload = async (
@@ -471,9 +687,11 @@ export default function Products() {
 
         await loadProductImages(editingProduct.id);
         await loadProducts();
+
         setSuccess("Product image added to the gallery.");
       } else {
         updateField("image_url", uploadedImageUrl);
+
         setSuccess(
           "Main image uploaded. Save the product, then edit it to add more gallery images."
         );
@@ -513,10 +731,21 @@ export default function Products() {
     setError("");
     setSuccess("");
 
+    const selectedBrandId =
+      form.brand_id && form.brand_id !== "legacy"
+        ? Number(form.brand_id)
+        : null;
+
     const commonData = {
       name: form.name.trim(),
       description: form.description.trim() || null,
+
+      // Keep the legacy text field synchronized.
       brand: form.brand.trim() || null,
+
+      // New foreign-key relationship.
+      brand_id: selectedBrandId,
+
       category: form.category.trim(),
       sku: form.sku.trim() || null,
       barcode: form.barcode.trim() || null,
@@ -549,14 +778,19 @@ export default function Products() {
       }
 
       setShowForm(false);
+      setShowBrandForm(false);
       setEditingProduct(null);
       setForm(emptyForm);
 
       await loadProducts();
     } catch (err: any) {
-      setError(
-        err.response?.data?.detail || "Unable to save product."
-      );
+      const detail = err.response?.data?.detail;
+
+      if (Array.isArray(detail)) {
+        setError(detail.map((item: any) => item.msg).join(", "));
+      } else {
+        setError(detail || "Unable to save product.");
+      }
     } finally {
       setSaving(false);
     }
@@ -626,14 +860,14 @@ export default function Products() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF]">
+      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF] dark:bg-[#0E1A2B] text-[#101B2D] dark:text-slate-100">
         Loading products...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF]">
+    <div className="min-h-screen bg-[#F7F5EF] dark:bg-[#0E1A2B] text-[#101B2D] dark:text-slate-100">
       <header className="flex flex-wrap items-center justify-between gap-4 bg-[#101B2D] px-6 py-5 text-white">
         <div>
           <h1 className="text-2xl font-black">G-MART</h1>
@@ -642,6 +876,7 @@ export default function Products() {
 
         <div className="flex items-center gap-4">
           <span className="text-sm">{user?.full_name}</span>
+
           <button
             onClick={handleLogout}
             className="rounded-lg border border-white/30 px-4 py-2 text-sm hover:bg-white/10"
@@ -654,10 +889,8 @@ export default function Products() {
       <main className="mx-auto max-w-7xl px-4 py-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-[#101B2D]">
-              Products
-            </h2>
-            <p className="mt-1 text-sm text-gray-500">
+            <h2 className="text-2xl font-bold">Products</h2>
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Add, edit and manage your store inventory.
             </p>
           </div>
@@ -671,28 +904,32 @@ export default function Products() {
         </div>
 
         {error && (
-          <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-700 dark:text-red-300">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-700">
+          <div className="mb-4 rounded-lg bg-green-50 dark:bg-green-950/30 p-3 text-sm text-green-700 dark:text-green-300">
             {success}
           </div>
         )}
 
         <div className="mb-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-xl bg-white p-5 shadow-sm">
-            <p className="text-sm text-gray-500">Total Products</p>
-            <p className="mt-2 text-3xl font-bold text-[#101B2D]">
+          <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
+            <p className="text-sm text-gray-500 dark:text-slate-400">
+              Total Products
+            </p>
+            <p className="mt-2 text-3xl font-bold">
               {products.length}
             </p>
           </div>
 
-          <div className="rounded-xl bg-white p-5 shadow-sm">
-            <p className="text-sm text-gray-500">Low Stock Products</p>
-            <p className="mt-2 text-3xl font-bold text-orange-600">
+          <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
+            <p className="text-sm text-gray-500 dark:text-slate-400">
+              Low Stock Products
+            </p>
+            <p className="mt-2 text-3xl font-bold text-orange-600 dark:text-orange-300">
               {
                 products.filter(
                   (p) => p.stock <= (p.low_stock_threshold ?? 5)
@@ -707,13 +944,13 @@ export default function Products() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search products, brands or categories..."
-            className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-[#D6B875]"
+            className="min-w-0 flex-1 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-[#101B2D] dark:text-slate-100 px-4 py-3 outline-none focus:border-[#D6B875]"
           />
 
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="rounded-lg border border-gray-300 bg-white px-4 py-3"
+            className="rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-[#101B2D] dark:text-slate-100 px-4 py-3"
           >
             <option value="all">All products</option>
             <option value="available">Available</option>
@@ -722,7 +959,7 @@ export default function Products() {
           </select>
         </div>
 
-        <div className="overflow-x-auto rounded-xl bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-xl bg-white dark:bg-slate-800 shadow-sm">
           <table className="w-full min-w-[850px] text-left text-sm">
             <thead className="bg-[#101B2D] text-white">
               <tr>
@@ -737,7 +974,10 @@ export default function Products() {
 
             <tbody>
               {filteredProducts.map((product) => (
-                <tr key={product.id} className="border-b border-gray-100">
+                <tr
+                  key={product.id}
+                  className="border-b border-gray-100 dark:border-slate-700"
+                >
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       {product.image_url && (
@@ -752,10 +992,8 @@ export default function Products() {
                       )}
 
                       <div>
-                        <p className="font-semibold text-[#101B2D]">
-                          {product.name}
-                        </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="font-semibold">{product.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-slate-400">
                           {product.brand || "No brand"}
                         </p>
                       </div>
@@ -766,8 +1004,9 @@ export default function Products() {
 
                   <td className="p-4">
                     ₹{Number(product.discounted_price).toFixed(2)}
+
                     {Number(product.discount_percentage) > 0 && (
-                      <p className="text-xs text-green-600">
+                      <p className="text-xs text-green-600 dark:text-green-300">
                         {Number(product.discount_percentage)}% off
                       </p>
                     )}
@@ -778,7 +1017,7 @@ export default function Products() {
                       <button
                         onClick={() => changeStock(product, -1)}
                         disabled={product.stock <= 0}
-                        className="rounded bg-gray-100 px-2 py-1 disabled:opacity-40"
+                        className="rounded bg-gray-100 dark:bg-slate-700 px-2 py-1 disabled:opacity-40"
                       >
                         −
                       </button>
@@ -789,14 +1028,14 @@ export default function Products() {
 
                       <button
                         onClick={() => changeStock(product, 1)}
-                        className="rounded bg-gray-100 px-2 py-1"
+                        className="rounded bg-gray-100 dark:bg-slate-700 px-2 py-1"
                       >
                         +
                       </button>
                     </div>
 
                     {product.stock <= (product.low_stock_threshold ?? 5) && (
-                      <p className="mt-1 text-xs text-orange-600">
+                      <p className="mt-1 text-xs text-orange-600 dark:text-orange-300">
                         Low stock
                       </p>
                     )}
@@ -807,8 +1046,8 @@ export default function Products() {
                       onClick={() => toggleAvailability(product)}
                       className={`rounded-full px-3 py-1 text-xs font-semibold ${
                         product.is_available
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                          ? "bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300"
+                          : "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300"
                       }`}
                     >
                       {product.is_available ? "Available" : "Unavailable"}
@@ -819,14 +1058,14 @@ export default function Products() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => openEditForm(product)}
-                        className="rounded-lg bg-blue-50 px-3 py-2 text-blue-700"
+                        className="rounded-lg bg-blue-50 dark:bg-blue-950/30 px-3 py-2 text-blue-700 dark:text-blue-300"
                       >
                         Edit
                       </button>
 
                       <button
                         onClick={() => handleDelete(product)}
-                        className="rounded-lg bg-red-50 px-3 py-2 text-red-700"
+                        className="rounded-lg bg-red-50 dark:bg-red-950/30 px-3 py-2 text-red-700 dark:text-red-300"
                       >
                         Delete
                       </button>
@@ -837,7 +1076,10 @@ export default function Products() {
 
               {filteredProducts.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="p-10 text-center text-gray-500">
+                  <td
+                    colSpan={6}
+                    className="p-10 text-center text-gray-500 dark:text-slate-400"
+                  >
                     No products found.
                   </td>
                 </tr>
@@ -849,15 +1091,15 @@ export default function Products() {
 
       {showForm && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 p-4">
-          <div className="mx-auto my-6 max-w-3xl rounded-2xl bg-white p-6 shadow-xl">
+          <div className="mx-auto my-6 max-w-3xl rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-xl">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-[#101B2D]">
+              <h2 className="text-xl font-bold">
                 {editingProduct ? "Edit Product" : "Add New Product"}
               </h2>
 
               <button
                 onClick={() => setShowForm(false)}
-                className="text-2xl text-gray-500"
+                className="text-2xl text-gray-500 dark:text-slate-400"
               >
                 ×
               </button>
@@ -875,20 +1117,66 @@ export default function Products() {
                   />
                 </FormField>
 
+                {/* BRAND SELECTION */}
                 <FormField label="Brand">
-                  <input
-                    value={form.brand}
-                    onChange={(e) => updateField("brand", e.target.value)}
-                    className="form-input"
-                  />
+                  <div className="space-y-3">
+                    <select
+                      value={form.brand_id}
+                      onChange={(e) => handleBrandSelection(e.target.value)}
+                      className="form-input"
+                    >
+                      <option value="">
+                        {loadingBrands ? "Loading brands..." : "Select a brand"}
+                      </option>
+
+                      {form.brand_id === "legacy" && (
+                        <option value="legacy">
+                          {form.brand} (Legacy / Unlinked)
+                        </option>
+                      )}
+
+                      {brands
+                        .filter(
+                          (brand) =>
+                            brand.is_active ||
+                            String(brand.id) === form.brand_id
+                        )
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((brand) => (
+                          <option key={brand.id} value={String(brand.id)}>
+                            {brand.name}
+                            {!brand.is_active ? " (Inactive)" : ""}
+                          </option>
+                        ))}
+                    </select>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setNewBrand(emptyBrandForm);
+                        setBrandLogoPreview("");
+                        setShowBrandForm(true);
+                        setError("");
+                        setSuccess("");
+                      }}
+                      className="w-full rounded-lg border border-[#D6B875] px-4 py-2 text-sm font-semibold text-[#101B2D] dark:text-slate-100 hover:bg-[#D6B875]/10"
+                    >
+                      + Create New Brand
+                    </button>
+
+                    {form.brand && (
+                      <p className="text-xs text-green-700 dark:text-green-300">
+                        Selected brand: {form.brand}
+                      </p>
+                    )}
+                  </div>
                 </FormField>
 
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-200">
                     Product Category *
                   </label>
 
-                  {/* Search categories */}
                   <input
                     type="text"
                     value={categorySearch}
@@ -897,15 +1185,14 @@ export default function Products() {
                     className="form-input mb-3"
                   />
 
-                  {/* Existing category radio buttons */}
-                  <div className="grid grid-cols-1 gap-2 rounded-xl border border-gray-200 p-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-2 rounded-xl border border-gray-200 dark:border-slate-700 p-4 sm:grid-cols-2">
                     {filteredCategories.map((category) => (
                       <label
                         key={category}
                         className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition ${
                           form.category === category && !addingNewCategory
-                            ? "border-[#D6B875] bg-[#F7F5EF]"
-                            : "border-gray-100 hover:bg-gray-50"
+                            ? "border-[#D6B875] bg-[#F7F5EF] dark:bg-slate-700"
+                            : "border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
                         }`}
                       >
                         <input
@@ -922,24 +1209,23 @@ export default function Products() {
                           className="h-4 w-4 accent-[#101B2D]"
                         />
 
-                        <span className="text-sm font-medium text-gray-700">
+                        <span className="text-sm font-medium text-gray-700 dark:text-slate-200">
                           {category}
                         </span>
                       </label>
                     ))}
 
                     {filteredCategories.length === 0 && (
-                      <p className="col-span-full py-2 text-sm text-gray-500">
+                      <p className="col-span-full py-2 text-sm text-gray-500 dark:text-slate-400">
                         No matching categories found.
                       </p>
                     )}
 
-                    {/* Add new category option */}
                     <label
                       className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition ${
                         addingNewCategory
-                          ? "border-[#D6B875] bg-[#F7F5EF]"
-                          : "border-gray-100 hover:bg-gray-50"
+                          ? "border-[#D6B875] bg-[#F7F5EF] dark:bg-slate-700"
+                          : "border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
                       }`}
                     >
                       <input
@@ -953,13 +1239,12 @@ export default function Products() {
                         className="h-4 w-4 accent-[#101B2D]"
                       />
 
-                      <span className="text-sm font-semibold text-[#101B2D]">
+                      <span className="text-sm font-semibold">
                         + Add New Category
                       </span>
                     </label>
                   </div>
 
-                  {/* New category input */}
                   {addingNewCategory && (
                     <input
                       type="text"
@@ -973,7 +1258,7 @@ export default function Products() {
                   )}
 
                   {form.category && (
-                    <p className="mt-2 text-xs text-green-700">
+                    <p className="mt-2 text-xs text-green-700 dark:text-green-300">
                       Selected category: {form.category}
                     </p>
                   )}
@@ -1091,26 +1376,28 @@ export default function Products() {
                   />
                 </FormField>
 
-                <div className="sm:col-span-2 rounded-xl border border-gray-200 p-4">
+                <div className="sm:col-span-2 rounded-xl border border-gray-200 dark:border-slate-700 p-4">
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <h3 className="font-semibold text-[#101B2D]">
+                      <h3 className="font-semibold">
                         Product Image Gallery
                       </h3>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-slate-400">
                         Add up to 8 images. The first image is the main product image.
                       </p>
                     </div>
+
                     {editingProduct && (
-                      <span className="text-xs font-medium text-gray-500">
+                      <span className="text-xs font-medium text-gray-500 dark:text-slate-400">
                         {productImages.length}/8 images
                       </span>
                     )}
                   </div>
 
-                  <label className="mb-3 block text-sm font-medium text-gray-700">
+                  <label className="mb-3 block text-sm font-medium text-gray-700 dark:text-slate-200">
                     {editingProduct ? "Add gallery image" : "Main product image"}
                   </label>
+
                   <input
                     type="file"
                     accept=".jpg,.jpeg,.png,.webp"
@@ -1123,7 +1410,7 @@ export default function Products() {
                   />
 
                   {uploading && (
-                    <p className="mt-2 text-xs text-blue-600">
+                    <p className="mt-2 text-xs text-blue-600 dark:text-blue-300">
                       Uploading image...
                     </p>
                   )}
@@ -1133,9 +1420,10 @@ export default function Products() {
                       <img
                         src={form.image_url}
                         alt="Main product preview"
-                        className="h-20 w-20 rounded-lg border object-contain bg-[#F7F5EF]"
+                        className="h-20 w-20 rounded-lg border object-contain bg-[#F7F5EF] dark:bg-[#0E1A2B]"
                       />
-                      <p className="break-all text-xs text-green-700">
+
+                      <p className="break-all text-xs text-green-700 dark:text-green-300">
                         Main image uploaded. Save the product first, then edit it to manage the full gallery.
                       </p>
                     </div>
@@ -1144,11 +1432,11 @@ export default function Products() {
                   {editingProduct && (
                     <div className="mt-4">
                       {loadingImages ? (
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-slate-400">
                           Loading product images...
                         </p>
                       ) : productImages.length === 0 ? (
-                        <p className="rounded-lg bg-gray-50 p-4 text-sm text-gray-500">
+                        <p className="rounded-lg bg-gray-50 dark:bg-slate-950 p-4 text-sm text-gray-500 dark:text-slate-400">
                           No product images yet. Upload the first image above.
                         </p>
                       ) : (
@@ -1156,23 +1444,26 @@ export default function Products() {
                           {productImages.map((image, index) => (
                             <div
                               key={image.id || `legacy-${image.product_id}`}
-                              className="rounded-xl border border-gray-200 p-2"
+                              className="rounded-xl border border-gray-200 dark:border-slate-700 p-2"
                             >
-                              <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-[#F7F5EF]">
+                              <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B]">
                                 <img
                                   src={image.image_url}
                                   alt={`${form.name} image ${index + 1}`}
                                   className="h-full w-full object-contain"
                                 />
+
                                 {index === 0 && (
                                   <span className="absolute left-2 top-2 rounded bg-[#D6B875] px-2 py-1 text-[10px] font-bold text-[#101B2D]">
                                     MAIN
                                   </span>
                                 )}
                               </div>
-                              <p className="mt-2 text-center text-xs text-gray-500">
+
+                              <p className="mt-2 text-center text-xs text-gray-500 dark:text-slate-400">
                                 Image {index + 1}
                               </p>
+
                               <div className="mt-2 flex items-center justify-center gap-1">
                                 <button
                                   type="button"
@@ -1183,10 +1474,11 @@ export default function Products() {
                                     productImages.some((item) => item.id === 0)
                                   }
                                   title="Move left"
-                                  className="rounded bg-gray-100 px-2 py-1 text-sm disabled:opacity-40"
+                                  className="rounded bg-gray-100 dark:bg-slate-700 px-2 py-1 text-sm disabled:opacity-40"
                                 >
                                   ←
                                 </button>
+
                                 <button
                                   type="button"
                                   onClick={() => moveProductImage(index, 1)}
@@ -1196,16 +1488,17 @@ export default function Products() {
                                     productImages.some((item) => item.id === 0)
                                   }
                                   title="Move right"
-                                  className="rounded bg-gray-100 px-2 py-1 text-sm disabled:opacity-40"
+                                  className="rounded bg-gray-100 dark:bg-slate-700 px-2 py-1 text-sm disabled:opacity-40"
                                 >
                                   →
                                 </button>
+
                                 <button
                                   type="button"
                                   onClick={() => deleteProductImage(image)}
                                   disabled={imageActionLoading || image.id === 0}
                                   title="Delete image"
-                                  className="rounded bg-red-50 px-2 py-1 text-xs font-semibold text-red-600 disabled:opacity-40"
+                                  className="rounded bg-red-50 dark:bg-red-950/30 px-2 py-1 text-xs font-semibold text-red-600 dark:text-red-300 disabled:opacity-40"
                                 >
                                   Delete
                                 </button>
@@ -1214,13 +1507,15 @@ export default function Products() {
                           ))}
                         </div>
                       )}
+
                       {productImages.some((image) => image.id === 0) && (
-                        <p className="mt-3 text-xs text-amber-700">
+                        <p className="mt-3 text-xs text-amber-700 dark:text-amber-300">
                           Your existing main image is still in the legacy image field. Upload one more image to migrate it into the gallery; then you can reorder or delete images.
                         </p>
                       )}
+
                       {imageActionLoading && (
-                        <p className="mt-2 text-xs text-blue-600">
+                        <p className="mt-2 text-xs text-blue-600 dark:text-blue-300">
                           Updating gallery...
                         </p>
                       )}
@@ -1229,34 +1524,38 @@ export default function Products() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-gray-200 p-4">
+              <div className="rounded-xl border border-gray-200 dark:border-slate-700 p-4">
                 <div className="mb-3">
-                  <h3 className="font-semibold text-[#101B2D]">
+                  <h3 className="font-semibold">
                     Frequently Bought Together
                   </h3>
-                  <p className="mt-1 text-xs text-gray-500">
+
+                  <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                     Choose complementary products to recommend on this product's details page.
                     If none are selected, the customer page uses its same-category fallback.
                   </p>
                 </div>
 
                 {!editingProduct ? (
-                  <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800">
+                  <p className="rounded-lg bg-amber-50 dark:bg-amber-950/30 p-3 text-sm text-amber-800 dark:text-amber-200">
                     Save this product first. Then edit it to select Frequently Bought Together products.
                   </p>
                 ) : (
                   <>
                     <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <span className="text-xs font-medium text-gray-600">
+                      <span className="text-xs font-medium text-gray-600 dark:text-slate-300">
                         {frequentlyBoughtIds.length}/20 selected
                       </span>
+
                       <button
                         type="button"
                         onClick={saveFrequentlyBought}
                         disabled={savingFrequentlyBought || loadingFrequentlyBought}
                         className="rounded-lg bg-[#101B2D] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
                       >
-                        {savingFrequentlyBought ? "Saving..." : "Save recommendations"}
+                        {savingFrequentlyBought
+                          ? "Saving..."
+                          : "Save recommendations"}
                       </button>
                     </div>
 
@@ -1269,16 +1568,18 @@ export default function Products() {
                     />
 
                     {loadingFrequentlyBought ? (
-                      <p className="py-4 text-sm text-gray-500">
+                      <p className="py-4 text-sm text-gray-500 dark:text-slate-400">
                         Loading recommendations...
                       </p>
                     ) : (
-                      <div className="max-h-64 space-y-2 overflow-y-auto rounded-lg border border-gray-100 p-2">
+                      <div className="max-h-64 space-y-2 overflow-y-auto rounded-lg border border-gray-100 dark:border-slate-700 p-2">
                         {products
                           .filter((product) => product.id !== editingProduct.id)
                           .filter((product) => {
                             const term = frequentlyBoughtSearch.trim().toLowerCase();
+
                             if (!term) return true;
+
                             return (
                               product.name.toLowerCase().includes(term) ||
                               (product.brand || "").toLowerCase().includes(term) ||
@@ -1288,54 +1589,66 @@ export default function Products() {
                           .map((product) => (
                             <label
                               key={product.id}
-                              className="flex cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-[#F7F5EF]"
+                              className="flex cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-[#F7F5EF] dark:hover:bg-slate-700"
                             >
                               <input
                                 type="checkbox"
                                 checked={frequentlyBoughtIds.includes(product.id)}
-                                onChange={() => toggleFrequentlyBoughtProduct(product.id)}
+                                onChange={() =>
+                                  toggleFrequentlyBoughtProduct(product.id)
+                                }
                                 disabled={
                                   !frequentlyBoughtIds.includes(product.id) &&
                                   frequentlyBoughtIds.length >= 20
                                 }
                                 className="h-4 w-4 accent-[#101B2D]"
                               />
+
                               {product.image_url ? (
                                 <img
                                   src={product.image_url}
                                   alt={product.name}
-                                  className="h-10 w-10 rounded-md bg-[#F7F5EF] object-contain"
+                                  className="h-10 w-10 rounded-md bg-[#F7F5EF] dark:bg-[#0E1A2B] object-contain"
                                 />
                               ) : (
-                                <div className="h-10 w-10 rounded-md bg-gray-100" />
+                                <div className="h-10 w-10 rounded-md bg-gray-100 dark:bg-slate-700" />
                               )}
+
                               <span className="min-w-0 flex-1">
-                                <span className="block truncate text-sm font-medium text-[#101B2D]">
+                                <span className="block truncate text-sm font-medium">
                                   {product.name}
                                 </span>
-                                <span className="block truncate text-xs text-gray-500">
+
+                                <span className="block truncate text-xs text-gray-500 dark:text-slate-400">
                                   {product.brand || product.category}
                                 </span>
                               </span>
-                              <span className="text-xs text-gray-500">
+
+                              <span className="text-xs text-gray-500 dark:text-slate-400">
                                 ₹{Number(product.discounted_price).toFixed(2)}
                               </span>
                             </label>
                           ))}
-                        {products.filter((product) => product.id !== editingProduct.id).length === 0 && (
-                          <p className="p-3 text-sm text-gray-500">No other products available.</p>
+
+                        {products.filter(
+                          (product) => product.id !== editingProduct.id
+                        ).length === 0 && (
+                          <p className="p-3 text-sm text-gray-500 dark:text-slate-400">
+                            No other products available.
+                          </p>
                         )}
                       </div>
                     )}
-                    <p className="mt-2 text-xs text-gray-500">
-                      Recommendations are saved separately. Remember to click “Save recommendations” after changing selections.
+
+                    <p className="mt-2 text-xs text-gray-500 dark:text-slate-400">
+                      Recommendations are saved separately. Remember to click
+                      “Save recommendations” after changing selections.
                     </p>
                   </>
                 )}
               </div>
 
-              {/* AMOUNT PURCHASING SETTING */}
-              <div className="rounded-xl border border-[#D6B875] bg-[#F7F5EF] p-4">
+              <div className="rounded-xl border border-[#D6B875] bg-[#F7F5EF] dark:bg-[#0E1A2B] p-4">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
@@ -1350,17 +1663,17 @@ export default function Products() {
                   />
 
                   <div>
-                    <p className="font-semibold text-[#101B2D]">
+                    <p className="font-semibold">
                       Allow customers to buy by amount (₹)
                     </p>
 
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                       Enable this for products such as rice, oil and loose
                       grains. Customers can enter an amount of money and
                       receive the corresponding quantity.
                     </p>
 
-                    <p className="mt-2 text-xs font-medium text-gray-600">
+                    <p className="mt-2 text-xs font-medium text-gray-600 dark:text-slate-300">
                       Default: Disabled (quantity-based purchasing only).
                     </p>
                   </div>
@@ -1389,11 +1702,11 @@ export default function Products() {
                 </label>
               )}
 
-              <div className="flex justify-end gap-3 border-t pt-5">
+              <div className="flex justify-end gap-3 border-t border-gray-200 dark:border-slate-700 pt-5">
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="rounded-lg border px-5 py-3"
+                  className="rounded-lg border border-gray-300 dark:border-slate-600 px-5 py-3"
                 >
                   Cancel
                 </button>
@@ -1414,6 +1727,164 @@ export default function Products() {
           </div>
         </div>
       )}
+
+      {/* CREATE BRAND MODAL */}
+      {showBrandForm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-2xl">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-bold">
+                  Create New Brand
+                </h3>
+                <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
+                  The new brand will automatically be selected for this product.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowBrandForm(false)}
+                disabled={savingBrand}
+                className="text-2xl text-gray-500 dark:text-slate-400"
+              >
+                ×
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateBrand} className="space-y-4">
+              <FormField label="Brand Name *">
+                <input
+                  required
+                  minLength={2}
+                  maxLength={100}
+                  autoFocus
+                  value={newBrand.name}
+                  onChange={(e) =>
+                    setNewBrand((previous) => ({
+                      ...previous,
+                      name: e.target.value,
+                    }))
+                  }
+                  placeholder="Enter brand name"
+                  className="form-input"
+                />
+              </FormField>
+
+              <FormField label="Description">
+                <textarea
+                  rows={3}
+                  value={newBrand.description}
+                  onChange={(e) =>
+                    setNewBrand((previous) => ({
+                      ...previous,
+                      description: e.target.value,
+                    }))
+                  }
+                  placeholder="Brand description (optional)"
+                  className="form-input"
+                />
+              </FormField>
+
+              <FormField label="Brand Logo">
+                <div className="space-y-3">
+                  {/* Upload logo */}
+                  <input
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    onChange={handleBrandLogoUpload}
+                    disabled={uploadingBrandLogo}
+                    className="form-input"
+                  />
+
+                  {uploadingBrandLogo && (
+                    <p className="text-sm text-blue-600 dark:text-blue-300">
+                      Uploading brand logo...
+                    </p>
+                  )}
+
+                  {/* Logo preview */}
+                  {brandLogoPreview && (
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={brandLogoPreview}
+                        alt="Brand logo preview"
+                        className="h-20 w-20 rounded-lg border border-gray-200 dark:border-slate-600 bg-white object-contain p-2"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBrandLogoPreview("");
+                          setNewBrand((previous) => ({
+                            ...previous,
+                            logo_url: "",
+                          }));
+                        }}
+                        className="text-sm text-red-600 dark:text-red-300"
+                      >
+                        Remove logo
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2">
+                    <div className="h-px flex-1 bg-gray-200 dark:bg-slate-600" />
+                    <span className="text-xs text-gray-500">OR</span>
+                    <div className="h-px flex-1 bg-gray-200 dark:bg-slate-600" />
+                  </div>
+
+                  {/* Manual URL option */}
+                  <input
+                    type="url"
+                    value={newBrand.logo_url}
+                    onChange={(e) => {
+                      setNewBrand((previous) => ({
+                        ...previous,
+                        logo_url: e.target.value,
+                      }));
+                      setBrandLogoPreview(e.target.value);
+                    }}
+                    placeholder="Enter logo image URL"
+                    className="form-input"
+                  />
+
+                  <p className="text-xs text-gray-500 dark:text-slate-400">
+                    Upload a JPG, PNG or WEBP image (maximum 5 MB), or paste an image URL.
+                  </p>
+                </div>
+              </FormField>
+
+              <div className="flex justify-end gap-3 border-t border-gray-200 dark:border-slate-700 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowBrandForm(false)}
+                  disabled={savingBrand}
+                  className="rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-2 text-sm"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={
+                    savingBrand ||
+                    uploadingBrandLogo ||
+                    newBrand.name.trim().length < 2
+                  }
+                  className="rounded-lg bg-[#101B2D] px-5 py-2 text-sm font-semibold text-white disabled:opacity-50"
+                >
+                  {uploadingBrandLogo
+                    ? "Uploading Logo..."
+                    : savingBrand
+                      ? "Creating..."
+                      : "Create Brand"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1427,7 +1898,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-gray-700">
+      <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-slate-200">
         {label}
       </label>
       {children}

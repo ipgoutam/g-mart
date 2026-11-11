@@ -56,7 +56,7 @@ type StatusOption =
 const PAGE_SIZE = 10;
 
 const statusStyles: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800",
+  pending: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800",
   confirmed: "bg-blue-100 text-blue-800",
   preparing: "bg-purple-100 text-purple-800",
   ready_for_pickup: "bg-indigo-100 text-indigo-800",
@@ -66,10 +66,10 @@ const statusStyles: Record<string, string> = {
 };
 
 const paymentStyles: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800",
+  pending: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800",
   paid: "bg-green-100 text-green-800",
   failed: "bg-red-100 text-red-800",
-  refunded: "bg-gray-100 text-gray-700",
+  refunded: "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200",
 };
 
 const formatCurrency = (value: number | string | null | undefined) => {
@@ -388,13 +388,13 @@ function Orders() {
         label: "Total Orders",
         value: summary?.total_orders ?? 0,
         icon: "📦",
-        color: "bg-blue-50 text-blue-700",
+        color: "bg-blue-50 text-blue-700 dark:text-blue-300",
       },
       {
         label: "Pending Orders",
         value: summary?.pending_orders ?? 0,
         icon: "⏳",
-        color: "bg-yellow-50 text-yellow-700",
+        color: "bg-yellow-50 text-yellow-700 dark:text-yellow-300",
       },
       {
         label: "Confirmed Orders",
@@ -412,13 +412,13 @@ function Orders() {
         label: "Completed Orders",
         value: summary?.completed_orders ?? 0,
         icon: "✅",
-        color: "bg-green-50 text-green-700",
+        color: "bg-green-50 text-green-700 dark:text-green-300",
       },
       {
         label: "Cancelled Orders",
         value: summary?.cancelled_orders ?? 0,
         icon: "✕",
-        color: "bg-red-50 text-red-700",
+        color: "bg-red-50 text-red-700 dark:text-red-300",
       },
     ],
     [summary]
@@ -426,12 +426,12 @@ function Orders() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="mx-auto max-w-4xl rounded-xl bg-white p-8 text-center shadow-sm">
-          <h2 className="text-xl font-bold text-gray-800">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
+        <div className="mx-auto max-w-4xl rounded-xl bg-white dark:bg-slate-800 p-8 text-center shadow-sm">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-slate-100">
             Access denied
           </h2>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 dark:text-slate-400">
             You need an admin account to manage orders.
           </p>
         </div>
@@ -440,7 +440,7 @@ function Orders() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
 
         {/* Page heading */}
@@ -450,11 +450,11 @@ function Orders() {
               G-MART ADMIN
             </p>
 
-            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] sm:text-3xl">
+            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] dark:text-slate-100 sm:text-3xl">
               Order Management
             </h1>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               View, manage and track customer orders.
             </p>
           </div>
@@ -464,7 +464,7 @@ function Orders() {
               loadOrders();
               loadSummary();
             }}
-            className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50"
+            className="rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200 shadow-sm transition hover:bg-gray-50 dark:hover:bg-slate-700"
           >
             ↻ Refresh Orders
           </button>
@@ -472,7 +472,7 @@ function Orders() {
 
         {/* Alerts */}
         {error && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
             <span>{error}</span>
             <button
               onClick={() => setError("")}
@@ -484,7 +484,7 @@ function Orders() {
         )}
 
         {success && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 px-4 py-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
             <span>{success}</span>
             <button
               onClick={() => setSuccess("")}
@@ -500,10 +500,10 @@ function Orders() {
           {visibleSummary.map((item) => (
             <div
               key={item.label}
-              className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm"
+              className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm"
             >
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">{item.label}</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400">{item.label}</p>
 
                 <span
                   className={`flex h-9 w-9 items-center justify-center rounded-lg text-lg ${item.color}`}
@@ -512,7 +512,7 @@ function Orders() {
                 </span>
               </div>
 
-              <p className="mt-3 text-2xl font-bold text-[#101B2D]">
+              <p className="mt-3 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                 {item.value}
               </p>
             </div>
@@ -521,24 +521,24 @@ function Orders() {
 
         {/* Revenue card */}
         <div className="mb-7 rounded-xl bg-[#101B2D] p-6 text-white shadow-sm">
-          <p className="text-sm text-gray-300">Total Revenue</p>
+          <p className="text-sm text-gray-300 dark:text-slate-500">Total Revenue</p>
           <p className="mt-2 text-3xl font-bold">
             {formatCurrency(summary?.total_revenue)}
           </p>
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
             Revenue reported by the order summary API
           </p>
         </div>
 
         {/* Search and filters */}
-        <div className="mb-6 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-          <h2 className="mb-4 text-lg font-bold text-[#101B2D]">
+        <div className="mb-6 rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <h2 className="mb-4 text-lg font-bold text-[#101B2D] dark:text-slate-100">
             Find Orders
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Search Orders
               </label>
 
@@ -552,7 +552,7 @@ function Orders() {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Order Status
               </label>
 
@@ -573,7 +573,7 @@ function Orders() {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Payment Status
               </label>
 
@@ -591,7 +591,7 @@ function Orders() {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Delivery Type
               </label>
 
@@ -616,7 +616,7 @@ function Orders() {
                 setDeliveryType("");
                 setPage(1);
               }}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700"
             >
               Clear Filters
             </button>
@@ -624,34 +624,34 @@ function Orders() {
         </div>
 
         {/* Orders table */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 p-5 sm:flex-row sm:items-center">
+        <div className="overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 dark:border-slate-700 p-5 sm:flex-row sm:items-center">
             <div>
-              <h2 className="text-lg font-bold text-[#101B2D]">
+              <h2 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
                 All Orders
               </h2>
 
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 Manage customer orders and their progress.
               </p>
             </div>
 
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-slate-400">
               Page {page}
             </span>
           </div>
 
           {loading ? (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-gray-500 dark:text-slate-400">
               Loading orders...
             </div>
           ) : orders.length === 0 ? (
             <div className="p-12 text-center">
               <div className="text-4xl">📦</div>
-              <h3 className="mt-3 font-semibold text-gray-700">
+              <h3 className="mt-3 font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 No orders found
               </h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 Try changing your search or filters.
               </p>
             </div>
@@ -659,7 +659,7 @@ function Orders() {
             <>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[1050px] text-left text-sm">
-                  <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
+                  <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400">
                     <tr>
                       <th className="px-5 py-4">Order</th>
                       <th className="px-5 py-4">Customer</th>
@@ -672,7 +672,7 @@ function Orders() {
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                     {orders.map((order) => {
                       const availableStatuses =
                         getAvailableStatuses(order);
@@ -682,40 +682,40 @@ function Orders() {
                       return (
                         <tr
                           key={order.id}
-                          className="transition hover:bg-gray-50"
+                          className="transition hover:bg-gray-50 dark:hover:bg-slate-700"
                         >
                           <td className="px-5 py-4">
-                            <p className="font-semibold text-[#101B2D]">
+                            <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                               {order.order_number}
                             </p>
-                            <p className="mt-1 text-xs text-gray-400">
+                            <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                               ID: {order.id}
                             </p>
                           </td>
 
                           <td className="px-5 py-4">
-                            <p className="font-medium text-gray-700">
+                            <p className="font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                               Customer #{order.customer_id}
                             </p>
-                            <p className="mt-1 text-xs text-gray-400">
+                            <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                               {order.customer_phone || "No phone"}
                             </p>
                           </td>
 
-                          <td className="px-5 py-4 text-gray-600">
+                          <td className="px-5 py-4 text-gray-600 dark:text-slate-300">
                             {formatDate(order.created_at)}
                           </td>
 
                           <td className="px-5 py-4">
-                            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold capitalize text-gray-700">
+                            <span className="rounded-full bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-3 py-1 text-xs font-semibold capitalize text-gray-700 dark:text-slate-200 dark:text-slate-200">
                               {order.delivery_type}
                             </span>
                           </td>
 
-                          <td className="px-5 py-4 font-semibold text-[#101B2D]">
+                          <td className="px-5 py-4 font-semibold text-[#101B2D] dark:text-slate-100">
                             {formatCurrency(order.total_amount)}
                             {codDue && (
-                              <p className="mt-1 text-xs font-semibold text-orange-700">
+                              <p className="mt-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
                                 COD to collect
                               </p>
                             )}
@@ -723,14 +723,14 @@ function Orders() {
 
                           <td className="px-5 py-4">
                             <div className="flex flex-col items-start gap-1">
-                              <span className="text-xs font-medium capitalize text-gray-600">
+                              <span className="text-xs font-medium capitalize text-gray-600 dark:text-slate-300">
                                 {order.payment_method}
                               </span>
 
                               <span
                                 className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                                   paymentStyles[order.payment_status] ||
-                                  "bg-gray-100 text-gray-700"
+                                  "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200"
                                 }`}
                               >
                                 {formatStatus(order.payment_status)}
@@ -742,7 +742,7 @@ function Orders() {
                             <span
                               className={`inline-block rounded-full px-3 py-1.5 text-xs font-semibold ${
                                 statusStyles[order.order_status] ||
-                                "bg-gray-100 text-gray-700"
+                                "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200"
                               }`}
                             >
                               {formatStatus(order.order_status)}
@@ -783,7 +783,7 @@ function Orders() {
                                     );
                                   }
                                 }}
-                                className="mt-2 block w-full rounded-lg border border-gray-200 bg-white px-2 py-2 text-xs outline-none focus:border-[#D6B875]"
+                                className="mt-2 block w-full rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-2 text-xs outline-none focus:border-[#D6B875]"
                               >
                                 <option value="">
                                   {updatingOrderId === order.id
@@ -807,8 +807,8 @@ function Orders() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between border-t border-gray-100 px-5 py-4">
-                <p className="text-sm text-gray-500">
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-slate-700 px-5 py-4">
+                <p className="text-sm text-gray-500 dark:text-slate-400">
                   Page {page} of {totalPages}
                 </p>
 
@@ -816,7 +816,7 @@ function Orders() {
                   <button
                     disabled={page <= 1 || loading}
                     onClick={() => setPage((current) => current - 1)}
-                    className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     Previous
                   </button>
@@ -824,7 +824,7 @@ function Orders() {
                   <button
                     disabled={page >= totalPages || loading}
                     onClick={() => setPage((current) => current + 1)}
-                    className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     Next
                   </button>
@@ -844,34 +844,34 @@ function Orders() {
           }}
         >
           <div
-            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {detailsLoading ? (
-              <div className="p-12 text-center text-gray-500">
+              <div className="p-12 text-center text-gray-500 dark:text-slate-400">
                 Loading order details...
               </div>
             ) : selectedOrder ? (
               <>
                 {/* Modal header */}
-                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white p-5 sm:p-6">
+                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-[#B3944D]">
                       ORDER DETAILS
                     </p>
 
-                    <h2 className="mt-1 text-xl font-bold text-[#101B2D]">
+                    <h2 className="mt-1 text-xl font-bold text-[#101B2D] dark:text-slate-100">
                       {selectedOrder.order_number}
                     </h2>
 
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                       {formatDate(selectedOrder.created_at)}
                     </p>
                   </div>
 
                   <button
                     onClick={() => setSelectedOrder(null)}
-                    className="rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition hover:bg-gray-200"
+                    className="rounded-lg bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-3 py-2 text-gray-600 dark:text-slate-300 transition hover:bg-gray-200 dark:hover:bg-slate-700"
                   >
                     ✕
                   </button>
@@ -880,30 +880,30 @@ function Orders() {
                 <div className="space-y-6 p-5 sm:p-6">
                   {/* Status and customer */}
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Customer
                       </p>
 
-                      <p className="mt-2 font-semibold text-[#101B2D]">
+                      <p className="mt-2 font-semibold text-[#101B2D] dark:text-slate-100">
                         Customer #{selectedOrder.customer_id}
                       </p>
 
-                      <p className="mt-1 text-sm text-gray-600">
+                      <p className="mt-1 text-sm text-gray-600 dark:text-slate-300">
                         {selectedOrder.customer_phone || "No phone number"}
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Delivery Information
                       </p>
 
-                      <p className="mt-2 font-semibold capitalize text-[#101B2D]">
+                      <p className="mt-2 font-semibold capitalize text-[#101B2D] dark:text-slate-100">
                         {selectedOrder.delivery_type}
                       </p>
 
-                      <p className="mt-1 text-sm text-gray-600">
+                      <p className="mt-1 text-sm text-gray-600 dark:text-slate-300">
                         {selectedOrder.delivery_address ||
                           "Store pickup"}
                       </p>
@@ -912,7 +912,7 @@ function Orders() {
 
                   {/* Order and payment status */}
                   <div>
-                    <h3 className="mb-3 font-bold text-[#101B2D]">
+                    <h3 className="mb-3 font-bold text-[#101B2D] dark:text-slate-100">
                       Order Status
                     </h3>
 
@@ -920,7 +920,7 @@ function Orders() {
                       <span
                         className={`rounded-full px-3 py-2 text-xs font-semibold ${
                           statusStyles[selectedOrder.order_status] ||
-                          "bg-gray-100 text-gray-700"
+                          "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200"
                         }`}
                       >
                         {formatStatus(selectedOrder.order_status)}
@@ -929,13 +929,13 @@ function Orders() {
                       <span
                         className={`rounded-full px-3 py-2 text-xs font-semibold ${
                           paymentStyles[selectedOrder.payment_status] ||
-                          "bg-gray-100 text-gray-700"
+                          "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200"
                         }`}
                       >
                         Payment: {formatStatus(selectedOrder.payment_status)}
                       </span>
 
-                      <span className="rounded-full bg-gray-100 px-3 py-2 text-xs font-semibold capitalize text-gray-700">
+                      <span className="rounded-full bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-3 py-2 text-xs font-semibold capitalize text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         Method: {selectedOrder.payment_method}
                       </span>
                     </div>
@@ -943,16 +943,16 @@ function Orders() {
 
                   {/* COD collection */}
                   {isCodPaymentDue(selectedOrder) && (
-                    <div className="rounded-xl border border-orange-200 bg-orange-50 p-5">
-                      <p className="text-sm font-semibold uppercase tracking-wide text-orange-800">
+                    <div className="rounded-xl border border-orange-200 dark:border-orange-800/60 bg-orange-50 dark:bg-orange-950/30 p-5">
+                      <p className="text-sm font-semibold uppercase tracking-wide text-orange-800 dark:text-orange-200">
                         Cash on Delivery
                       </p>
 
-                      <p className="mt-2 text-sm text-orange-700">
+                      <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
                         Collect this amount from the customer before completing the delivery.
                       </p>
 
-                      <p className="mt-3 text-3xl font-bold text-[#101B2D]">
+                      <p className="mt-3 text-3xl font-bold text-[#101B2D] dark:text-slate-100">
                         {formatCurrency(selectedOrder.total_amount)}
                       </p>
 
@@ -972,13 +972,13 @@ function Orders() {
 
                   {/* Products */}
                   <div>
-                    <h3 className="mb-3 font-bold text-[#101B2D]">
+                    <h3 className="mb-3 font-bold text-[#101B2D] dark:text-slate-100">
                       Ordered Products
                     </h3>
 
-                    <div className="overflow-x-auto rounded-xl border border-gray-100">
+                    <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-700">
                       <table className="w-full min-w-[550px] text-left text-sm">
-                        <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+                        <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase text-gray-500 dark:text-slate-400">
                           <tr>
                             <th className="px-4 py-3">Product</th>
                             <th className="px-4 py-3">Quantity</th>
@@ -987,15 +987,15 @@ function Orders() {
                           </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                           {selectedOrder.items?.map((item) => (
                             <tr key={item.id}>
                               <td className="px-4 py-3">
-                                <p className="font-semibold text-gray-800">
+                                <p className="font-semibold text-gray-800 dark:text-slate-100">
                                   {item.product_name}
                                 </p>
 
-                                <p className="mt-1 text-xs text-gray-400">
+                                <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                                   {item.purchase_mode === "amount"
                                     ? `Amount purchase: ${formatCurrency(
                                         item.purchase_amount
@@ -1004,15 +1004,15 @@ function Orders() {
                                 </p>
                               </td>
 
-                              <td className="px-4 py-3 text-gray-600">
+                              <td className="px-4 py-3 text-gray-600 dark:text-slate-300">
                                 {Number(item.quantity)} {item.unit}
                               </td>
 
-                              <td className="px-4 py-3 text-gray-600">
+                              <td className="px-4 py-3 text-gray-600 dark:text-slate-300">
                                 {formatCurrency(item.unit_price)}
                               </td>
 
-                              <td className="px-4 py-3 font-semibold text-[#101B2D]">
+                              <td className="px-4 py-3 font-semibold text-[#101B2D] dark:text-slate-100">
                                 {formatCurrency(item.line_total)}
                               </td>
                             </tr>
@@ -1021,7 +1021,7 @@ function Orders() {
                       </table>
                     </div>
 
-                    <p className="mt-2 text-xs text-gray-400">
+                    <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
                       Stock deducted:{" "}
                       {selectedOrder.items?.reduce(
                         (total, item) =>
@@ -1034,18 +1034,18 @@ function Orders() {
                   </div>
 
                   {/* Price breakdown */}
-                  <div className="rounded-xl bg-gray-50 p-5">
-                    <h3 className="mb-4 font-bold text-[#101B2D]">
+                  <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-5">
+                    <h3 className="mb-4 font-bold text-[#101B2D] dark:text-slate-100">
                       Price Summary
                     </h3>
 
                     <div className="space-y-3 text-sm">
-                      <div className="flex justify-between text-gray-600">
+                      <div className="flex justify-between text-gray-600 dark:text-slate-300">
                         <span>Subtotal</span>
                         <span>{formatCurrency(selectedOrder.subtotal)}</span>
                       </div>
 
-                      <div className="flex justify-between text-gray-600">
+                      <div className="flex justify-between text-gray-600 dark:text-slate-300">
                         <span>Delivery Fee</span>
                         <span>
                           {formatCurrency(selectedOrder.delivery_fee)}
@@ -1053,18 +1053,18 @@ function Orders() {
                       </div>
 
                       {selectedOrder.coupon_code && (
-                        <div className="flex justify-between text-gray-600">
+                        <div className="flex justify-between text-gray-600 dark:text-slate-300">
                           <span>
                             Coupon ({selectedOrder.coupon_code})
                           </span>
-                          <span className="text-green-700">
+                          <span className="text-green-700 dark:text-green-300 dark:text-green-300">
                             -{formatCurrency(selectedOrder.discount_amount)}
                           </span>
                         </div>
                       )}
 
-                      <div className="border-t border-gray-200 pt-3">
-                        <div className="flex justify-between text-lg font-bold text-[#101B2D]">
+                      <div className="border-t border-gray-200 dark:border-slate-700 pt-3">
+                        <div className="flex justify-between text-lg font-bold text-[#101B2D] dark:text-slate-100">
                           <span>Total Amount</span>
                           <span>
                             {formatCurrency(selectedOrder.total_amount)}
@@ -1076,12 +1076,12 @@ function Orders() {
 
                   {/* Notes */}
                   {selectedOrder.notes && (
-                    <div className="rounded-xl border border-gray-100 p-4">
-                      <h3 className="font-bold text-[#101B2D]">
+                    <div className="rounded-xl border border-gray-100 dark:border-slate-700 p-4">
+                      <h3 className="font-bold text-[#101B2D] dark:text-slate-100">
                         Customer Notes
                       </h3>
 
-                      <p className="mt-2 whitespace-pre-wrap text-sm text-gray-600">
+                      <p className="mt-2 whitespace-pre-wrap text-sm text-gray-600 dark:text-slate-300">
                         {selectedOrder.notes}
                       </p>
                     </div>
@@ -1089,8 +1089,8 @@ function Orders() {
 
                   {/* Status update inside modal */}
                   {getAvailableStatuses(selectedOrder).length > 0 && (
-                    <div className="rounded-xl border border-gray-100 p-4">
-                      <h3 className="mb-3 font-bold text-[#101B2D]">
+                    <div className="rounded-xl border border-gray-100 dark:border-slate-700 p-4">
+                      <h3 className="mb-3 font-bold text-[#101B2D] dark:text-slate-100">
                         Update Order Status
                       </h3>
 
@@ -1112,7 +1112,7 @@ function Orders() {
                       </div>
 
                       {isCodPaymentDue(selectedOrder) && (
-                        <p className="mt-3 text-xs text-orange-700">
+                        <p className="mt-3 text-xs text-orange-700 dark:text-orange-300">
                           Complete delivery will become available after COD payment is collected.
                         </p>
                       )}

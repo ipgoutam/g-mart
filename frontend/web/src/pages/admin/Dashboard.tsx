@@ -112,22 +112,22 @@ const statusClass = (status: string) => {
   switch (status?.toLowerCase()) {
     case "completed":
     case "paid":
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700 dark:text-green-300";
 
     case "pending":
     case "pending_payment":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300";
 
     case "cancelled":
     case "failed":
-      return "bg-red-100 text-red-700";
+      return "bg-red-100 text-red-700 dark:text-red-300";
 
     case "processing":
     case "confirmed":
-      return "bg-blue-100 text-blue-700";
+      return "bg-blue-100 text-blue-700 dark:text-blue-300";
 
     default:
-      return "bg-gray-100 text-gray-700";
+      return "bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-200";
   }
 };
 
@@ -145,13 +145,13 @@ function DailySalesChart({ sales }: { sales: SalesItem[] }) {
     <div>
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <h3 className="font-bold text-[#101B2D]">Daily Sales</h3>
-          <p className="text-xs text-gray-500">Last 7 days</p>
+          <h3 className="font-bold text-[#101B2D] dark:text-slate-100">Daily Sales</h3>
+          <p className="text-xs text-gray-500 dark:text-slate-400">Last 7 days</p>
         </div>
       </div>
 
       {sales.length === 0 ? (
-        <p className="py-10 text-center text-gray-500">
+        <p className="py-10 text-center text-gray-500 dark:text-slate-400">
           No sales data available.
         </p>
       ) : (
@@ -172,7 +172,7 @@ function DailySalesChart({ sales }: { sales: SalesItem[] }) {
                 key={item.date || index}
                 className="flex h-full min-w-0 flex-1 flex-col items-center justify-end"
               >
-                <span className="mb-2 text-center text-[10px] text-gray-500 sm:text-xs">
+                <span className="mb-2 text-center text-[10px] text-gray-500 dark:text-slate-400 sm:text-xs">
                   {formatMoney(item.revenue)}
                 </span>
 
@@ -186,7 +186,7 @@ function DailySalesChart({ sales }: { sales: SalesItem[] }) {
                   />
                 </div>
 
-                <span className="mt-2 text-xs text-gray-500">
+                <span className="mt-2 text-xs text-gray-500 dark:text-slate-400">
                   {label}
                 </span>
               </div>
@@ -210,11 +210,11 @@ function MonthlySalesChart({ sales }: { sales: SalesItem[] }) {
 
   return (
     <div>
-      <h3 className="font-bold text-[#101B2D]">Monthly Sales</h3>
-      <p className="mb-5 text-xs text-gray-500">Last 12 months</p>
+      <h3 className="font-bold text-[#101B2D] dark:text-slate-100">Monthly Sales</h3>
+      <p className="mb-5 text-xs text-gray-500 dark:text-slate-400">Last 12 months</p>
 
       {sales.length === 0 ? (
-        <p className="py-10 text-center text-gray-500">
+        <p className="py-10 text-center text-gray-500 dark:text-slate-400">
           No monthly sales data available.
         </p>
       ) : (
@@ -238,7 +238,7 @@ function MonthlySalesChart({ sales }: { sales: SalesItem[] }) {
                   />
                 </div>
 
-                <span className="mt-2 whitespace-nowrap text-[10px] text-gray-500">
+                <span className="mt-2 whitespace-nowrap text-[10px] text-gray-500 dark:text-slate-400">
                   {item.month?.split(" ")[0]}
                 </span>
               </div>
@@ -266,20 +266,20 @@ function SummaryCard({
   icon: string;
 }) {
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">{title}</p>
+        <p className="text-sm text-gray-500 dark:text-slate-400">{title}</p>
 
-        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F7F5EF] text-xl">
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] text-xl">
           {icon}
         </span>
       </div>
 
-      <h3 className="mt-3 text-2xl font-bold text-[#101B2D]">
+      <h3 className="mt-3 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
         {value}
       </h3>
 
-      <p className="mt-1 text-xs text-gray-500">{subtitle}</p>
+      <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">{subtitle}</p>
     </div>
   );
 }
@@ -431,9 +431,9 @@ function Dashboard() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-[#D6B875]" />
+          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 dark:border-slate-700 border-t-[#D6B875]" />
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-slate-300">
             Loading G-MART dashboard...
           </p>
         </div>
@@ -452,11 +452,11 @@ function Dashboard() {
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-[#101B2D]">
+          <h2 className="text-2xl font-bold text-[#101B2D] dark:text-slate-100">
             Dashboard Overview
           </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
             Monitor your store performance and business activity.
           </p>
         </div>
@@ -473,7 +473,7 @@ function Dashboard() {
       {/* ERROR MESSAGE */}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div className="rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 p-4 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
           {error}
         </div>
       )}
@@ -481,7 +481,7 @@ function Dashboard() {
       {/* SUMMARY CARDS */}
 
       <section>
-        <h3 className="mb-4 font-bold text-[#101B2D]">
+        <h3 className="mb-4 font-bold text-[#101B2D] dark:text-slate-100">
           Business Summary
         </h3>
 
@@ -546,29 +546,29 @@ function Dashboard() {
 
       {/* ORDER STATUS */}
 
-      <section className="rounded-xl bg-white p-5 shadow-sm">
-        <h3 className="mb-4 font-bold text-[#101B2D]">
+      <section className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
+        <h3 className="mb-4 font-bold text-[#101B2D] dark:text-slate-100">
           Order Status Overview
         </h3>
 
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-yellow-50 p-4">
-            <p className="text-sm text-yellow-700">Pending</p>
-            <p className="mt-2 text-2xl font-bold text-yellow-800">
+          <div className="rounded-lg bg-yellow-50 dark:bg-yellow-950/30 p-4">
+            <p className="text-sm text-yellow-700 dark:text-yellow-300 dark:text-yellow-300">Pending</p>
+            <p className="mt-2 text-2xl font-bold text-yellow-800 dark:text-yellow-200">
               {summary.pending_orders}
             </p>
           </div>
 
-          <div className="rounded-lg bg-green-50 p-4">
-            <p className="text-sm text-green-700">Completed</p>
-            <p className="mt-2 text-2xl font-bold text-green-800">
+          <div className="rounded-lg bg-green-50 dark:bg-green-950/30 p-4">
+            <p className="text-sm text-green-700 dark:text-green-300 dark:text-green-300">Completed</p>
+            <p className="mt-2 text-2xl font-bold text-green-800 dark:text-green-200">
               {summary.completed_orders}
             </p>
           </div>
 
-          <div className="rounded-lg bg-red-50 p-4">
-            <p className="text-sm text-red-700">Cancelled</p>
-            <p className="mt-2 text-2xl font-bold text-red-800">
+          <div className="rounded-lg bg-red-50 dark:bg-red-950/30 p-4">
+            <p className="text-sm text-red-700 dark:text-red-300 dark:text-red-300">Cancelled</p>
+            <p className="mt-2 text-2xl font-bold text-red-800 dark:text-red-200">
               {summary.cancelled_orders}
             </p>
           </div>
@@ -578,30 +578,30 @@ function Dashboard() {
       {/* SALES CHARTS */}
 
       <section className="grid gap-5 lg:grid-cols-2">
-        <div className="rounded-xl bg-white p-5 shadow-sm">
+        <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
           <DailySalesChart sales={dailySales} />
         </div>
 
-        <div className="rounded-xl bg-white p-5 shadow-sm">
+        <div className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
           <MonthlySalesChart sales={monthlySales} />
         </div>
       </section>
 
       {/* BEST SELLING PRODUCTS */}
 
-      <section className="rounded-xl bg-white p-5 shadow-sm">
+      <section className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
         <div className="mb-5">
-          <h3 className="font-bold text-[#101B2D]">
+          <h3 className="font-bold text-[#101B2D] dark:text-slate-100">
             Best-Selling Products
           </h3>
 
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-slate-400">
             Based on paid, non-cancelled orders
           </p>
         </div>
 
         {bestProducts.length === 0 ? (
-          <p className="py-6 text-center text-gray-500">
+          <p className="py-6 text-center text-gray-500 dark:text-slate-400">
             No sales data available yet.
           </p>
         ) : (
@@ -621,27 +621,27 @@ function Dashboard() {
                 <div key={`${product.product_name}-${index}`}>
                   <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F7F5EF] text-sm font-bold text-[#101B2D]">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] text-sm font-bold text-[#101B2D] dark:text-slate-100">
                         {index + 1}
                       </span>
 
                       <div>
-                        <p className="font-semibold text-[#101B2D]">
+                        <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                           {product.product_name}
                         </p>
 
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-slate-400">
                           {product.total_quantity_sold} sold
                         </p>
                       </div>
                     </div>
 
-                    <p className="font-semibold text-[#101B2D]">
+                    <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                       {formatMoney(product.total_sales)}
                     </p>
                   </div>
 
-                  <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+                  <div className="h-2 overflow-hidden rounded-full bg-gray-100 dark:bg-slate-700 dark:bg-slate-700">
                     <div
                       className="h-full rounded-full bg-[#D6B875]"
                       style={{ width: `${percentage}%` }}
@@ -656,14 +656,14 @@ function Dashboard() {
 
       {/* LOW STOCK */}
 
-      <section className="rounded-xl bg-white p-5 shadow-sm">
+      <section className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-bold text-[#101B2D]">
+            <h3 className="font-bold text-[#101B2D] dark:text-slate-100">
               Low Stock Alerts
             </h3>
 
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-slate-400">
               Products that need restocking
             </p>
           </div>
@@ -677,13 +677,13 @@ function Dashboard() {
         </div>
 
         {lowStock.length === 0 ? (
-          <p className="py-6 text-center text-green-600">
+          <p className="py-6 text-center text-green-600 dark:text-green-300 dark:text-green-300">
             All products have sufficient stock.
           </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[550px] text-left text-sm">
-              <thead className="bg-[#F7F5EF] text-gray-600">
+              <thead className="bg-[#F7F5EF] dark:bg-[#0E1A2B] text-gray-600 dark:text-slate-300">
                 <tr>
                   <th className="p-3">Product</th>
                   <th className="p-3">Category</th>
@@ -697,15 +697,15 @@ function Dashboard() {
                 {lowStock.map((product) => (
                   <tr
                     key={product.id}
-                    className="border-b border-gray-100"
+                    className="border-b border-gray-100 dark:border-slate-700"
                   >
-                    <td className="p-3 font-medium text-[#101B2D]">
+                    <td className="p-3 font-medium text-[#101B2D] dark:text-slate-100">
                       {product.name}
                     </td>
 
                     <td className="p-3">{product.category}</td>
 
-                    <td className="p-3 font-bold text-red-600">
+                    <td className="p-3 font-bold text-red-600 dark:text-red-300 dark:text-red-300">
                       {product.stock}
                     </td>
 
@@ -714,7 +714,7 @@ function Dashboard() {
                     </td>
 
                     <td className="p-3">
-                      <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+                      <span className="rounded-full bg-red-100 dark:bg-red-900/30 px-3 py-1 text-xs font-semibold text-red-700 dark:text-red-300 dark:text-red-300">
                         Low Stock
                       </span>
                     </td>
@@ -728,27 +728,27 @@ function Dashboard() {
 
       {/* RECENT ORDERS */}
 
-      <section className="rounded-xl bg-white p-5 shadow-sm">
+      <section className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-bold text-[#101B2D]">
+            <h3 className="font-bold text-[#101B2D] dark:text-slate-100">
               Recent Orders
             </h3>
 
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-slate-400">
               Latest customer orders
             </p>
           </div>
         </div>
 
         {recentOrders.length === 0 ? (
-          <p className="py-6 text-center text-gray-500">
+          <p className="py-6 text-center text-gray-500 dark:text-slate-400">
             No orders found.
           </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] text-left text-sm">
-              <thead className="bg-[#F7F5EF] text-gray-600">
+              <thead className="bg-[#F7F5EF] dark:bg-[#0E1A2B] text-gray-600 dark:text-slate-300">
                 <tr>
                   <th className="p-3">Order Number</th>
                   <th className="p-3">Customer Name/ID</th>
@@ -764,25 +764,25 @@ function Dashboard() {
                 {recentOrders.map((order) => (
                   <tr
                     key={order.id}
-                    className="border-b border-gray-100"
+                    className="border-b border-gray-100 dark:border-slate-700"
                   >
-                    <td className="p-3 font-semibold text-[#101B2D]">
+                    <td className="p-3 font-semibold text-[#101B2D] dark:text-slate-100">
                       {order.order_number}
                     </td>
 
                     <td className="p-3">
                       <div>
-                        <p className="font-semibold text-[#101B2D]">
+                        <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                           {order.customer_name}
                         </p>
 
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-slate-400">
                           Customer ID: #{order.customer_id}
                         </p>
                       </div>
                     </td>
 
-                    <td className="p-3 text-gray-500">
+                    <td className="p-3 text-gray-500 dark:text-slate-400">
                       {formatDate(order.created_at)}
                     </td>
 
@@ -819,48 +819,48 @@ function Dashboard() {
 
       {/* PAYMENT STATISTICS */}
 
-      <section className="rounded-xl bg-white p-5 shadow-sm">
-        <h3 className="font-bold text-[#101B2D]">
+      <section className="rounded-xl bg-white dark:bg-slate-800 p-5 shadow-sm">
+        <h3 className="font-bold text-[#101B2D] dark:text-slate-100">
           Payment Statistics
         </h3>
 
-        <p className="mb-5 text-xs text-gray-500">
+        <p className="mb-5 text-xs text-gray-500 dark:text-slate-400">
           Online payments and cash collections
         </p>
 
         {!payments ? (
-          <p className="py-5 text-center text-gray-500">
+          <p className="py-5 text-center text-gray-500 dark:text-slate-400">
             Payment statistics unavailable.
           </p>
         ) : (
           <>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="rounded-lg bg-[#F7F5EF] p-4">
-                <p className="text-sm text-gray-500">
+              <div className="rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] p-4">
+                <p className="text-sm text-gray-500 dark:text-slate-400">
                   Total Collected
                 </p>
 
-                <p className="mt-2 text-2xl font-bold text-[#101B2D]">
+                <p className="mt-2 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                   {formatMoney(payments.total_collected)}
                 </p>
               </div>
 
-              <div className="rounded-lg bg-blue-50 p-4">
-                <p className="text-sm text-blue-700">
+              <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 p-4">
+                <p className="text-sm text-blue-700 dark:text-blue-300 dark:text-blue-300">
                   Online Collected
                 </p>
 
-                <p className="mt-2 text-2xl font-bold text-blue-800">
+                <p className="mt-2 text-2xl font-bold text-blue-800 dark:text-blue-200">
                   {formatMoney(payments.online_collected)}
                 </p>
               </div>
 
-              <div className="rounded-lg bg-green-50 p-4">
-                <p className="text-sm text-green-700">
+              <div className="rounded-lg bg-green-50 dark:bg-green-950/30 p-4">
+                <p className="text-sm text-green-700 dark:text-green-300 dark:text-green-300">
                   Cash Collected
                 </p>
 
-                <p className="mt-2 text-2xl font-bold text-green-800">
+                <p className="mt-2 text-2xl font-bold text-green-800 dark:text-green-200">
                   {formatMoney(payments.cod_collected)}
                 </p>
               </div>
@@ -891,13 +891,13 @@ function Dashboard() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-lg border border-gray-100 p-3 text-center"
+                  className="rounded-lg border border-gray-100 dark:border-slate-700 p-3 text-center"
                 >
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-slate-400">
                     {item.label}
                   </p>
 
-                  <p className="mt-2 text-xl font-bold text-[#101B2D]">
+                  <p className="mt-2 text-xl font-bold text-[#101B2D] dark:text-slate-100">
                     {item.value}
                   </p>
                 </div>
@@ -909,7 +909,7 @@ function Dashboard() {
 
       {/* FOOTER */}
 
-      <footer className="border-t border-gray-200 py-5 text-center text-xs text-gray-500">
+      <footer className="border-t border-gray-200 dark:border-slate-700 py-5 text-center text-xs text-gray-500 dark:text-slate-400">
         G-MART Admin Dashboard · Store Management
       </footer>
     </div>

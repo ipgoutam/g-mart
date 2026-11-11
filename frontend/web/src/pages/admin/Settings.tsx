@@ -171,7 +171,7 @@ function Settings() {
 
   if (loading) {
     return (
-      <div className="p-8 text-center text-navy">
+      <div className="p-8 text-center text-navy dark:text-slate-100">
         Loading store settings...
       </div>
     );
@@ -181,19 +181,19 @@ function Settings() {
     "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-champagne";
 
   return (
-    <div className="min-h-screen bg-ivory p-4 md:p-8">
+    <div className="min-h-screen bg-ivory dark:bg-[#0E1A2B] p-4 md:p-8">
       <div className="mx-auto max-w-4xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-navy">
+          <h1 className="text-3xl font-bold text-navy dark:text-slate-100">
             Store Settings
           </h1>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 dark:text-slate-400">
             Manage your G-MART store information and preferences.
           </p>
         </div>
 
         {isNew && (
-          <div className="mb-6 rounded-lg bg-amber-50 p-4 text-sm text-amber-800">
+          <div className="mb-6 rounded-lg bg-amber-50 dark:bg-amber-950/30 p-4 text-sm text-amber-800 dark:text-amber-200">
             Store settings have not been created yet. Configure
             them below and save to create your settings.
           </div>
@@ -201,14 +201,14 @@ function Settings() {
 
         <div className="space-y-6">
           {/* Store Information */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-xl font-semibold text-navy">
+          <section className="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+            <h2 className="mb-5 text-xl font-semibold text-navy dark:text-slate-100">
               Store Information
             </h2>
 
             <div className="space-y-4">
               <div>
-                <label className="mb-2 block text-sm font-medium text-navy">
+                <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                   Store Name
                 </label>
                 <input
@@ -222,7 +222,7 @@ function Settings() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-navy">
+                <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                   Phone Number
                 </label>
                 <input
@@ -236,7 +236,7 @@ function Settings() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-navy">
+                <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                   Store Address
                 </label>
                 <textarea
@@ -253,14 +253,14 @@ function Settings() {
           </section>
 
           {/* Store Hours */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-xl font-semibold text-navy">
+          <section className="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+            <h2 className="mb-5 text-xl font-semibold text-navy dark:text-slate-100">
               Store Hours
             </h2>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium text-navy">
+                <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                   Opening Time
                 </label>
                 <input
@@ -274,7 +274,7 @@ function Settings() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-navy">
+                <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                   Closing Time
                 </label>
                 <input
@@ -297,25 +297,25 @@ function Settings() {
                 }
                 className="h-4 w-4"
               />
-              <span className="font-medium text-navy">
+              <span className="font-medium text-navy dark:text-slate-100">
                 Store is currently open
               </span>
             </label>
           </section>
 
           {/* Delivery Settings */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-2 text-xl font-semibold text-navy">
+          <section className="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+            <h2 className="mb-2 text-xl font-semibold text-navy dark:text-slate-100">
               Delivery Settings
             </h2>
 
-            <p className="mb-5 text-sm text-gray-500">
+            <p className="mb-5 text-sm text-gray-500 dark:text-slate-400">
               Set the delivery fee charged for home delivery orders.
               Pickup orders will always have no delivery fee.
             </p>
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-navy">
+              <label className="mb-2 block text-sm font-medium text-navy dark:text-slate-100">
                 Delivery Fee (₹)
               </label>
 
@@ -334,8 +334,8 @@ function Settings() {
           </section>
 
           {/* Payment Settings */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-xl font-semibold text-navy">
+          <section className="rounded-xl bg-white dark:bg-slate-800 p-6 shadow-sm">
+            <h2 className="mb-5 text-xl font-semibold text-navy dark:text-slate-100">
               Payment Settings
             </h2>
 
@@ -352,25 +352,25 @@ function Settings() {
                 className="h-4 w-4"
               />
 
-              <span className="font-medium text-navy">
+              <span className="font-medium text-navy dark:text-slate-100">
                 Enable online payment
               </span>
             </label>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-500 dark:text-slate-400">
               Enable this only after integrating a payment gateway.
             </p>
           </section>
 
           {/* Messages */}
           {message && (
-            <p className="rounded-lg bg-green-50 p-4 text-sm text-green-700">
+            <p className="rounded-lg bg-green-50 dark:bg-green-950/30 p-4 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
               {message}
             </p>
           )}
 
           {error && (
-            <p className="rounded-lg bg-red-50 p-4 text-sm text-red-700">
+            <p className="rounded-lg bg-red-50 dark:bg-red-950/30 p-4 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
               {error}
             </p>
           )}

@@ -246,12 +246,12 @@ function Customers() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="mx-auto max-w-4xl rounded-xl bg-white p-8 text-center shadow-sm">
-          <h2 className="text-xl font-bold text-gray-800">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-8">
+        <div className="mx-auto max-w-4xl rounded-xl bg-white dark:bg-slate-800 p-8 text-center shadow-sm">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-slate-100">
             Access denied
           </h2>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 dark:text-slate-400">
             You need an admin account to manage customers.
           </p>
         </div>
@@ -264,19 +264,19 @@ function Customers() {
       label: "Total Customers",
       value: summary?.total_customers ?? 0,
       icon: "👥",
-      color: "bg-blue-50 text-blue-700",
+      color: "bg-blue-50 text-blue-700 dark:text-blue-300",
     },
     {
       label: "Active Customers",
       value: summary?.active_customers ?? 0,
       icon: "✓",
-      color: "bg-green-50 text-green-700",
+      color: "bg-green-50 text-green-700 dark:text-green-300",
     },
     {
       label: "Inactive Customers",
       value: summary?.inactive_customers ?? 0,
       icon: "⊘",
-      color: "bg-red-50 text-red-700",
+      color: "bg-red-50 text-red-700 dark:text-red-300",
     },
     {
       label: "New Customers (30 Days)",
@@ -293,7 +293,7 @@ function Customers() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
 
         {/* Page heading */}
@@ -303,11 +303,11 @@ function Customers() {
               G-MART ADMIN
             </p>
 
-            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] sm:text-3xl">
+            <h1 className="mt-1 text-2xl font-bold text-[#101B2D] dark:text-slate-100 sm:text-3xl">
               Customer Management
             </h1>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               View customers, manage accounts and track customer activity.
             </p>
           </div>
@@ -317,7 +317,7 @@ function Customers() {
               loadCustomers();
               loadSummary();
             }}
-            className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50"
+            className="rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200 shadow-sm transition hover:bg-gray-50 dark:hover:bg-slate-700"
           >
             ↻ Refresh Customers
           </button>
@@ -325,7 +325,7 @@ function Customers() {
 
         {/* Alerts */}
         {error && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 px-4 py-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
             <span>{error}</span>
             <button
               onClick={() => setError("")}
@@ -337,7 +337,7 @@ function Customers() {
         )}
 
         {success && (
-          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+          <div className="mb-5 flex items-center justify-between rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 px-4 py-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
             <span>{success}</span>
             <button
               onClick={() => setSuccess("")}
@@ -353,10 +353,10 @@ function Customers() {
           {summaryCards.map((item) => (
             <div
               key={item.label}
-              className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm"
+              className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm"
             >
               <div className="flex items-center justify-between gap-2">
-                <p className="text-sm text-gray-500">{item.label}</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400">{item.label}</p>
 
                 <span
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-lg ${item.color}`}
@@ -365,7 +365,7 @@ function Customers() {
                 </span>
               </div>
 
-              <p className="mt-3 text-2xl font-bold text-[#101B2D]">
+              <p className="mt-3 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                 {item.value}
               </p>
             </div>
@@ -374,7 +374,7 @@ function Customers() {
 
         {/* Spending card */}
         <div className="mb-7 rounded-xl bg-[#101B2D] p-6 text-white shadow-sm">
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-gray-300 dark:text-slate-500">
             Total Customer Spending
           </p>
 
@@ -382,20 +382,20 @@ function Customers() {
             {formatCurrency(summary?.total_customer_spending)}
           </p>
 
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
             Calculated from paid orders.
           </p>
         </div>
 
         {/* Search and filters */}
-        <div className="mb-6 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-          <h2 className="mb-4 text-lg font-bold text-[#101B2D]">
+        <div className="mb-6 rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
+          <h2 className="mb-4 text-lg font-bold text-[#101B2D] dark:text-slate-100">
             Find Customers
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Search Customers
               </label>
 
@@ -409,7 +409,7 @@ function Customers() {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-600">
+              <label className="mb-1.5 block text-sm font-medium text-gray-600 dark:text-slate-300">
                 Account Status
               </label>
 
@@ -432,7 +432,7 @@ function Customers() {
                 setStatusFilter("");
                 setPage(1);
               }}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700"
             >
               Clear Filters
             </button>
@@ -440,36 +440,36 @@ function Customers() {
         </div>
 
         {/* Customer table */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 p-5 sm:flex-row sm:items-center">
+        <div className="overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+          <div className="flex flex-col justify-between gap-2 border-b border-gray-100 dark:border-slate-700 p-5 sm:flex-row sm:items-center">
             <div>
-              <h2 className="text-lg font-bold text-[#101B2D]">
+              <h2 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
                 All Customers
               </h2>
 
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 View and manage registered store customers.
               </p>
             </div>
 
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-slate-400">
               {total} customers found
             </span>
           </div>
 
           {loading ? (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-gray-500 dark:text-slate-400">
               Loading customers...
             </div>
           ) : customers.length === 0 ? (
             <div className="p-12 text-center">
               <div className="text-4xl">👥</div>
 
-              <h3 className="mt-3 font-semibold text-gray-700">
+              <h3 className="mt-3 font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 No customers found
               </h3>
 
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 Try changing your search or filters.
               </p>
             </div>
@@ -477,7 +477,7 @@ function Customers() {
             <>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[950px] text-left text-sm">
-                  <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
+                  <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase tracking-wider text-gray-500 dark:text-slate-400">
                     <tr>
                       <th className="px-5 py-4">Customer</th>
                       <th className="px-5 py-4">Contact</th>
@@ -487,33 +487,33 @@ function Customers() {
                     </tr>
                   </thead>
 
-                  <tbody className="divide-y divide-gray-100">
+                  <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                     {customers.map((customer) => (
                       <tr
                         key={customer.id}
-                        className="transition hover:bg-gray-50"
+                        className="transition hover:bg-gray-50 dark:hover:bg-slate-700"
                       >
                         <td className="px-5 py-4">
-                          <p className="font-semibold text-[#101B2D]">
+                          <p className="font-semibold text-[#101B2D] dark:text-slate-100">
                             {customer.full_name}
                           </p>
 
-                          <p className="mt-1 text-xs text-gray-400">
+                          <p className="mt-1 text-xs text-gray-400 dark:text-slate-500">
                             Customer ID: #{customer.id}
                           </p>
                         </td>
 
                         <td className="px-5 py-4">
-                          <p className="text-gray-700">
+                          <p className="text-gray-700 dark:text-slate-200 dark:text-slate-200">
                             {customer.email || "No email"}
                           </p>
 
-                          <p className="mt-1 text-xs text-gray-500">
+                          <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                             {customer.phone || "No phone"}
                           </p>
                         </td>
 
-                        <td className="px-5 py-4 text-gray-600">
+                        <td className="px-5 py-4 text-gray-600 dark:text-slate-300">
                           {formatDate(customer.created_at)}
                         </td>
 
@@ -521,8 +521,8 @@ function Customers() {
                           <span
                             className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                               customer.is_active
-                                ? "bg-green-100 text-green-700"
-                                : "bg-red-100 text-red-700"
+                                ? "bg-green-100 text-green-700 dark:text-green-300"
+                                : "bg-red-100 text-red-700 dark:text-red-300"
                             }`}
                           >
                             {customer.is_active ? "Active" : "Inactive"}
@@ -545,8 +545,8 @@ function Customers() {
                               }
                               className={`rounded-lg px-3 py-2 text-xs font-semibold disabled:opacity-50 ${
                                 customer.is_active
-                                  ? "bg-red-50 text-red-700 hover:bg-red-100"
-                                  : "bg-green-50 text-green-700 hover:bg-green-100"
+                                  ? "bg-red-50 text-red-700 dark:text-red-300 hover:bg-red-100"
+                                  : "bg-green-50 text-green-700 dark:text-green-300 hover:bg-green-100"
                               }`}
                             >
                               {updatingId === customer.id
@@ -564,8 +564,8 @@ function Customers() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between border-t border-gray-100 px-5 py-4">
-                <p className="text-sm text-gray-500">
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-slate-700 px-5 py-4">
+                <p className="text-sm text-gray-500 dark:text-slate-400">
                   Page {page} of {totalPages}
                 </p>
 
@@ -573,7 +573,7 @@ function Customers() {
                   <button
                     disabled={page <= 1 || loading}
                     onClick={() => setPage((current) => current - 1)}
-                    className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     Previous
                   </button>
@@ -581,7 +581,7 @@ function Customers() {
                   <button
                     disabled={page >= totalPages || loading}
                     onClick={() => setPage((current) => current + 1)}
-                    className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-gray-600 dark:text-slate-300 transition hover:bg-gray-50 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     Next
                   </button>
@@ -601,34 +601,34 @@ function Customers() {
           }}
         >
           <div
-            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {detailsLoading ? (
-              <div className="p-12 text-center text-gray-500">
+              <div className="p-12 text-center text-gray-500 dark:text-slate-400">
                 Loading customer details...
               </div>
             ) : selectedCustomer ? (
               <>
                 {/* Modal header */}
-                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white p-5 sm:p-6">
+                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 sm:p-6">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-[#B3944D]">
                       CUSTOMER PROFILE
                     </p>
 
-                    <h2 className="mt-1 text-xl font-bold text-[#101B2D]">
+                    <h2 className="mt-1 text-xl font-bold text-[#101B2D] dark:text-slate-100">
                       {selectedCustomer.full_name}
                     </h2>
 
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                       Customer ID: #{selectedCustomer.id}
                     </p>
                   </div>
 
                   <button
                     onClick={() => setSelectedCustomer(null)}
-                    className="rounded-lg bg-gray-100 px-3 py-2 text-gray-600 transition hover:bg-gray-200"
+                    className="rounded-lg bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-3 py-2 text-gray-600 dark:text-slate-300 transition hover:bg-gray-200 dark:hover:bg-slate-700"
                   >
                     ✕
                   </button>
@@ -637,46 +637,46 @@ function Customers() {
                 <div className="space-y-6 p-5 sm:p-6">
                   {/* Customer information */}
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Email Address
                       </p>
 
-                      <p className="mt-2 break-all font-semibold text-[#101B2D]">
+                      <p className="mt-2 break-all font-semibold text-[#101B2D] dark:text-slate-100">
                         {selectedCustomer.email || "Not provided"}
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Phone Number
                       </p>
 
-                      <p className="mt-2 font-semibold text-[#101B2D]">
+                      <p className="mt-2 font-semibold text-[#101B2D] dark:text-slate-100">
                         {selectedCustomer.phone || "Not provided"}
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Registration Date
                       </p>
 
-                      <p className="mt-2 font-semibold text-[#101B2D]">
+                      <p className="mt-2 font-semibold text-[#101B2D] dark:text-slate-100">
                         {formatDate(selectedCustomer.created_at)}
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-4">
-                      <p className="text-xs font-medium uppercase text-gray-500">
+                    <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-4">
+                      <p className="text-xs font-medium uppercase text-gray-500 dark:text-slate-400">
                         Account Status
                       </p>
 
                       <span
                         className={`mt-2 inline-block rounded-full px-3 py-1 text-xs font-semibold ${
                           selectedCustomer.is_active
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
+                            ? "bg-green-100 text-green-700 dark:text-green-300"
+                            : "bg-red-100 text-red-700 dark:text-red-300"
                         }`}
                       >
                         {selectedCustomer.is_active ? "Active" : "Inactive"}
@@ -686,37 +686,37 @@ function Customers() {
 
                   {/* Customer statistics */}
                   <div>
-                    <h3 className="mb-3 font-bold text-[#101B2D]">
+                    <h3 className="mb-3 font-bold text-[#101B2D] dark:text-slate-100">
                       Customer Activity
                     </h3>
 
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <div className="rounded-xl border border-gray-100 p-4">
-                        <p className="text-sm text-gray-500">
+                      <div className="rounded-xl border border-gray-100 dark:border-slate-700 p-4">
+                        <p className="text-sm text-gray-500 dark:text-slate-400">
                           Total Orders
                         </p>
 
-                        <p className="mt-2 text-2xl font-bold text-[#101B2D]">
+                        <p className="mt-2 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                           {selectedCustomer.total_orders}
                         </p>
                       </div>
 
-                      <div className="rounded-xl border border-gray-100 p-4">
-                        <p className="text-sm text-gray-500">
+                      <div className="rounded-xl border border-gray-100 dark:border-slate-700 p-4">
+                        <p className="text-sm text-gray-500 dark:text-slate-400">
                           Non-cancelled Orders
                         </p>
 
-                        <p className="mt-2 text-2xl font-bold text-[#101B2D]">
+                        <p className="mt-2 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                           {selectedCustomer.non_cancelled_orders}
                         </p>
                       </div>
 
-                      <div className="rounded-xl border border-gray-100 p-4">
-                        <p className="text-sm text-gray-500">
+                      <div className="rounded-xl border border-gray-100 dark:border-slate-700 p-4">
+                        <p className="text-sm text-gray-500 dark:text-slate-400">
                           Total Spending
                         </p>
 
-                        <p className="mt-2 text-2xl font-bold text-[#101B2D]">
+                        <p className="mt-2 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                           {formatCurrency(selectedCustomer.total_spending)}
                         </p>
                       </div>
@@ -725,18 +725,18 @@ function Customers() {
 
                   {/* Customer order history */}
                   <div>
-                    <h3 className="mb-3 font-bold text-[#101B2D]">
+                    <h3 className="mb-3 font-bold text-[#101B2D] dark:text-slate-100">
                       Recent Order History
                     </h3>
 
                     {customerOrders.length === 0 ? (
-                      <div className="rounded-xl bg-gray-50 p-8 text-center text-sm text-gray-500">
+                      <div className="rounded-xl bg-gray-50 dark:bg-slate-950 p-8 text-center text-sm text-gray-500 dark:text-slate-400">
                         This customer has not placed any orders yet.
                       </div>
                     ) : (
-                      <div className="overflow-x-auto rounded-xl border border-gray-100">
+                      <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-700">
                         <table className="w-full min-w-[650px] text-left text-sm">
-                          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+                          <thead className="bg-gray-50 dark:bg-slate-950 text-xs uppercase text-gray-500 dark:text-slate-400">
                             <tr>
                               <th className="px-4 py-3">Order</th>
                               <th className="px-4 py-3">Date</th>
@@ -746,14 +746,14 @@ function Customers() {
                             </tr>
                           </thead>
 
-                          <tbody className="divide-y divide-gray-100">
+                          <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                             {customerOrders.map((order) => (
                               <tr key={order.id}>
-                                <td className="px-4 py-3 font-semibold text-[#101B2D]">
+                                <td className="px-4 py-3 font-semibold text-[#101B2D] dark:text-slate-100">
                                   {order.order_number}
                                 </td>
 
-                                <td className="px-4 py-3 text-gray-600">
+                                <td className="px-4 py-3 text-gray-600 dark:text-slate-300">
                                   {formatDate(order.created_at)}
                                 </td>
 
@@ -762,13 +762,13 @@ function Customers() {
                                 </td>
 
                                 <td className="px-4 py-3">
-                                  <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-semibold text-gray-700">
+                                  <span className="rounded-full bg-gray-100 dark:bg-slate-700 dark:bg-slate-700 px-2.5 py-1 text-xs font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                                     {formatStatus(order.payment_status)}
                                   </span>
                                 </td>
 
                                 <td className="px-4 py-3">
-                                  <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                                  <span className="rounded-full bg-blue-50 dark:bg-blue-950/30 px-2.5 py-1 text-xs font-semibold text-blue-700 dark:text-blue-300 dark:text-blue-300">
                                     {formatStatus(order.order_status)}
                                   </span>
                                 </td>
@@ -779,7 +779,7 @@ function Customers() {
                       </div>
                     )}
 
-                    <p className="mt-2 text-xs text-gray-400">
+                    <p className="mt-2 text-xs text-gray-400 dark:text-slate-500">
                       Showing the 10 most recent orders.
                     </p>
                   </div>

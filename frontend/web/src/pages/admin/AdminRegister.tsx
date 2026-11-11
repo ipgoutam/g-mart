@@ -76,37 +76,37 @@ function AdminRegister() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-10">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl sm:p-9">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-slate-950 px-4 py-10">
+      <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-xl sm:p-9">
         <div className="mb-7 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-            <ShieldCheck size={34} className="text-green-700" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+            <ShieldCheck size={34} className="text-green-700 dark:text-green-300 dark:text-green-300" />
           </div>
 
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
             Create Admin Account
           </h1>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-gray-500 dark:text-slate-400">
             You have been invited to join the G-MART Admin team.
           </p>
         </div>
 
         {error && (
-          <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <div className="mb-5 rounded-lg border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="mb-5 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+          <div className="mb-5 rounded-lg border border-green-200 dark:border-green-800/60 bg-green-50 dark:bg-green-950/30 p-3 text-sm text-green-700 dark:text-green-300 dark:text-green-300">
             {success} Redirecting you to login...
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 Invitation Code
             </label>
 
@@ -116,12 +116,12 @@ function AdminRegister() {
                 value={manualToken}
                 onChange={(e) => setManualToken(e.target.value)}
                 placeholder="Enter your invitation code"
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+                className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
             </div>
           
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
               Full Name
             </label>
             <input
@@ -131,11 +131,11 @@ function AdminRegister() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
           </div>
             <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
                 Phone Number (Optional)
             </label>
 
@@ -146,11 +146,11 @@ function AdminRegister() {
                 placeholder="Enter your phone number"
                 minLength={10}
                 maxLength={15}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+                className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
             </div>
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
               Email Address
             </label>
             <input
@@ -159,15 +159,15 @@ function AdminRegister() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your invited email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
               Use the same email address that received the invitation.
             </p>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
               Password
             </label>
             <div className="relative">
@@ -178,12 +178,12 @@ function AdminRegister() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Create a password"
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+                className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 pr-12 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-slate-400"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
@@ -192,7 +192,7 @@ function AdminRegister() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-200 dark:text-slate-200">
               Confirm Password
             </label>
             <div className="relative">
@@ -202,14 +202,14 @@ function AdminRegister() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter your password"
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+                className="w-full rounded-lg border border-gray-300 dark:border-slate-600 px-4 py-3 pr-12 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
               />
               <button
                 type="button"
                 onClick={() =>
                   setShowConfirmPassword(!showConfirmPassword)
                 }
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-slate-400"
                 aria-label={
                   showConfirmPassword ? "Hide password" : "Show password"
                 }
@@ -232,11 +232,11 @@ function AdminRegister() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold text-green-700 hover:underline"
+            className="font-semibold text-green-700 dark:text-green-300 dark:text-green-300 hover:underline"
           >
             Login
           </Link>

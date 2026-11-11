@@ -13,6 +13,8 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  Moon,
+  Sun,
   Package,
   RotateCcw,
   Settings,
@@ -24,9 +26,11 @@ import {
   PanelsTopLeft,
   UserRound,
   Eye,
+  Star,
 } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../hooks/useTheme";
 import api from "../../services/api";
 
 // --------------------------------------------------
@@ -85,6 +89,13 @@ const navigationGroups = [
         icon: ClipboardList,
         active: true,
         permission: "inventory",
+      },
+      {
+        label: "Reviews",
+        path: "/admin/reviews",
+        icon: Star,
+        active: true,
+        permission: "products",
       },
     ],
   },
@@ -167,6 +178,7 @@ const navigationGroups = [
 const sectionRoutes: Record<string, string> = {
   "/admin": "dashboard",
   "/admin/products": "products",
+  "/admin/reviews": "products",
   "/admin/categories": "categories",
   "/admin/inventory": "inventory",
   "/admin/orders": "orders",
@@ -184,6 +196,8 @@ const sectionRoutes: Record<string, string> = {
 
 function AdminLayout() {
   const { user, loading, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -405,11 +419,11 @@ function AdminLayout() {
     !["admin", "super_admin"].includes(user.role)
   ) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF]">
+      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF] dark:bg-[#0E1A2B]">
         <div className="text-center">
-          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-[#D6B875]" />
+          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 dark:border-slate-700 border-t-[#D6B875]" />
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-slate-300">
             Loading admin panel...
           </p>
         </div>
@@ -423,18 +437,18 @@ function AdminLayout() {
 
   if (!hasAnyPermission) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF] px-4">
-        <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-sm">
+      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF] dark:bg-[#0E1A2B] px-4">
+        <div className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-800 p-8 text-center shadow-sm">
           <ShieldCheck
             size={42}
             className="mx-auto mb-4 text-[#D6B875]"
           />
 
-          <h1 className="mb-2 text-xl font-bold text-[#101B2D]">
+          <h1 className="mb-2 text-xl font-bold text-[#101B2D] dark:text-slate-100">
             No Admin Access
           </h1>
 
-          <p className="text-sm leading-6 text-gray-600">
+          <p className="text-sm leading-6 text-gray-600 dark:text-slate-300">
             You currently do not have permission to access any admin
             sections. Please contact your Super Admin to request access.
           </p>
@@ -456,11 +470,11 @@ function AdminLayout() {
 
   if (!currentSectionAllowed && firstAllowedPath) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF]">
+      <div className="flex min-h-screen items-center justify-center bg-[#F7F5EF] dark:bg-[#0E1A2B]">
         <div className="text-center">
-          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-[#D6B875]" />
+          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 dark:border-slate-700 border-t-[#D6B875]" />
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-slate-300">
             Redirecting...
           </p>
         </div>
@@ -535,7 +549,7 @@ function AdminLayout() {
                 ) : (
                   <div
                     key={item.path}
-                    className="flex cursor-not-allowed items-center justify-between rounded-lg px-3 py-3 text-sm text-gray-500"
+                    className="flex cursor-not-allowed items-center justify-between rounded-lg px-3 py-3 text-sm text-gray-500 dark:text-slate-400"
                     title="Coming soon"
                   >
                     <span className="flex items-center gap-3">
@@ -563,7 +577,7 @@ function AdminLayout() {
           <button
             type="button"
             onClick={openCustomerView}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm text-gray-300 transition-all duration-200 hover:bg-[#1C2B42] hover:text-white"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm text-gray-300 dark:text-slate-500 transition-all duration-200 hover:bg-[#1C2B42] hover:text-white"
           >
             <Eye size={19} strokeWidth={1.9} />
             <span>View Customer Homepage</span>
@@ -575,7 +589,7 @@ function AdminLayout() {
 
       <div className="border-t border-white/10 p-4">
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D6B875] font-bold text-[#101B2D]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D6B875] font-bold text-[#101B2D] dark:text-slate-100">
             {user.full_name?.charAt(0)?.toUpperCase() || "A"}
           </div>
 
@@ -584,7 +598,7 @@ function AdminLayout() {
               {user.full_name}
             </p>
 
-            <p className="text-xs capitalize text-gray-400">
+            <p className="text-xs capitalize text-gray-400 dark:text-slate-500">
               {user.role.replace("_", " ")}
             </p>
           </div>
@@ -593,7 +607,7 @@ function AdminLayout() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 px-3 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-400"
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 px-3 py-2.5 text-sm font-semibold text-gray-300 dark:text-slate-500 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-400"
         >
           <LogOut size={17} />
           Logout
@@ -607,7 +621,44 @@ function AdminLayout() {
   // --------------------------------------------------
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF]">
+    <div className="admin-theme-scope min-h-screen bg-[#F7F5EF] dark:bg-[#0E1A2B] text-[#101B2D] dark:text-slate-100 transition-colors duration-200">
+      <style>{`
+        .dark .admin-theme-scope input:not([type="checkbox"]):not([type="radio"]),
+        .dark .admin-theme-scope textarea,
+        .dark .admin-theme-scope select {
+          background-color: #1e293b !important;
+          color: #f1f5f9 !important;
+          border-color: #475569 !important;
+          color-scheme: dark;
+        }
+        .dark .admin-theme-scope input::placeholder,
+        .dark .admin-theme-scope textarea::placeholder {
+          color: #94a3b8 !important;
+          opacity: 1;
+        }
+        .dark .admin-theme-scope select option {
+          background-color: #1e293b;
+          color: #f1f5f9;
+        }
+        .dark .admin-theme-scope input:disabled,
+        .dark .admin-theme-scope textarea:disabled,
+        .dark .admin-theme-scope select:disabled {
+          background-color: #334155 !important;
+          color: #cbd5e1 !important;
+          opacity: 1;
+        }
+        .dark .admin-theme-scope input[type="checkbox"],
+        .dark .admin-theme-scope input[type="radio"] {
+          accent-color: #d6b875;
+        }
+        .dark .admin-theme-scope input:-webkit-autofill,
+        .dark .admin-theme-scope input:-webkit-autofill:hover,
+        .dark .admin-theme-scope input:-webkit-autofill:focus {
+          -webkit-text-fill-color: #f1f5f9 !important;
+          box-shadow: 0 0 0 1000px #1e293b inset !important;
+          transition: background-color 9999s ease-out 0s;
+        }
+      `}</style>
 
       {/* ADMIN HEADER */}
 
@@ -673,6 +724,28 @@ function AdminLayout() {
               </NavLink>
             )}
 
+            {/* THEME TOGGLE */}
+
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              title={isDark ? "Light mode" : "Dark mode"}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#1C2B42] text-white transition hover:bg-[#D6B875] hover:text-[#101B2D] sm:h-10 sm:w-10"
+            >
+              {isDark ? (
+                <>
+                  <Sun size={17} className="sm:hidden" />
+                  <Sun size={20} className="hidden sm:block" />
+                </>
+              ) : (
+                <>
+                  <Moon size={17} className="sm:hidden" />
+                  <Moon size={20} className="hidden sm:block" />
+                </>
+              )}
+            </button>
+
             {/* PROFILE DROPDOWN */}
 
             <div className="relative">
@@ -681,20 +754,20 @@ function AdminLayout() {
                 onClick={() => setProfileMenuOpen((prev) => !prev)}
                 aria-label="Admin profile"
                 aria-expanded={profileMenuOpen}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D6B875]/40 bg-[#D6B875] text-[#101B2D] transition hover:scale-105 sm:h-10 sm:w-10"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D6B875]/40 bg-[#D6B875] text-[#101B2D] dark:text-slate-100 transition hover:scale-105 sm:h-10 sm:w-10"
               >
                 <UserRound size={20} />
               </button>
 
               {profileMenuOpen && (
-                <div className="absolute right-0 top-12 z-[100] w-60 overflow-hidden rounded-xl border border-gray-200 bg-white text-[#101B2D] shadow-xl">
+                <div className="absolute right-0 top-12 z-[100] w-60 overflow-hidden rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[#101B2D] dark:text-slate-100 shadow-xl">
 
-                  <div className="border-b border-gray-100 px-4 py-4">
+                  <div className="border-b border-gray-100 dark:border-slate-700 px-4 py-4">
                     <p className="truncate text-sm font-bold">
                       {user.full_name}
                     </p>
 
-                    <p className="mt-1 text-xs capitalize text-gray-500">
+                    <p className="mt-1 text-xs capitalize text-gray-500 dark:text-slate-400">
                       {user.role.replace("_", " ")}
                     </p>
                   </div>
@@ -705,7 +778,7 @@ function AdminLayout() {
                       setProfileMenuOpen(false);
                       handleLogout();
                     }}
-                    className="flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                    className="flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-red-600 dark:text-red-300 dark:text-red-300 transition hover:bg-red-50"
                   >
                     <LogOut size={17} />
                     Logout

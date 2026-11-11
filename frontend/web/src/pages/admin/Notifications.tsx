@@ -219,29 +219,29 @@ const Notifications = () => {
 
   if (role !== "admin" && role !== "super_admin") {
     return (
-      <div className="p-8 text-center text-red-600">
+      <div className="p-8 text-center text-red-600 dark:text-red-300 dark:text-red-300">
         You do not have permission to access this page.
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F6F8] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F5F6F8] dark:bg-[#0E1A2B] p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-2xl font-bold text-[#101B2D] sm:text-3xl">
+            <h1 className="text-2xl font-bold text-[#101B2D] dark:text-slate-100 sm:text-3xl">
               Notifications
             </h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
               Monitor and manage customer notifications.
             </p>
           </div>
 
           <button
             onClick={refreshAll}
-            className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-[#101B2D] shadow-sm hover:bg-gray-50"
+            className="rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-[#101B2D] dark:text-slate-100 shadow-sm hover:bg-gray-50 dark:hover:bg-slate-700"
           >
             ↻ Refresh
           </button>
@@ -267,7 +267,7 @@ const Notifications = () => {
         </div>
 
         {/* Notification Filters */}
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+        <div className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
             <input
               type="text"
@@ -277,7 +277,7 @@ const Notifications = () => {
                 setPage(0);
               }}
               placeholder="Search title or message..."
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
             />
 
             <select
@@ -286,7 +286,7 @@ const Notifications = () => {
                 setTypeFilter(e.target.value);
                 setPage(0);
               }}
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
             >
               <option value="">All notification types</option>
               <option value="order_placed">Order Placed</option>
@@ -303,7 +303,7 @@ const Notifications = () => {
                 setStatusFilter(e.target.value);
                 setPage(0);
               }}
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm outline-none focus:border-[#B3944D]"
             >
               <option value="">All statuses</option>
               <option value="unread">Unread</option>
@@ -313,25 +313,25 @@ const Notifications = () => {
         </div>
 
         {/* Notification List */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-          <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="font-bold text-[#101B2D]">
+        <div className="overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+          <div className="border-b border-gray-100 dark:border-slate-700 px-5 py-4">
+            <h2 className="font-bold text-[#101B2D] dark:text-slate-100">
               Customer Notification History
             </h2>
           </div>
 
           {error && (
-            <div className="m-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            <div className="m-4 rounded-lg bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-600 dark:text-red-300 dark:text-red-300">
               {error}
             </div>
           )}
 
           {loading ? (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-gray-500 dark:text-slate-400">
               Loading notifications...
             </div>
           ) : notifications.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">
+            <div className="p-12 text-center text-gray-500 dark:text-slate-400">
               <div className="mb-3 text-4xl">🔔</div>
               <p className="font-semibold">No notifications found</p>
               <p className="mt-1 text-sm">
@@ -339,7 +339,7 @@ const Notifications = () => {
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-gray-100 dark:divide-slate-700">
               {notifications.map((item) => (
                 <div
                   key={item.id}
@@ -354,22 +354,22 @@ const Notifications = () => {
 
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-semibold text-[#101B2D]">
+                        <h3 className="font-semibold text-[#101B2D] dark:text-slate-100">
                           {item.title}
                         </h3>
 
                         {!item.is_read && (
-                          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800">
+                          <span className="rounded-full bg-amber-100 dark:bg-amber-900/30 dark:bg-amber-900/30 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-200">
                             Unread
                           </span>
                         )}
                       </div>
 
-                      <p className="mt-1 line-clamp-2 text-sm text-gray-600">
+                      <p className="mt-1 line-clamp-2 text-sm text-gray-600 dark:text-slate-300">
                         {item.message}
                       </p>
 
-                      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400">
+                      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 dark:text-slate-500">
                         <span>Customer: {item.customer_name}</span>
                         <span>{item.customer_email}</span>
                         <span>{typeLabel(item.notification_type)}</span>
@@ -381,7 +381,7 @@ const Notifications = () => {
                   <div className="flex shrink-0 flex-wrap gap-2">
                     <button
                       onClick={() => setSelected(item)}
-                      className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-semibold text-[#101B2D] hover:bg-gray-100"
+                      className="rounded-lg border border-gray-200 dark:border-slate-700 px-3 py-2 text-xs font-semibold text-[#101B2D] dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-700"
                     >
                       View
                     </button>
@@ -397,7 +397,7 @@ const Notifications = () => {
 
                     <button
                       onClick={() => deleteNotification(item.id)}
-                      className="rounded-lg border border-red-100 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"
+                      className="rounded-lg border border-red-100 dark:border-red-900/50 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-300 dark:text-red-300 hover:bg-red-50"
                     >
                       Delete
                     </button>
@@ -408,8 +408,8 @@ const Notifications = () => {
           )}
 
           {/* Pagination */}
-          <div className="flex items-center justify-between border-t border-gray-100 px-5 py-4">
-            <span className="text-xs text-gray-500">
+          <div className="flex items-center justify-between border-t border-gray-100 dark:border-slate-700 px-5 py-4">
+            <span className="text-xs text-gray-500 dark:text-slate-400">
               Page {page + 1}
             </span>
 
@@ -417,7 +417,7 @@ const Notifications = () => {
               <button
                 disabled={page === 0 || loading}
                 onClick={() => setPage((p) => p - 1)}
-                className="rounded-lg border border-gray-200 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Previous
               </button>
@@ -425,7 +425,7 @@ const Notifications = () => {
               <button
                 disabled={notifications.length < pageSize || loading}
                 onClick={() => setPage((p) => p + 1)}
-                className="rounded-lg border border-gray-200 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Next
               </button>
@@ -434,20 +434,20 @@ const Notifications = () => {
         </div>
 
         {/* Email & SMS Delivery History */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-          <div className="flex flex-col justify-between gap-3 border-b border-gray-100 p-5 sm:flex-row sm:items-center">
+        <div className="overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+          <div className="flex flex-col justify-between gap-3 border-b border-gray-100 dark:border-slate-700 p-5 sm:flex-row sm:items-center">
             <div>
-              <h2 className="text-lg font-bold text-[#101B2D]">
+              <h2 className="text-lg font-bold text-[#101B2D] dark:text-slate-100">
                 Delivery History
               </h2>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
                 Track customer email and SMS delivery records.
               </p>
             </div>
 
             <button
               onClick={loadDeliveries}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold hover:bg-gray-50"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-2 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-700"
             >
               ↻ Refresh
             </button>
@@ -461,9 +461,9 @@ const Notifications = () => {
               { label: "Failed", value: deliveryStats.failed },
               { label: "Pending", value: deliveryStats.pending },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-lg bg-gray-50 p-4">
-                <p className="text-xs text-gray-500">{stat.label}</p>
-                <p className="mt-2 text-2xl font-bold text-[#101B2D]">
+              <div key={stat.label} className="rounded-lg bg-gray-50 dark:bg-slate-950 p-4">
+                <p className="text-xs text-gray-500 dark:text-slate-400">{stat.label}</p>
+                <p className="mt-2 text-2xl font-bold text-[#101B2D] dark:text-slate-100">
                   {stat.value}
                 </p>
               </div>
@@ -475,7 +475,7 @@ const Notifications = () => {
             <select
               value={deliveryChannel}
               onChange={(e) => setDeliveryChannel(e.target.value)}
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm"
             >
               <option value="">All Channels</option>
               <option value="email">Email</option>
@@ -485,7 +485,7 @@ const Notifications = () => {
             <select
               value={deliveryStatus}
               onChange={(e) => setDeliveryStatus(e.target.value)}
-              className="rounded-lg border border-gray-200 px-4 py-3 text-sm"
+              className="rounded-lg border border-gray-200 dark:border-slate-700 px-4 py-3 text-sm"
             >
               <option value="">All Statuses</option>
               <option value="sent">Sent</option>
@@ -495,17 +495,17 @@ const Notifications = () => {
           </div>
 
           {deliveryError && (
-            <div className="mx-5 mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            <div className="mx-5 mb-4 rounded-lg bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-600 dark:text-red-300 dark:text-red-300">
               {deliveryError}
             </div>
           )}
 
           {deliveryLoading ? (
-            <div className="p-10 text-center text-gray-500">
+            <div className="p-10 text-center text-gray-500 dark:text-slate-400">
               Loading delivery history...
             </div>
           ) : deliveries.length === 0 ? (
-            <div className="p-10 text-center text-gray-500">
+            <div className="p-10 text-center text-gray-500 dark:text-slate-400">
               <div className="mb-3 text-3xl">✉</div>
               <p className="font-semibold">No delivery records found</p>
               <p className="mt-1 text-sm">
@@ -513,15 +513,15 @@ const Notifications = () => {
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-gray-100 dark:divide-slate-700">
               {deliveries.map((delivery) => (
                 <div key={delivery.id} className="space-y-3 p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <h3 className="font-semibold text-[#101B2D]">
+                      <h3 className="font-semibold text-[#101B2D] dark:text-slate-100">
                         {delivery.notification_title}
                       </h3>
-                      <p className="mt-1 text-xs text-gray-500">
+                      <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
                         Delivery ID: {delivery.id} · Notification ID:{" "}
                         {delivery.notification_id}
                       </p>
@@ -530,10 +530,10 @@ const Notifications = () => {
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-semibold ${
                         delivery.status === "sent"
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-green-100 text-green-700 dark:text-green-300"
                           : delivery.status === "failed"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-amber-100 text-amber-700"
+                          ? "bg-red-100 text-red-700 dark:text-red-300"
+                          : "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
                       }`}
                     >
                       {delivery.status.toUpperCase()}
@@ -542,53 +542,53 @@ const Notifications = () => {
 
                   <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2 lg:grid-cols-5">
                     <div>
-                      <p className="text-xs text-gray-400">Customer</p>
-                      <p className="font-medium text-gray-700">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">Customer</p>
+                      <p className="font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {delivery.customer_name}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-xs text-gray-400">Customer Email</p>
-                      <p className="break-all font-medium text-gray-700">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">Customer Email</p>
+                      <p className="break-all font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {delivery.customer_email}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-xs text-gray-400">Channel</p>
-                      <p className="font-medium capitalize text-gray-700">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">Channel</p>
+                      <p className="font-medium capitalize text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {delivery.channel}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-xs text-gray-400">Recipient</p>
-                      <p className="break-all font-medium text-gray-700">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">Recipient</p>
+                      <p className="break-all font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {delivery.recipient}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-xs text-gray-400">Attempts</p>
-                      <p className="font-medium text-gray-700">
+                      <p className="text-xs text-gray-400 dark:text-slate-500">Attempts</p>
+                      <p className="font-medium text-gray-700 dark:text-slate-200 dark:text-slate-200">
                         {delivery.attempts}
                       </p>
                     </div>
                   </div>
 
                   {delivery.error_message && (
-                    <div className="rounded-lg bg-red-50 p-3">
-                      <p className="text-xs font-semibold text-red-600">
+                    <div className="rounded-lg bg-red-50 dark:bg-red-950/30 p-3">
+                      <p className="text-xs font-semibold text-red-600 dark:text-red-300 dark:text-red-300">
                         Delivery Error
                       </p>
-                      <p className="mt-1 text-sm text-red-700">
+                      <p className="mt-1 text-sm text-red-700 dark:text-red-300 dark:text-red-300">
                         {delivery.error_message}
                       </p>
                     </div>
                   )}
 
-                  <div className="flex flex-wrap gap-4 text-xs text-gray-400">
+                  <div className="flex flex-wrap gap-4 text-xs text-gray-400 dark:text-slate-500">
                     <span>
                       Created: {formatDate(delivery.created_at)}
                     </span>
@@ -613,16 +613,16 @@ const Notifications = () => {
           onClick={() => setSelected(null)}
         >
           <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+            className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-5 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-[#101B2D]">
+              <h2 className="text-xl font-bold text-[#101B2D] dark:text-slate-100">
                 Notification Details
               </h2>
               <button
                 onClick={() => setSelected(null)}
-                className="text-2xl text-gray-400 hover:text-gray-700"
+                className="text-2xl text-gray-400 dark:text-slate-500 hover:text-gray-700"
               >
                 ×
               </button>
@@ -648,8 +648,8 @@ const Notifications = () => {
               />
 
               <div>
-                <p className="mb-1 font-semibold text-gray-500">Message</p>
-                <p className="rounded-lg bg-gray-50 p-3 text-gray-700">
+                <p className="mb-1 font-semibold text-gray-500 dark:text-slate-400">Message</p>
+                <p className="rounded-lg bg-gray-50 dark:bg-slate-950 p-3 text-gray-700 dark:text-slate-200 dark:text-slate-200">
                   {selected.message}
                 </p>
               </div>
@@ -667,7 +667,7 @@ const Notifications = () => {
 
               <button
                 onClick={() => deleteNotification(selected.id)}
-                className="rounded-lg bg-red-50 px-4 py-2 text-sm font-semibold text-red-600"
+                className="rounded-lg bg-red-50 dark:bg-red-950/30 px-4 py-2 text-sm font-semibold text-red-600 dark:text-red-300 dark:text-red-300"
               >
                 Delete
               </button>
@@ -695,12 +695,12 @@ const StatCard = ({
   value: number;
   icon: string;
 }) => (
-  <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+  <div className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
     <div className="flex items-center justify-between">
-      <p className="text-sm font-medium text-gray-500">{title}</p>
+      <p className="text-sm font-medium text-gray-500 dark:text-slate-400">{title}</p>
       <span className="text-xl text-[#B3944D]">{icon}</span>
     </div>
-    <p className="mt-3 text-3xl font-bold text-[#101B2D]">{value}</p>
+    <p className="mt-3 text-3xl font-bold text-[#101B2D] dark:text-slate-100">{value}</p>
   </div>
 );
 
@@ -711,9 +711,9 @@ const Detail = ({
   label: string;
   value: string | number;
 }) => (
-  <div className="flex justify-between gap-4 border-b border-gray-100 pb-2">
-    <span className="font-medium text-gray-500">{label}</span>
-    <span className="break-all text-right font-semibold text-[#101B2D]">
+  <div className="flex justify-between gap-4 border-b border-gray-100 dark:border-slate-700 pb-2">
+    <span className="font-medium text-gray-500 dark:text-slate-400">{label}</span>
+    <span className="break-all text-right font-semibold text-[#101B2D] dark:text-slate-100">
       {value}
     </span>
   </div>
