@@ -1,4 +1,15 @@
-import { ShoppingCart } from "lucide-react";
+import {
+  ShoppingCart,
+  IndianRupee,
+  TrendingUp,
+  Users,
+  Package,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  RefreshCw,
+  ArrowRight,
+} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -258,20 +269,22 @@ function SummaryCard({
   title,
   value,
   subtitle,
-  icon,
+  icon: Icon,
 }: {
   title: string;
   value: string | number;
   subtitle: string;
-  icon: string;
+  icon: React.ElementType;
 }) {
   return (
     <div className="rounded-xl border border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500 dark:text-slate-400">{title}</p>
+        <p className="text-sm text-gray-500 dark:text-slate-400">
+          {title}
+        </p>
 
-        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] text-xl">
-          {icon}
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F7F5EF] dark:bg-[#0E1A2B] text-[#8c7137] dark:text-[#D6B875]">
+          <Icon size={20} strokeWidth={1.8} />
         </span>
       </div>
 
@@ -279,7 +292,9 @@ function SummaryCard({
         {value}
       </h3>
 
-      <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">{subtitle}</p>
+      <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
+        {subtitle}
+      </p>
     </div>
   );
 }
@@ -466,7 +481,13 @@ function Dashboard() {
           disabled={refreshing}
           className="rounded-lg bg-[#101B2D] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1C2B42] disabled:opacity-50"
         >
-          {refreshing ? "Refreshing..." : "↻ Refresh"}
+          <span className="flex items-center gap-2">
+            <RefreshCw
+              size={16}
+              className={refreshing ? "animate-spin" : ""}
+            />
+            {refreshing ? "Refreshing..." : "Refresh"}
+          </span>
         </button>
       </div>
 
@@ -490,56 +511,56 @@ function Dashboard() {
             title="Total Revenue"
             value={formatMoney(summary.total_revenue)}
             subtitle="Paid orders, excluding cancelled orders"
-            icon="₹"
+            icon={IndianRupee}
           />
 
           <SummaryCard
             title="Today's Revenue"
             value={formatMoney(summary.today_revenue)}
             subtitle={`${summary.today_orders} orders today`}
-            icon="📈"
+            icon={TrendingUp}
           />
 
           <SummaryCard
             title="Total Orders"
             value={summary.total_orders}
             subtitle={`${summary.pending_orders} pending orders`}
-            icon="<ShoppingCart size={18} />"
+            icon={ShoppingCart}
           />
 
           <SummaryCard
             title="Total Customers"
             value={summary.total_customers}
             subtitle="Registered customers"
-            icon="👥"
+            icon={Users}
           />
 
           <SummaryCard
             title="Total Products"
             value={summary.total_products}
             subtitle="Products in your inventory"
-            icon="📦"
+            icon={Package}
           />
 
           <SummaryCard
             title="Low Stock"
             value={summary.low_stock_products}
             subtitle="Products needing restocking"
-            icon="⚠️"
+            icon={AlertTriangle}
           />
 
           <SummaryCard
             title="Completed Orders"
             value={summary.completed_orders}
             subtitle="Successfully completed"
-            icon="✅"
+            icon={CheckCircle}
           />
 
           <SummaryCard
             title="Cancelled Orders"
             value={summary.cancelled_orders}
             subtitle="Cancelled orders"
-            icon="❌"
+            icon={XCircle}
           />
         </div>
       </section>
@@ -672,7 +693,10 @@ function Dashboard() {
             to="/admin/inventory"
             className="text-sm font-semibold text-[#8c7137] hover:underline"
           >
-            View Stock History →
+            <span className="inline-flex items-center gap-1">
+              View Stock History
+              <ArrowRight size={15} />
+            </span>
           </Link>
         </div>
 
